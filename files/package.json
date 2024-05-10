@@ -41,7 +41,7 @@
       "yup": "^1.3.3"
    },
    "scripts": {
-      "dev": "nodemon ./src/index.ts",
+      "dev": "console-ninja nodemon ./src/index.ts",
       "start": "tsc && node ./build/index.js",
       "build": "tsc --build",
       "clean": "tsc --build --clean",

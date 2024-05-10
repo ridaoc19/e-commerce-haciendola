@@ -34,7 +34,7 @@
       "zod": "^3.23.8"
    },
    "scripts": {
-      "dev": "nodemon ./src/index.ts",
+      "dev": "console-ninja nodemon ./src/index.ts",
       "start": "tsc && node ./build/src/index.js",
       "build": "tsc --build",
       "clean": "tsc --build --clean",

@@ -1,7 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('products')
-export default class ProductEntity {
+export class ProductEntity {
   @PrimaryGeneratedColumn("uuid")
   product_id: string; 
 
@@ -35,5 +34,21 @@ export default class ProductEntity {
   @Column()
   grams: string;
 
+  @ManyToOne(() => CategoryEntity, category => category.products)
+  @JoinColumn({ name: 'category_id' })
+  category: CategoryEntity;
+
 }
 
+
+@Entity('categories')
+export class CategoryEntity {
+  @PrimaryGeneratedColumn("uuid")
+  category_id: string;
+
+  @Column({ type: 'varchar' })
+  category: string;
+
+  @OneToMany(() => ProductEntity, product => product.category, { cascade: ['remove', 'recover'] })
+  products: ProductEntity[];
+}

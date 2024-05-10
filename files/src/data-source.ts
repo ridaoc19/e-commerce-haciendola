@@ -2,7 +2,7 @@ import "reflect-metadata"
 import { DataSource } from "typeorm"
 import '../dotenv'
 import FilesEntity from "./modules/files/entity"
-import ProductEntity from "./modules/excel/entity"
+import { ProductEntity, CategoryEntity } from "./modules/excel/entity"
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -15,7 +15,8 @@ export const AppDataSource = new DataSource({
     logging: false,
     entities: [
         FilesEntity,
-        ProductEntity
+        ProductEntity,
+        CategoryEntity
     ],
     migrations: [],
     subscribers: [],

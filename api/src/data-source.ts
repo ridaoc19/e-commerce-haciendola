@@ -5,6 +5,7 @@ import AdvertisingEntity from "./modules/advertising/entity"
 import FilesEntity from "./modules/developer/entity"
 import ProductEntity from "./modules/product/entity"
 import UserEntity from "./modules/user/entity"
+import CategoryEntity from "./modules/category/entity"
 // import { User } from "./entity/User"
 
 export const AppDataSource = new DataSource({
@@ -20,6 +21,7 @@ export const AppDataSource = new DataSource({
         UserEntity,
         AdvertisingEntity,
         ProductEntity,
+        CategoryEntity,
         FilesEntity,
     ],
     migrations: [],
