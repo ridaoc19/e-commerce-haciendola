@@ -36,3 +36,4 @@ export default class ProductEntity {
   grams: string;
 
 }
+

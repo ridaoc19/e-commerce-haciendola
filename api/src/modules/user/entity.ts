@@ -1,6 +1,4 @@
-import { Column, DeleteDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import CartEntity from '../cart/entity';
-import ProductEntity from '../product/entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export default class UserEntity {
@@ -33,25 +31,5 @@ export default class UserEntity {
 
   @Column({ nullable: true })
   addresses: string;
-
-  @ManyToMany(() => ProductEntity, product => product.favorites)
-  @JoinTable({
-    name: 'favorites',
-    joinColumn: {
-      name: 'user',
-      referencedColumnName: 'user_id'
-    },
-    inverseJoinColumn: {
-      name: 'product',
-      referencedColumnName: 'product_id'
-    }
-  })
-  favorite: ProductEntity[];
-
-  @ManyToMany(() => CartEntity, cart => cart.user)
-  cart: CartEntity[];
-
-  @DeleteDateColumn({ select: false })
-  deletedAt: Date;
 }
 
