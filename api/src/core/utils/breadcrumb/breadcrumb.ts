@@ -2,7 +2,7 @@ import { AppDataSource } from "../../../data-source";
 import CategoryEntity from "../../../modules/category/entity";
 import DepartmentEntity from "../../../modules/department/entity";
 import ProductEntity from "../../../modules/product/entity";
-import SubcategoryEntity from "../../../modules/subcategory/entity";
+import SubcategoryEntity from "../../../modules/category/entity";
 import VariantEntity from "../../../modules/variant/entity";
 import { findParentUUID } from "../findParentUUID";
 

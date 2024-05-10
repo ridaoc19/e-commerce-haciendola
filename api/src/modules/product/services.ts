@@ -3,22 +3,20 @@ import { StatusHTTP } from '../../core/utils/send/enums';
 import { errorHandlerCatch, errorHandlerRes } from '../../core/utils/send/errorHandler';
 import { successHandler } from '../../core/utils/send/successHandler';
 import { AppDataSource } from '../../data-source';
-import NavigationEntity from '../navigation/entity';
-import SubcategoryEntity from '../subcategory/entity';
 import ProductEntity from './entity';
+import CategoryEntity from '../category/entity';
 
 export default {
   async createProduct(req: Request, res: Response) {
     try {
-      const { subcategory_id } = req.params;
-      const { product, brand, description, specifications, warranty, benefits, contents } = req.body;
-      // console.log(req.body)
-      const subcategoryRepository = AppDataSource.getRepository(SubcategoryEntity);
+      const { category_id } = req.params;
+      const { product, description, price, listPrice, images, stock, handle, barcode, sku, grams } = req.body;
+      const categoryRepository = AppDataSource.getRepository(CategoryEntity);
       const productRepository = AppDataSource.getRepository(ProductEntity);
 
-      const existingSubcategory = await subcategoryRepository.findOne({ where: { subcategory_id }, relations: { category: { department: true } } });
+      const existingCategory = await categoryRepository.findOne({ where: { category_id } });
 
-      if (!existingSubcategory) {
+      if (!existingCategory) {
         return errorHandlerRes({
           res, req,
           status_code: 404,
@@ -29,28 +27,18 @@ export default {
 
       const newProduct = new ProductEntity();
       newProduct.product = product
-      newProduct.brand = brand
       newProduct.description = description
-      newProduct.specifications = specifications
-      newProduct.benefits = benefits
-      newProduct.contents = contents
-      newProduct.warranty = warranty
-
-      newProduct.subcategory = existingSubcategory
+      newProduct.price = price
+      newProduct.listPrice = listPrice
+      newProduct.images = images
+      newProduct.stock = stock
+      newProduct.handle = handle
+      newProduct.barcode = barcode
+      newProduct.sku = sku
+      newProduct.grams = grams
+      newProduct.category = existingCategory
       await productRepository.save(newProduct)
 
-      // Crear entidad de navegación asociada a la variante
-      const navigationRepository = AppDataSource.getRepository(NavigationEntity);
-      const newNavigation = new NavigationEntity();
-
-      // Asignar otras entidades relacionadas
-      newNavigation.product = newProduct;
-      newNavigation.subcategory = existingSubcategory;
-      newNavigation.category = existingSubcategory.category;
-      newNavigation.department = existingSubcategory.category.department;
-
-      // Guardar la entidad de navegación
-      await navigationRepository.save(newNavigation);
 
       successHandler({
         res,
@@ -70,7 +58,7 @@ export default {
   async updateProduct(req: Request, res: Response) {
     try {
       const { product_id } = req.params;
-      const { product, brand, description, specifications, warranty, benefits, contents } = req.body;
+      const { product, description, price, listPrice, images, stock, handle, barcode, sku, grams } = req.body;
 
       const productRepository = AppDataSource.getRepository(ProductEntity);
 
@@ -86,12 +74,15 @@ export default {
       }
 
       existingProduct.product = product
-      existingProduct.brand = brand
       existingProduct.description = description
-      existingProduct.specifications = specifications
-      existingProduct.benefits = benefits
-      existingProduct.contents = contents
-      existingProduct.warranty = warranty
+      existingProduct.price = price
+      existingProduct.listPrice = listPrice
+      existingProduct.images = images
+      existingProduct.stock = stock
+      existingProduct.handle = handle
+      existingProduct.barcode = barcode
+      existingProduct.sku = sku
+      existingProduct.grams = grams
 
       await productRepository.save(existingProduct);
 
@@ -117,7 +108,7 @@ export default {
 
       const productRepository = AppDataSource.getRepository(ProductEntity);
 
-      const existingProduct = await productRepository.findOne({ where: { product_id }, relations: { variants: true } });
+      const existingProduct = await productRepository.findOne({ where: { product_id } });
 
       if (!existingProduct) {
         return errorHandlerRes({
@@ -151,7 +142,7 @@ export default {
 
       const productRepository = AppDataSource.getRepository(ProductEntity);
 
-      const product = await productRepository.findOne({ where: { product_id }, relations: { subcategory: true, variants: true } });
+      const product = await productRepository.findOne({ where: { product_id }, relations: { category: true } });
 
       if (!product) {
         return errorHandlerRes({

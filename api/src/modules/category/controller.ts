@@ -1,13 +1,12 @@
-import { Router } from "express";
-import categoryServices from './services';
-const { createCategory, updateCategory, deleteCategory, getCategory } = categoryServices;
+import { Router } from 'express';
+import subcategoryServices from './services';
+const { createCategory, updateCategory, deleteCategory, getCategory } = subcategoryServices;
 
 const router = Router();
 
-router.post('/create/:department_id', createCategory);
-router.put('/edit/:category_id', updateCategory);
-router.delete('/delete/:category_id', deleteCategory);
-router.get('/request/:category_id', getCategory);
+router.post('/create/:category_id', createCategory);
+router.put('/edit/:subcategory_id', updateCategory);
+router.delete('/delete/:subcategory_id', deleteCategory);
+router.get('/request/:subcategory_id', getCategory);
 
 export { router };
-
