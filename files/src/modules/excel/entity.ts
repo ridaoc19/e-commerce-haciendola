@@ -10,16 +10,16 @@ export class ProductEntity {
   @Column({ type: 'text' })
   description: string;
 
-  @Column('float')
+  @Column()
   price: number;
 
-  @Column('float')
+  @Column()
   listPrice: number;
 
-  @Column('varchar', { array: true })
+  @Column('varchar', { array: true, default: [] })
   images: string[];
 
-  @Column('int')
+  @Column()
   stock: number;
 
   @Column()
