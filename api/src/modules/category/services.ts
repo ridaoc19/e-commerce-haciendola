@@ -3,27 +3,17 @@ import { StatusHTTP } from '../../core/utils/send/enums';
 import { errorHandlerCatch, errorHandlerRes } from '../../core/utils/send/errorHandler';
 import { successHandler } from '../../core/utils/send/successHandler';
 import { AppDataSource } from '../../data-source';
-import DepartmentEntity from '../department/entity';
 import CategoryEntity from './entity';
 
 export default {
   async createCategory(req: Request, res: Response) {
     try {
-      const { department_id } = req.params;
       const { category } = req.body;
 
-      const departmentRepository = AppDataSource.getRepository(DepartmentEntity);
       const categoryRepository = AppDataSource.getRepository(CategoryEntity);
-
-      const existingDepartment = await departmentRepository.findOne({ where: { department_id } });
-
-      if (!existingDepartment) {
-        return errorHandlerRes({ req, res, status_code: 404, status: StatusHTTP.notFound_404, errors: [{ field: 'category_create', message: 'Departamento no encontrado' }] })
-      }
 
       const newCategory = new CategoryEntity();
       newCategory.category = category;
-      newCategory.department = existingDepartment;
       await categoryRepository.save(newCategory);
 
       successHandler({
@@ -77,7 +67,7 @@ export default {
 
       const categoryRepository = AppDataSource.getRepository(CategoryEntity);
 
-      const existingCategory = await categoryRepository.findOne({ where: { category_id } });
+      const existingCategory = await categoryRepository.findOne({ where: { category_id }, relations: { products: true } });
 
       if (!existingCategory) {
         return errorHandlerRes({ req, res, status_code: 404, status: StatusHTTP.notFound_404, errors: [{ field: 'category_delete', message: 'Categoría no encontrado' }] })
@@ -105,7 +95,7 @@ export default {
 
       const categoryRepository = AppDataSource.getRepository(CategoryEntity);
 
-      const category = await categoryRepository.findOne({ where: { category_id }, relations: { department: true } });
+      const category = await categoryRepository.findOne({ where: { category_id }, relations: { products: true } });
 
       if (!category) {
         return errorHandlerRes({ req, res, status_code: 404, status: StatusHTTP.notFound_404, errors: [{ field: 'category_get', message: 'Categoría no encontrado' }] })

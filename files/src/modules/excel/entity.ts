@@ -1,8 +1,6 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import CategoryEntity from '../category/entity';
-
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('products')
-export default class ProductEntity {
+export class ProductEntity {
   @PrimaryGeneratedColumn("uuid")
   product_id: string; 
 
@@ -18,7 +16,7 @@ export default class ProductEntity {
   @Column()
   listPrice: number;
 
-  @Column('varchar', { array: true, default:[] })
+  @Column('varchar', { array: true, default: [] })
   images: string[];
 
   @Column()
@@ -40,4 +38,17 @@ export default class ProductEntity {
   @JoinColumn({ name: 'category_id' })
   category: CategoryEntity;
 
+}
+
+
+@Entity('categories')
+export class CategoryEntity {
+  @PrimaryGeneratedColumn("uuid")
+  category_id: string;
+
+  @Column({ type: 'varchar' })
+  category: string;
+
+  @OneToMany(() => ProductEntity, product => product.category, { cascade: ['remove', 'recover'] })
+  products: ProductEntity[];
 }
