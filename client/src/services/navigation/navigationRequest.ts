@@ -12,13 +12,7 @@ export enum RouteNavigation {
 export type RequestMapNavigation = {
   [RouteNavigation.NavigationMenu]: {
     route: RouteNavigation.NavigationMenu;
-    data: (Omit<IProduct.Department, 'categories'> & {
-      categories: (Omit<IProduct.Category, 'subcategories' | 'department'> & {
-        subcategories: (Omit<IProduct.Subcategory, 'products' | 'category'> & {
-          products: Pick<IProduct.Product, 'product_id' | 'product'>[]
-        })[]
-      })[]
-    })[]
+    data: (Pick<IProduct.Category, 'category_id' | 'category' > & {products: Pick<IProduct.Product, 'product_id' | 'product'>[]})[]
 
   },
   [RouteNavigation.NavigationListProduct]: {

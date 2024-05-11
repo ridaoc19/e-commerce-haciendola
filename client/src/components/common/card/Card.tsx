@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { IProduct } from '../../../interfaces/product.interface';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 
-export type CardProps = Pick<IProduct.Product, 'product_id' | 'product' | 'brand'> & { price: number[], images: string[] }
+export type CardProps = Pick<IProduct.Product, 'product_id' | 'product' > & { price: number[], images: string[] }
 
-function Card({ product_id, images, price, product, brand }: CardProps) {
+function Card({ product_id, images, price, product }: CardProps) {
   const { mediaQuery } = useMediaQuery();
   const uniqueVariants = [...new Set(price)];
   const minValue = Math.min(...uniqueVariants).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0, });
@@ -23,7 +23,7 @@ function Card({ product_id, images, price, product, brand }: CardProps) {
             : <img src={`${process.env.REACT_APP_SERVER_FILE}/${images[0]}`} alt="" />}
         </div>
         <div className="card__content">
-          <p>{brand}</p>
+          {/* <p>{brand}</p> */}
           {/* <OverflowDetectionComponent product={product}> */}
           <h4 >{product}</h4>
           {/* </OverflowDetectionComponent> */}

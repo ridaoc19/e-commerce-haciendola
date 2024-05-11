@@ -55,6 +55,7 @@ router.post('/', async (_req: Request, res: Response) => {
         newProduct.barcode = barcode;
         newProduct.sku = sku;
         newProduct.grams = grams;
+        newProduct.breadcrumb = []
         newProduct.category = existingCategory;
         await productRepository.save(newProduct);
       } catch (error) {

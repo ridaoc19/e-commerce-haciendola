@@ -11,7 +11,7 @@ interface SearchCardProps {
 
 function SearchCard({ listProduct, handleOnClick }: SearchCardProps) {
   const navigate = useNavigate()
-  const { product, variants, department, category, subcategory } = listProduct;
+  const { product, variants, category } = listProduct;
   const uniqueVariants = [...new Set(variants.map(e => e.price))];
   const minValue = Math.min(...uniqueVariants).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0, });
   const maxValue = Math.max(...uniqueVariants).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0, });
@@ -31,9 +31,7 @@ function SearchCard({ listProduct, handleOnClick }: SearchCardProps) {
         <Breadcrumb viewHome={false} viewProduct={false} handleOnClick={handleOnClick} breadcrumb={{
           entity: BreadcrumbType.Product,
           data: [
-            { _id: department.department_id, name: department.department, name_id: 'department' },
             { _id: category.category_id, name: category.category, name_id: 'category' },
-            { _id: subcategory.subcategory_id, name: subcategory.subcategory, name_id: 'subcategory' },
             { _id: product.product_id, name: product.product, name_id: 'product' },
           ]
         }}

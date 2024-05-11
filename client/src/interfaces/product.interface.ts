@@ -38,6 +38,15 @@ export namespace IProduct {
     warranty: string;
     subcategory: Subcategory;
     variants: Variant[];
+
+    price: number;
+    listPrice: number;
+    images: string[];
+    stock: number;
+    handle: string;
+    barcode: string;
+    sku: string;
+    grams: string;
   }
   export interface Subcategory {
     subcategory_id: string;

@@ -16,42 +16,25 @@ export type HandleChangeTextSelect = (data: React.ChangeEvent<HTMLInputElement> 
 
 // BREADCRUMB
 export enum BreadcrumbType {
-  Department = 'department',
   Category = 'category',
-  Subcategory = 'subcategory',
   Product = 'product',
-  Variant = 'variant',
 }
 
 export interface Data {
   name: string;
   _id: string;
-  name_id: 'department' | 'category' | 'subcategory' | 'product' | 'home'
+  name_id: 'category' | 'product' | 'home'
 }
 
 export type MapEntityBreadcrumb = {
-  [BreadcrumbType.Department]: {
-    entity: BreadcrumbType.Department;
-    data: Data[]
-  };
 
   [BreadcrumbType.Category]: {
     entity: BreadcrumbType.Category;
     data: Data[]
   };
 
-  [BreadcrumbType.Subcategory]: {
-    entity: BreadcrumbType.Subcategory;
-    data: Data[]
-  };
-
   [BreadcrumbType.Product]: {
     entity: BreadcrumbType.Product;
-    data: Data[]
-  };
-
-  [BreadcrumbType.Variant]: {
-    entity: BreadcrumbType.Variant;
     data: Data[]
   };
 

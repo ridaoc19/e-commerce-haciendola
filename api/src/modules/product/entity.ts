@@ -4,7 +4,7 @@ import CategoryEntity from '../category/entity';
 @Entity('products')
 export default class ProductEntity {
   @PrimaryGeneratedColumn("uuid")
-  product_id: string; 
+  product_id: string;
 
   @Column({ type: 'varchar' })
   product: string;
@@ -18,7 +18,7 @@ export default class ProductEntity {
   @Column()
   listPrice: number;
 
-  @Column('varchar', { array: true, default:[] })
+  @Column('varchar', { array: true, default: [] })
   images: string[];
 
   @Column()

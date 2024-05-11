@@ -57,9 +57,9 @@ function ListProducts() {
         </header>
 
         <main className={`list-product__card ${mediaQuery}`} >
-          {listProducts.map(({ product: { product_id, product, brand }, variants }) => {
+          {listProducts.map(({ product: { product_id, product }, variants }) => {
             return (
-              <Card key={product_id} product_id={product_id} product={product} brand={brand} images={variants[0].images} price={variants.map(variant => variant.price)} />
+              <Card key={product_id} product_id={product_id} product={product} images={variants[0].images} price={variants.map(variant => variant.price)} />
             )
           })}
         </main>

@@ -67,7 +67,16 @@ export const initialStateForm: RequestMapProduct = {
       warranty: '',
       contents: '',
       specifications: {},
-      benefits: []
+      benefits: [],
+
+      barcode: '',
+      handle: "",
+      images: [],
+      listPrice: 0,
+      price: 0,
+      sku: "",
+      stock: 0,
+      grams: ''
     },
     paramId: ''
   },
@@ -81,6 +90,15 @@ export const initialStateForm: RequestMapProduct = {
       contents: '',
       specifications: {},
       benefits: [],
+
+      barcode: '',
+      handle: "",
+      images: [],
+      listPrice: 0,
+      price: 0,
+      sku: "",
+      stock: 0,
+      grams: ''
     },
     paramId: ''
   },
@@ -88,6 +106,7 @@ export const initialStateForm: RequestMapProduct = {
     route: RouteProduct.ProductDelete,
     paramId: ''
   },
+
 
   "post|variant/create": {
     route: RouteProduct.VariantCreate,
