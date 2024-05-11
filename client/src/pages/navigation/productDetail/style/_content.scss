@@ -61,7 +61,14 @@
 
 
   &__price {
-    color: var(--brand-9);
+    color: var(--font-button);
+    font-size: larger;
+
+    del {
+      color    : #ccc;
+      font-size: medium;
+
+    }
   }
 
   &__benefits {}

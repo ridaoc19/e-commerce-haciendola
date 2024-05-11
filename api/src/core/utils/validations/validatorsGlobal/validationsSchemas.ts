@@ -65,6 +65,13 @@ const advertisingSchemas: { [key: string]: Yup.Schema } = {
   image_phone: Yup.string(),
 }
 
-const validationSchemas = { ...advertisingSchemas, ...userSchemas };
+const productSchemas: { [key: string]: Yup.Schema } = {
+  category: Yup.string()
+    .required('Debe ingresar un categorías')
+    .min(2, 'Ingrese al menos 2 caracteres para el categorías')
+    .max(50, 'Ingrese máximo 50 caracteres para el categorías'),
+}
+
+const validationSchemas = { ...advertisingSchemas, ...userSchemas, ...productSchemas };
 
 export { validationSchemas };

@@ -27,11 +27,11 @@ export const initialStateProductCreation: InitialStateProductCreation = {
   query: {
     type: 'search',
     search: '',
-    entity: 'department'
+    entity: 'category'
   },
   mutation: {
     entity: '',
-    route: RouteProduct.DepartmentCreate,
+    route: RouteProduct.CategoryCreate,
     paramId: ''
   }
 }
@@ -77,7 +77,7 @@ function useProductCreationQuery(): UseProductCreationQueryReturn {
 
   return {
     query: { data: data?.data, isLoading, isError, error, isSuccess, isFetching },
-    Breadcrumb: <Breadcrumb redirect={false} viewHome={false} breadcrumb={data?.data.breadcrumb || { data: [], entity: BreadcrumbType.Department }} />,
+    Breadcrumb: <Breadcrumb redirect={false} viewHome={false} breadcrumb={data?.data.breadcrumb || { data: [], entity: BreadcrumbType.Category }} />,
     setStateProductCreation,
     stateProductCreation,
   };
