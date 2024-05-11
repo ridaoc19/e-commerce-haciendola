@@ -40,7 +40,7 @@ export type RequestMapNavigation = {
     route: RouteNavigation.NavigationSearch;
     extensionRoute: `/${string}`;
     data: {
-      listProduct: (IProduct.ListProduct & { breadcrumb: MapEntityBreadcrumb[BreadcrumbType] })[];
+      listProduct: (IProduct.Product & { breadcrumb: MapEntityBreadcrumb[BreadcrumbType] })[];
       totalCount: number;
     }
   },
