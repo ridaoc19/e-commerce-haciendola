@@ -8,7 +8,7 @@ export enum RouteAdvertising {
   AdvertisingRequest = 'get|advertising/request',
 }
 
-export interface TopViewedProducts extends Pick<IProduct.Product, 'product_id' | 'product' | 'brand'> {
+export interface TopViewedProducts extends Pick<IProduct.Product, 'product_id' | 'product' > {
   images: string,
   price: Array<number>
 }
