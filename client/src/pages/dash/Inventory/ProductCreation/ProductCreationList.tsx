@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import Svg from "../../../../components/assets/icons/Svg";
 import Button from "../../../../components/common/button/Button";
-import { isVariant } from "../../../../interfaces/product.interface";
 import { RequestMapNavigation, RouteNavigation } from "../../../../services/navigation/navigationRequest";
 import { RouteProduct } from "../../../../services/product/productRequest";
 import { InitialStateProductCreation } from "./useProductCreationQuery";
@@ -48,15 +47,15 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
                   <li key={`${ind}abc`} className="product-creation-list__item">
                     <Button button={{
                       type: 'highlighter',
-                      // text,
-                      text: isVariant(item) ? (
-                        <div className="product-creation-list__item-button">
-                          {/* {item.images?.slice(0, 1).map((img, i) => <img key={`${i}-${img}`} height={30} src={img} alt=""></img>)} */}
-                          <div><b>price:</b> <i>{item.price}</i></div>
-                          <div><b>stock:</b> <i>{item.stock}</i></div>
-                          {Object.keys(item.attributes).length > 0 && Object.entries(item.attributes).map(([name, val], i) => <div key={`${i}-${name}`}><b>{name}:</b> <i>{!!val && val.toString()}</i></div>)}
-                        </div>
-                      ) : text,
+                      text,
+                      // text: isVariant(item) ? (
+                      //   <div className="product-creation-list__item-button">
+                      //     {/* {item.images?.slice(0, 1).map((img, i) => <img key={`${i}-${img}`} height={30} src={img} alt=""></img>)} */}
+                      //     {/* <div><b>price:</b> <i>{item.price}</i></div>
+                      //     <div><b>stock:</b> <i>{item.stock}</i></div> */}
+                      //     {/* {Object.keys(item.attributes).length > 0 && Object.entries(item.attributes).map(([name, val], i) => <div key={`${i}-${name}`}><b>{name}:</b> <i>{!!val && val.toString()}</i></div>)} */}
+                      //   </div>
+                      // ) : text,
                       handleClick: () => {
                         setStateProductCreation(prevState => ({
                           ...prevState,
