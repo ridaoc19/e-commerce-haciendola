@@ -27,7 +27,7 @@ export const initialStateProductCreation: InitialStateProductCreation = {
   query: {
     type: 'search',
     search: '',
-    entity: 'department'
+    entity: 'category'
   },
   mutation: {
     entity: '',

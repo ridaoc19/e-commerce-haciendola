@@ -6,9 +6,7 @@ import Spinner from "../../../../components/common/spinner";
 import { InitialStateProductCreation, UseProductCreationQueryReturn } from "./useProductCreationQuery";
 
 const options = [
-  { value: 'department', label: 'Departamento' },
   { value: 'category', label: 'Categoría' },
-  { value: 'subcategory', label: 'Subcategoría' },
   { value: 'product', label: 'Producto' },
 ];
 

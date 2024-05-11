@@ -66,8 +66,8 @@ export default {
 
       if (breadcrumb.entity === 'category') {
         queryBuilder
-        .innerJoin('product.category', 'category')
-        .where("category.category_id = :id", {id})
+          .innerJoin('product.category', 'category')
+          .where("category.category_id = :id", { id })
       } else if (breadcrumb.entity === 'product' || breadcrumb.entity === 'search') {
         queryBuilder.leftJoinAndSelect('product.category', 'category')
 
@@ -154,6 +154,82 @@ export default {
         },
       });
     } catch (error) {
+      errorHandlerCatch({ req, error, res });
+    }
+  },
+  async getListProductDashboardEnsayo(req: Request, res: Response) {
+    const { id, entity, type } = req.params;
+    try {
+      const dynamicEntity = await import(`../${entity}/entity`);
+
+      const queryBuilder = AppDataSource
+        .getRepository(dynamicEntity.default)
+        .createQueryBuilder(entity)
+
+
+      let breadcrumb = null
+      let totalCount = null
+
+      if (findParentUUID(id) && type === 'selected') {
+        breadcrumb = await getBreadcrumbs(id);
+        queryBuilder.where(`${entity}.${breadcrumb?.entity}_id = :id`, { id });
+      } else {
+        if (findParentUUID(id)) {
+          queryBuilder.where(`${entity}.${entity}_id = :id`, { id });
+        } else {
+          const searchTerms = id.split(' ').join('|');
+          queryBuilder.where(`LOWER(${entity}.${entity}::text) ~ LOWER(:regex)`, { regex: `(${searchTerms})` })
+          // queryBuilder.where(`${entity}.${entity} ILIKE :productName`, { productName: `%${id}%` });
+        }
+      }
+
+      if (entity === 'category') {
+        queryBuilder.leftJoinAndSelect('category.products', 'product')
+      } else if (entity === 'product') {
+        queryBuilder.leftJoinAndSelect('product.category', 'category')
+      }
+
+   await queryBuilder
+        // .skip(0)
+        // .take(15)
+        .getMany();       
+
+      // // Obtener el recuento total
+      // totalCount = await queryBuilder.getCount();
+
+      let category = await queryBuilder
+        .select(['DISTINCT ON (category.category) category.category, category.category_id'])
+        .getRawMany();
+
+      category = category.length > 0 && category[0].category_id ? category : []
+
+      let product = await queryBuilder
+      // .select(['DISTINCT ON (product.product) product.product, product.product_id, product.price, product.'])
+      .select(['DISTINCT ON (product.product) product.product_id, product.product, product.description, product.price, product.listPrice, product.images, product.stock, product.handle, product.barcode, product.sku, product.grams'])
+        .getRawMany();
+
+      product = product.length > 0 && product[0].product_id ? product : []
+
+      successHandler({
+        res,
+        dataDB: {
+          totalCount,
+          breadcrumb,
+          listProduct: null,
+          filters: {
+            category: category,
+            product: product,
+          }
+        },
+        json: {
+          field: 'navigation_list-product',
+          message: 'Datos obtenidos',
+          status_code: 200,
+          status: StatusHTTP.success_200,
+        },
+      });
+    } catch (error) {
+      console.log(error)
       errorHandlerCatch({ req, error, res });
     }
   },
