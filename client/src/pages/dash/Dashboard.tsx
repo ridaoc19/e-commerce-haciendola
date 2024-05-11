@@ -4,6 +4,7 @@ import { CreateContext, IContextData } from '../../hooks/useContext';
 import Account from './account/Account';
 import ProductCreation from './Inventory/ProductCreation/ProductCreation';
 import AdminUser from './AdminUser/AdminUser';
+import BulkCreateProducts from './bulkCreateProducts/BulkCreateProducts';
 
 function Dashboard() {
   const { dashboard: { stateDashboard: { component } } }: IContextData = useContext(CreateContext)!
@@ -13,6 +14,8 @@ function Dashboard() {
       return <Account />
     case "newDeptCatSubProdData":
       return <ProductCreation />
+    case "bulkCreateProducts":
+      return <BulkCreateProducts/>
     case "adminUser":
       return <AdminUser />
     default:

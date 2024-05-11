@@ -79,7 +79,7 @@ function ModalAdminImages({ stateAdminFiles, handleSelectedFiles, handleDeleteIm
                 type='file'
                 name='images'
                 onChange={handleUploadImage}
-                accept={requestData.toStore.typeFile === 'images' ? 'image/*' : 'video/*'}
+                accept={requestData.toStore.typeFile === 'images' ? 'image/*' : requestData.toStore.typeFile === 'videos'? 'video/*': '.xlsx'}
               />
             </div>
 

@@ -78,7 +78,7 @@ export const convertFromData = ({ toStore, toDelete }: RequestMapFiles[RouteFile
   const form = new FormData();
   if (toStore && toStore.file.length > 0) {
     toStore.file.forEach((file, _index) => {
-      form.append(`files`, file, `${toStore.entity}-${toStore.location}-${toStore.name}.${file.type.split("/")[1]}`);
+      form.append(`files`, file, `${toStore.entity}-${toStore.location}-${toStore.name}.${file.name.split(".").at(-1)}`);
     });
   }
   if (toDelete && toDelete.length > 0) {

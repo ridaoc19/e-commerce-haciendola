@@ -22,7 +22,7 @@ export type RequestMapFiles = {
         file: File[],
         entity: string,
         location: string,
-        typeFile: 'videos' | 'images'
+        typeFile: 'videos' | 'images' | 'excel'
         name: string
         selected: boolean
       },

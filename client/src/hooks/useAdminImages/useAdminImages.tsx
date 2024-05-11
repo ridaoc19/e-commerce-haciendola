@@ -11,7 +11,7 @@ interface UseAdminImagesReturnProps {
     nameComponent: string,
     img: string[]
   };
-  typeFile: 'images' | 'videos'
+  typeFile: 'images' | 'videos' | 'excel'
   openModal: (data: string, typeFile: InitialStateAdminFiles['requestData']['toStore']['typeFile']) => void
 }
 
