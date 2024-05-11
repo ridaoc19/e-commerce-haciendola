@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "../../../components/common/button/Button";
 import useListProduct from "../../../hooks/useListProduct/useListProduct";
 import useMediaQuery from "../../../hooks/useMediaQuery";
+import Card from "../../../components/common/card/Card";
 
 function ListProducts() {
   const { filterType, listProducts, PaginationButton, BreadcrumbComponent, Filters, currentIndex, paginationTotal, setStateListProduct, totalProduct } = useListProduct()
@@ -56,10 +57,9 @@ function ListProducts() {
         </header>
 
         <main className={`list-product__card ${mediaQuery}`} >
-          {listProducts.map(() => {
+          {listProducts.map(({product_id, product, images, price, listPrice}) => {
             return (
-              <></>
-              // <Card key={product_id} product_id={product_id} product={product} images={variants[0].images} price={variants.map(variant => variant.price)} />
+              <Card key={product_id} product_id={product_id} product={product} images={images} price={price} listPrice={listPrice} />
             )
           })}
         </main>

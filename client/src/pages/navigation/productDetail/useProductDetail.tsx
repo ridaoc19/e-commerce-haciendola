@@ -46,7 +46,7 @@ function useProductDetail(): UseProductDetail {
   useEffect(() => {
     if (listProducts.length > 0) {
       if (!isPending && !isSuccess) {
-        mutate(listProducts[0].product.product_id)
+        mutate(listProducts[0].product_id)
       }
       const selectProductStock = listProducts[0].variants.find(e => e.stock > 0)
       const selectProductAllStock = listProducts[0].variants[0]

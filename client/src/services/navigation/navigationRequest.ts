@@ -20,7 +20,7 @@ export type RequestMapNavigation = {
     extensionRoute: `/${string}/${string}/${string}/${string}${string}`;
     data: {
       breadcrumb: MapEntityBreadcrumb[BreadcrumbType];
-      listProduct: IProduct.ListProduct[];
+      listProduct: IProduct.Product[];
       filters: {
         department: string[]
         category: string[]

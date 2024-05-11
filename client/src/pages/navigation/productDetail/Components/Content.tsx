@@ -13,7 +13,7 @@ function Content({ handleClick, stateProductDetail, listProductsData: { listProd
   const { mediaQuery } = useMediaQuery();
 
   if (listProducts.length === 0 || !stateProductDetail.selectedVariant) return null
-  const { product: { product, brand, benefits } } = listProducts[0];
+  const { product, brand, benefits } = listProducts[0];
 
   return (
     <div className={`content ${mediaQuery}`}>

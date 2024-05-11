@@ -2,15 +2,12 @@ import { Link } from 'react-router-dom';
 import { IProduct } from '../../../interfaces/product.interface';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 
-export type CardProps = Pick<IProduct.Product, 'product_id' | 'product' > & { price: number[], images: string[] }
+export type CardProps = Pick<IProduct.Product, 'product_id' | 'product' | 'images' | 'price' | 'listPrice' >
 
-function Card({ product_id, images, price, product }: CardProps) {
+function Card({ product_id, images, price, product, listPrice }: CardProps) {
   const { mediaQuery } = useMediaQuery();
-  const uniqueVariants = [...new Set(price)];
-  const minValue = Math.min(...uniqueVariants).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0, });
-  const maxValue = Math.max(...uniqueVariants).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0, });
-
   const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+console.log(images);
 
   return (
     <Link to={`/product-detail/${product_id}`} className="global__card-container" >
@@ -18,16 +15,17 @@ function Card({ product_id, images, price, product }: CardProps) {
       <div className={`global__card-content ${mediaQuery}`}>
 
         <div className="card__images">
-          {urlRegex.test(images[0])
+          {images.length > 0 && urlRegex.test(images[0])
             ? <img src={images[0]} alt="" />
             : <img src={`${process.env.REACT_APP_SERVER_FILE}/${images[0]}`} alt="" />}
         </div>
         <div className="card__content">
           {/* <p>{brand}</p> */}
+          <p>{listPrice}</p>
           {/* <OverflowDetectionComponent product={product}> */}
-          <h4 >{product}</h4>
+          <h4 >{product.charAt(0).toUpperCase() + product.slice(1).toLowerCase()}</h4>
           {/* </OverflowDetectionComponent> */}
-          <h4>{uniqueVariants.length === 0 ? 'Agotado' : uniqueVariants.length > 1 ? `${minValue} - ${maxValue}` : minValue}</h4>
+          <h4>{price === 0 ? 'Agotado' : price}</h4>
         </div>
 
         <div className="card__button">

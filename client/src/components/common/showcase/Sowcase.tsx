@@ -100,7 +100,9 @@ const Showcase: React.FC<ShowcaseProps> = ({ products, title }) => {
               product_id={item.product_id}
               images={[item.images]}
               product={item.product}
-              price={item.price} />
+              price={item.price[0]}
+              listPrice={0}
+              />
           )
         })}
       </div>

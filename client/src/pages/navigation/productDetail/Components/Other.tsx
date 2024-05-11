@@ -6,7 +6,7 @@ interface OtherProps {
 
 function Other({ listProductsData: { listProducts } }: OtherProps) {
   if (listProducts.length === 0) return null
-  const { description, warranty, contents, product, specifications } = listProducts[0].product;
+  const { description, warranty, contents, product, specifications } = listProducts[0];
   return (
     <div className="other">
       <div className="other__description">
