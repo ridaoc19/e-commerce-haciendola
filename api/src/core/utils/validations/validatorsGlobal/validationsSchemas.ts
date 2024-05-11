@@ -70,6 +70,48 @@ const productSchemas: { [key: string]: Yup.Schema } = {
     .required('Debe ingresar un categorías')
     .min(2, 'Ingrese al menos 2 caracteres para el categorías')
     .max(50, 'Ingrese máximo 50 caracteres para el categorías'),
+  product: Yup.string()
+    .required('Debe ingresar un categorías')
+    .min(2, 'Ingrese al menos 2 caracteres para el categorías')
+    .max(50, 'Ingrese máximo 50 caracteres para el categorías'),
+  description: Yup.string()
+    .required('Debe ingresar un categorías')
+    .min(2, 'Ingrese al menos 2 caracteres para el categorías')
+    .max(1000, 'Ingrese máximo 1000 caracteres para el categorías'),
+  barcode: Yup.string()
+    .required('Debe ingresar un categorías')
+    .min(2, 'Ingrese al menos 2 caracteres para el categorías')
+    .max(50, 'Ingrese máximo 50 caracteres para el categorías'),
+  handle: Yup.string()
+    .required('Debe ingresar un categorías')
+    .min(2, 'Ingrese al menos 2 caracteres para el categorías')
+    .max(50, 'Ingrese máximo 50 caracteres para el categorías'),
+  listPrice: Yup.string()
+    .required('El precio total es obligatorio')
+    .min(2, 'Ingrese al menos 2 dígitos para el precio total')
+    .max(15, 'Ingrese máximo 15 dígitos para el precio total')
+    .matches(/^[0-9]+$/, 'Ingrese solo números para el precio total'),
+  price: Yup.string()
+    .required('El precio es obligatorio')
+    .min(2, 'Ingrese al menos 2 dígitos para el precio')
+    .max(15, 'Ingrese máximo 15 dígitos para el precio')
+    .matches(/^[0-9]+$/, 'Ingrese solo números para el precio total'),
+  grams: Yup.string()
+    .required('El precio total es obligatorio')
+    .min(2, 'Ingrese al menos 2 dígitos para el precio total')
+    .max(15, 'Ingrese máximo 15 dígitos para el precio total')
+    .matches(/^[0-9]+$/, 'Ingrese solo números para el precio total'),
+  stock: Yup.string()
+    .required('El precio total es obligatorio')
+    .min(2, 'Ingrese al menos 2 dígitos para el precio total')
+    .max(15, 'Ingrese máximo 15 dígitos para el precio total')
+    .matches(/^[0-9]+$/, 'Ingrese solo números para el precio total'),
+  sku: Yup.string()
+    .required('Debe ingresar un categorías')
+    .min(2, 'Ingrese al menos 2 caracteres para el categorías')
+    .max(50, 'Ingrese máximo 50 caracteres para el categorías'),
+  images: Yup.array()
+
 }
 
 const validationSchemas = { ...advertisingSchemas, ...userSchemas, ...productSchemas };
