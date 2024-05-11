@@ -31,7 +31,7 @@ export const initialStateProductCreation: InitialStateProductCreation = {
   },
   mutation: {
     entity: '',
-    route: RouteProduct.DepartmentCreate,
+    route: RouteProduct.CategoryCreate,
     paramId: ''
   }
 }

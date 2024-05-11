@@ -21,7 +21,6 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
     <>
       {listProduct.length > 0 && listProduct.map(([key, value]: [string, Value], index: number) => {
         const typedKey = key as Key; // Type assertion
-        console.log({key, value})
         return (
           <div key={index} className="product-creation-list">
             <div className="product-creation-list__title">
@@ -29,7 +28,7 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
               {typedKey === 'category' && (
                 <div className="product-creation-list__title-new-department">
                   <button onClick={() => {
-                    setStateProductCreation(prevState => ({ ...prevState, mutation: { ...prevState.mutation, entity: 'category', paramId: '', route: RouteProduct.DepartmentCreate } }))
+                    setStateProductCreation(prevState => ({ ...prevState, mutation: { ...prevState.mutation, entity: 'category', paramId: '', route: RouteProduct.CategoryCreate } }))
                   }}>
                     {Svg({ type: "increase", width: 16, height: 16 })}
                   </button>
@@ -39,8 +38,6 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
 
             <ul className="product-creation-list__content">
               {value.map((item, ind) => {
-                // const text = Object.entries(item).filter(([k]) => k === key).flat()[1] || ''
-                // const id = Object.entries(item).filter(([k]) => k === `${key}_id`).flat()[1] || ''
                 const text = 'product_id' in item ? item.product : item.category
                 const id = 'product_id' in item ? item.product_id : item.category_id
                 return (
@@ -48,14 +45,6 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
                     <Button button={{
                       type: 'highlighter',
                       text,
-                      // text: isVariant(item) ? (
-                      //   <div className="product-creation-list__item-button">
-                      //     {/* {item.images?.slice(0, 1).map((img, i) => <img key={`${i}-${img}`} height={30} src={img} alt=""></img>)} */}
-                      //     {/* <div><b>price:</b> <i>{item.price}</i></div>
-                      //     <div><b>stock:</b> <i>{item.stock}</i></div> */}
-                      //     {/* {Object.keys(item.attributes).length > 0 && Object.entries(item.attributes).map(([name, val], i) => <div key={`${i}-${name}`}><b>{name}:</b> <i>{!!val && val.toString()}</i></div>)} */}
-                      //   </div>
-                      // ) : text,
                       handleClick: () => {
                         setStateProductCreation(prevState => ({
                           ...prevState,
@@ -77,7 +66,7 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
                             ...prevState.mutation,
                             entity: typedKey,
                             paramId: id,
-                            route: key === 'department' ? RouteProduct.DepartmentEdit : key === 'category' ? RouteProduct.CategoryEdit : key === 'subcategory' ? RouteProduct.SubCategoryEdit : key === 'product' ? RouteProduct.ProductEdit : RouteProduct.VariantEdit
+                            route: key === 'category' ? RouteProduct.CategoryEdit : RouteProduct.ProductEdit
                           },
                         }))
                       }}>{Svg({ type: "edit", width: 16, height: 16 })}
@@ -85,34 +74,34 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
                     </div>
                     <div className="product-creation-list__delete">
                       {/* ELIMINAR */}
-                      {/* <button onClick={() => {
+                      <button onClick={() => {
                           setStateProductCreation(prevState => ({
                             ...prevState,
                             mutation: {
                               ...prevState.mutation,
                               entity: typedKey,
                               paramId: id,
-                              route: key === 'department' ? RouteProduct.DepartmentDelete : key === 'category' ? RouteProduct.CategoryDelete : key === 'subcategory' ? RouteProduct.SubCategoryDelete : key === 'product' ? RouteProduct.ProductDelete : RouteProduct.VariantDelete
+                              route: key === 'category' ? RouteProduct.CategoryDelete : RouteProduct.ProductDelete
                             },
                           }))
                         }}>{Svg({ type: "delete", width: 16, height: 16 })}
-                        </button> */}
+                        </button>
                     </div>
-                    {key !== 'variant' && (
+                    {key === 'category' && (
                       <div className="product-creation-list__add">
-                        {/* <button onClick={() => {
+                        <button onClick={() => {
                           setStateProductCreation(prevState => ({
                             ...prevState,
                             mutation: {
                               ...prevState.mutation,
-                              entity: typedKey === 'department' ? 'category' : typedKey === 'category' ? 'subcategory' : typedKey === 'subcategory' ? 'product' : 'variant',
+                              entity:'product',
                               paramId: id,
-                              route: key === 'department' ? RouteProduct.CategoryCreate : key === 'category' ? RouteProduct.SubCategoryCreate : typedKey === 'subcategory' ? RouteProduct.ProductCreate : RouteProduct.VariantCreate
+                              route: RouteProduct.ProductCreate
                             },
                           }))
                         }}>
                           {Svg({ type: "increase", width: 16, height: 16 })}
-                        </button> */}
+                        </button>
                       </div>
                     )}
                   </li>

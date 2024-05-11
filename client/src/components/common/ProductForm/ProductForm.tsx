@@ -69,6 +69,7 @@ function ProductForm<T extends RouteProduct>({ route, options, entity }: { route
   //     }));
   //   }
   // };
+console.log(requestData, "res");
 
   return (
     <form >
