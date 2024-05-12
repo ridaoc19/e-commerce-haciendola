@@ -22,7 +22,6 @@ function fetchCount(info: any) {
 export default {
   async postLogin(req: Request, res: Response) {
     try {
-      // const responseUserDB = await User.findOne({ email: req.body.email });
       const responseUserDB = await AppDataSource
         .getRepository(UserEntity)
         .findOne({ where: { email: req.body.email } });
@@ -34,8 +33,6 @@ export default {
       if (responseUserDB && responseUserDB.verified) {
         token = generateToken({ user_id: responseUserDB.user_id });
       }
-
-      // await fetchCount({ id: responseUserDB?._id })
 
       successHandler({
         dataDB: [{ ...responseUserDB, token }],

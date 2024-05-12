@@ -14,7 +14,7 @@ export async function sendEmail({ name, email, password, type, tokenEmail }: Sen
     const { subject, html }: { subject: string, html: string } = templateRegistre({ tokenEmail, name, password, type });
 
     const { error } = await resend.emails.send({
-      from: 'ecommerce.hilde@ridaoc.es',
+      from: process.env.EMAIL_RESEND,
       to: [email],
       subject,
       html,
