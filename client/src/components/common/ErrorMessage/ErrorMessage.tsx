@@ -54,7 +54,7 @@ const ErrorMessage: React.FC<IMessagesReducer.AppState> = ({ messages }) => {
 
 // Función para obtener el color según el código de estado
 const getStatusColor = (status_code: number): string => {
-  if (status_code >= 100 && status_code <= 199) {
+  if ((status_code >= 100 && status_code <= 199) || status_code === 204) {
     return 'information';
   } else if (status_code >= 200 && status_code <= 299) {
     return 'success';

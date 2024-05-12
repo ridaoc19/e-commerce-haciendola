@@ -5,7 +5,7 @@ import { HandleChangeText, HandleClick } from '../../interfaces/global.interface
 import { filesRequest } from '../../services/files/filesApi';
 import { RequestMapFiles, RouteFiles } from '../../services/files/filesRequest';
 import ModalAdminImages from './ModalAdminImages';
-interface UseAdminImagesReturnProps {
+export interface UseAdminImagesReturnProps {
   ModalAdminImages: ReactNode;
   selectedFiles: {
     nameComponent: string,

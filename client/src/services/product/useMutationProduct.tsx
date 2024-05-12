@@ -38,9 +38,10 @@ function useMutationProduct() {
       messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: error.errors.map(e => { return { ...e, status_code: error.status_code } }) })
       return error;
     },
-    onSuccess() {
+    onSuccess({ status_code, field, message }) {
       // if (route === RouteProduct.AccountAdminGet || route === RouteProduct.AccountAdminDelete || route === RouteProduct.AccountAdminPut) {
       //   console.log(route, "entro muchos")
+      messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: [{ status_code, field, message }] })
       queryClient.invalidateQueries({ queryKey: [IProduct.QUERY_KEY_PRODUCT.NavigationDashboard] })
       // } else {
       //   console.log(route, "entro uno")
