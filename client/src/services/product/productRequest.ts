@@ -13,7 +13,6 @@ export enum RouteProduct {
 export type RequestMapProduct = {
   [RouteProduct.CategoryCreate]: {
     route: RouteProduct.CategoryCreate;
-    paramId: IProduct.Department['department_id'];
     requestData: Pick<IProduct.Category, 'category'>;
   };
   [RouteProduct.CategoryEdit]: {
@@ -28,13 +27,13 @@ export type RequestMapProduct = {
 
   [RouteProduct.ProductCreate]: {
     route: RouteProduct.ProductCreate;
-    paramId: IProduct.Subcategory['subcategory_id'];
-    requestData: Omit<IProduct.Product, 'product_id' | 'variants' | 'subcategory'>;
+    paramId: IProduct.Category['category_id'];
+    requestData: Omit<IProduct.Product, 'product_id' | 'category'>;
   };
   [RouteProduct.ProductEdit]: {
     route: RouteProduct.ProductEdit;
     paramId: IProduct.Product['product_id'];
-    requestData: Omit<IProduct.Product, 'product_id' | 'variants' | 'subcategory'>;
+    requestData: Omit<IProduct.Product, 'product_id' | 'category'>;
   };
   [RouteProduct.ProductDelete]: {
     route: RouteProduct.ProductDelete;

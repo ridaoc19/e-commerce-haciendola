@@ -71,9 +71,17 @@ function useProductCreationQuery(): UseProductCreationQueryReturn {
   }, [search])
 
   useEffect(() => {
-    error?.errors && error.errors.length > 0 && messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: error.errors.map(e => { return { ...e, status_code: error.status_code } }) })
+    console.log(data)
+    if (error?.errors && error.errors.length > 0 ) {
+      messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: error.errors.map(e => { return { ...e, status_code: error.status_code } }) })
+      return
+    }
+
+    if (data?.data && data.data.filters.category.length === 0) {
+      messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: [{status_code: 204, field: 'search_creation_product', message: `La solicitud se ha completado con éxito, pero no hay ${stateProductCreation.query.entity === 'category'? 'categorías creadas': 'productos creados'} con el nombre "${stateProductCreation.query.search}".`}] })
+    }
     // eslint-disable-next-line
-  }, [error])
+  }, [error, data])
 
   return {
     query: { data: data?.data, isLoading, isError, error, isSuccess, isFetching },

@@ -7,7 +7,7 @@
     top     : 50%;
 
     >button {
-      width: 1.5rem;
+      width : 1.5rem;
       height: 1rem;
     }
   }
@@ -21,8 +21,11 @@
       width: 100%;
 
       img {
-        width        : 100%;
-        border-radius: 0.5rem;
+        width          : 100%;
+        border-radius  : 0.5rem;
+        max-height     : 24rem;
+        object-fit     : cover;
+        object-position: top;
       }
     }
   }
@@ -33,7 +36,7 @@
     right   : 0;
 
     >button {
-      width: 1.5rem;
+      width : 1.5rem;
       height: 1rem;
     }
   }

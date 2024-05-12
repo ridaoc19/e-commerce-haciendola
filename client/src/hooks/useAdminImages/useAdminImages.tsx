@@ -5,13 +5,13 @@ import { HandleChangeText, HandleClick } from '../../interfaces/global.interface
 import { filesRequest } from '../../services/files/filesApi';
 import { RequestMapFiles, RouteFiles } from '../../services/files/filesRequest';
 import ModalAdminImages from './ModalAdminImages';
-interface UseAdminImagesReturnProps {
+export interface UseAdminImagesReturnProps {
   ModalAdminImages: ReactNode;
   selectedFiles: {
     nameComponent: string,
     img: string[]
   };
-  typeFile: 'images' | 'videos'
+  typeFile: 'images' | 'videos' | 'excel'
   openModal: (data: string, typeFile: InitialStateAdminFiles['requestData']['toStore']['typeFile']) => void
 }
 

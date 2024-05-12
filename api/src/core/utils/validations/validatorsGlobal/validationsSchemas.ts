@@ -67,9 +67,59 @@ const advertisingSchemas: { [key: string]: Yup.Schema } = {
 
 const productSchemas: { [key: string]: Yup.Schema } = {
   category: Yup.string()
-    .required('Debe ingresar un categorías')
-    .min(2, 'Ingrese al menos 2 caracteres para el categorías')
-    .max(50, 'Ingrese máximo 50 caracteres para el categorías'),
+  .required('Debe ingresar una categoría')
+  .min(2, 'Ingrese al menos 2 caracteres para la categoría')
+  .max(50, 'Ingrese máximo 50 caracteres para la categoría'),
+
+product: Yup.string()
+  .required('Debe ingresar un producto')
+  .min(2, 'Ingrese al menos 2 caracteres para el producto')
+  .max(80, 'Ingrese máximo 80 caracteres para el producto'),
+
+description: Yup.string()
+  .required('Debe ingresar una descripción')
+  .min(20, 'Ingrese al menos 20 caracteres para la descripción'),
+
+barcode: Yup.string()
+  .required('Debe ingresar un código de barras')
+  .min(2, 'Ingrese al menos 2 caracteres para el código de barras')
+  .max(50, 'Ingrese máximo 50 caracteres para el código de barras'),
+
+handle: Yup.string()
+  .required('Debe ingresar un identificador')
+  .min(2, 'Ingrese al menos 2 caracteres para el identificador')
+  .max(50, 'Ingrese máximo 50 caracteres para el identificador'),
+
+listPrice: Yup.number()
+  .required('El precio total es obligatorio')
+  .min(1, 'Ingrese al menos $1 para el precio total')
+  .max(100000000, 'Ingrese máximo $100.000.000 para el precio total')
+  .typeError('Ingrese un valor numérico para el precio total'),
+
+price: Yup.number()
+  .required('El precio es obligatorio')
+  .min(10, 'Ingrese al menos $10 para el precio')
+  .max(100000000, 'Ingrese máximo $100.000.000 para el precio')
+  .typeError('Ingrese un valor numérico para el precio'),
+
+grams: Yup.number()
+  .required('Los gramos son obligatorios')
+  .min(1, 'Ingrese al menos 1 gramos')
+  .max(100000, 'Ingrese máximo 100000 gramos')
+  .typeError('Ingrese un valor numérico para los gramos'),
+
+stock: Yup.number()
+  .required('El stock es obligatorio')
+  .min(1, 'Ingrese al menos 1 para el stock')
+  .max(5000, 'Ingrese máximo 5000 para el stock')
+  .typeError('Ingrese un valor numérico para el stock'),
+
+sku: Yup.string()
+  .required('Debe ingresar un SKU')
+  .min(2, 'Ingrese al menos 2 caracteres para el SKU')
+  .max(50, 'Ingrese máximo 50 caracteres para el SKU'),
+
+images: Yup.array()
 }
 
 const validationSchemas = { ...advertisingSchemas, ...userSchemas, ...productSchemas };

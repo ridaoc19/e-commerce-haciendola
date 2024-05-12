@@ -6,7 +6,6 @@ export const initialStateForm: RequestMapProduct = {
     requestData: {
       category: ''
     },
-    paramId: ''
   },
   "put|category/edit": {
     route: RouteProduct.CategoryEdit,
@@ -23,12 +22,7 @@ export const initialStateForm: RequestMapProduct = {
     route: RouteProduct.ProductCreate,
     requestData: {
       product: '',
-      brand: '',
       description: '',
-      warranty: '',
-      contents: '',
-      specifications: {},
-      benefits: [],
 
       barcode: '',
       handle: "",
@@ -37,7 +31,7 @@ export const initialStateForm: RequestMapProduct = {
       price: 0,
       sku: "",
       stock: 0,
-      grams: ''
+      grams: '',
     },
     paramId: ''
   },
@@ -45,12 +39,7 @@ export const initialStateForm: RequestMapProduct = {
     route: RouteProduct.ProductEdit,
     requestData: {
       product: '',
-      brand: '',
       description: '',
-      warranty: '',
-      contents: '',
-      specifications: {},
-      benefits: [],
 
       barcode: '',
       handle: "",
@@ -59,7 +48,7 @@ export const initialStateForm: RequestMapProduct = {
       price: 0,
       sku: "",
       stock: 0,
-      grams: ''
+      grams: '',
     },
     paramId: ''
   },

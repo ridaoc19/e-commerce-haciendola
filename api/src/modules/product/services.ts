@@ -21,7 +21,7 @@ export default {
           res, req,
           status_code: 404,
           status: StatusHTTP.notFound_404,
-          errors: [{ field: 'product_create', message: 'Subcategoría no encontrada' }],
+          errors: [{ field: 'product_create', message: 'categoría no encontrada' }],
         });
       }
 
@@ -119,7 +119,7 @@ export default {
         });
       }
 
-      await productRepository.softRemove([existingProduct]);
+      await productRepository.remove([existingProduct]);
 
       successHandler({
         res,
