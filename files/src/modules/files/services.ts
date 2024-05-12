@@ -9,8 +9,9 @@ import { StatusHTTP } from '../../core/utils/send/enums';
 import { errorHandlerCatch, errorHandlerRes } from '../../core/utils/send/errorHandler';
 import { successHandler } from '../../core/utils/send/successHandler';
 import { AppDataSource } from '../../data-source';
+import { CategoryEntity, ProductEntity } from '../excel/entity';
 import FilesEntity from './entity';
-import { excel } from '../excel/controller';
+const XlsxPopulate = require('xlsx-populate');
 
 interface Files {
   file_id: string,
@@ -22,6 +23,20 @@ interface Files {
   selected: boolean
 };
 
+interface Product {
+  handle: string;
+  product: string;
+  category: string;
+  description: string;
+  sku: string,
+  grams: string;
+  stock: number,
+  price: number,
+  listPrice: number,
+  barcode: string
+}
+
+
 export default {
   async imagesCreateAndDelete(req: Request, res: Response) {
     const entity = req.query.entity as string
@@ -32,15 +47,8 @@ export default {
     const filesRepository = AppDataSource.getRepository(FilesEntity);
 
     try {
-      console.log(req.query);
-
-      if (typeFile === 'excel') {
-        excel({ res })
-      }
-
-
-
-      const imagesCreated: Omit<Files, 'file_id' | 'selected'>[] | [] = req.files && Array.isArray(req.files) ? req.files.map(file => {
+      // ? SIRVE PARA TODOS
+      const imagesCreated: ({ fileId: string } & Omit<Files, 'file_id' | 'selected'>)[] | [] = req.files && Array.isArray(req.files) ? req.files.map(file => {
         // const imagesCreated: { fileId: string, url: string, entity: string, location: string, name: string }[] | [] = req.files && Array.isArray(req.files) ? req.files.map(file => {
         return {
           fileId: file.filename,
@@ -52,46 +60,145 @@ export default {
         }
       }) : []
 
-      if (imagesCreated.length > 0) {
-        const newFiles = filesRepository.create(imagesCreated);
-        await filesRepository.save(newFiles);
-      }
-
-      if (Array.isArray(deleteBody) && deleteBody.length > 0) {
-        const findDelete = await filesRepository
-          .createQueryBuilder('files')
-          .where('files.url IN (:...url)', { url: deleteBody })
-          .getMany();
-
-        if (!deleteFiles(findDelete.map(e => e.fileId))) return errorHandlerRes({
+      if (imagesCreated.length === 0) {
+        deleteFiles(imagesCreated.map(file => file.fileId))
+        return errorHandlerRes({
           res, req,
           status_code: 404,
           status: StatusHTTP.notFound_404,
-          errors: [{ field: 'file_delete', message: 'Error al eliminar imágenes' }],
+          errors: [{ field: `${entity}_${typeFile}_${name}`, message: 'Debe enviar por lo menos un archivo' }],
         });
-        await filesRepository
-          .createQueryBuilder('files')
-          .delete()
-          // .from(FilesEntity) // Reemplaza YourEntity con el nombre de tu entidad
-          .where('files.file_id IN (:...ids)', { ids: findDelete.map(e => e.file_id) })
-          .execute();
       }
 
-      const files = await getFiles({ entity, location, name, typeFile, selected: false })
+      console.log(imagesCreated)
 
-      successHandler({
-        res,
-        dataDB: {
-          data: files,
-          delete: deleteBody,
-        },
-        json: {
-          field: 'file_create',
-          message: 'Imágenes actualizadas correctamente',
-          status_code: 201,
-          status: StatusHTTP.created_201,
-        },
-      });
+      //! EXCEL
+      if (typeFile === 'excel') {
+        if (imagesCreated.length > 1) {
+          deleteFiles(imagesCreated.map(file => file.fileId))
+          return errorHandlerRes({
+            res, req,
+            status_code: 404,
+            status: StatusHTTP.notFound_404,
+            errors: [{ field: 'file_create_excel', message: 'Solo puede enviar un (1) archivo de excel' }],
+          });
+        }
+
+        const absolutePath = path.resolve(__dirname, '..', '..', '..', 'files', imagesCreated[0].fileId);
+        const workbook = await XlsxPopulate.fromFileAsync(absolutePath);
+        const excelData = await workbook.sheet("Hoja1").usedRange().value();
+        const filterProducts: [(string)[]] = excelData.filter((e: [[]]) => e.filter(Boolean).length === 10);
+        const incomplete: [(string)[]] = excelData.filter((e: [[]]) => e.filter(Boolean).length > 0 && e.filter(Boolean).length < 10);
+
+        const result = filterProducts.slice(1).map(entry => {
+          const obj: any = {};
+          filterProducts[0].forEach((key, index) => {
+            obj[key] = entry[index];
+          });
+          return obj;
+        }) as Product[];
+
+        const categoryRepository = AppDataSource.getRepository(CategoryEntity);
+        const productRepository = AppDataSource.getRepository(ProductEntity);
+
+        for (const { handle, product, category, description, sku, grams, stock, price, listPrice, barcode } of result) {
+          try {
+            let existingCategory = await categoryRepository.findOne({ where: { category } });
+            if (!existingCategory) {
+              existingCategory = new CategoryEntity();
+              existingCategory.category = category;
+              await categoryRepository.save(existingCategory);
+            }
+
+            const newProduct = new ProductEntity();
+            newProduct.product = product;
+            newProduct.description = description;
+            newProduct.price = price;
+            newProduct.listPrice = listPrice;
+            newProduct.stock = stock;
+            newProduct.handle = handle;
+            newProduct.barcode = barcode;
+            newProduct.sku = sku;
+            newProduct.grams = grams;
+            newProduct.category = existingCategory;
+            await productRepository.save(newProduct);
+          } catch (error) {
+            console.error("Error saving product:", error);
+          }
+        }
+
+        deleteFiles(imagesCreated.map(file => file.fileId))
+
+        successHandler({
+          res,
+          dataDB: {
+            data: [],
+            delete: [],
+          },
+          json: {
+            field: 'file_create_excel',
+            message: incomplete.length > 0 ? `De ${filterProducts.length + incomplete.length} Se cargaron ${filterProducts.length} productos y faltaron por cargar ${incomplete.length} ya que estan incompletos` : `Se cargaron (${filterProducts.length} la totalidad de productos`,
+            status_code: 201,
+            status: StatusHTTP.created_201,
+          },
+        });
+
+        //!IMAGENES Y VIDEOS
+      } else {
+        // const imagesCreated: Omit<Files, 'file_id' | 'selected'>[] | [] = req.files && Array.isArray(req.files) ? req.files.map(file => {
+        //   // const imagesCreated: { fileId: string, url: string, entity: string, location: string, name: string }[] | [] = req.files && Array.isArray(req.files) ? req.files.map(file => {
+        //   return {
+        //     fileId: file.filename,
+        //     url: `${process.env.FILES_FILTER_IMAGES}/files/${file.filename}`,
+        //     entity,
+        //     location,
+        //     typeFile,
+        //     name,
+        //   }
+        // }) : []
+
+        if (imagesCreated.length > 0) {
+          const newFiles = filesRepository.create(imagesCreated);
+          await filesRepository.save(newFiles);
+        }
+
+        if (Array.isArray(deleteBody) && deleteBody.length > 0) {
+          const findDelete = await filesRepository
+            .createQueryBuilder('files')
+            .where('files.url IN (:...url)', { url: deleteBody })
+            .getMany();
+
+          if (!deleteFiles(findDelete.map(e => e.fileId))) return errorHandlerRes({
+            res, req,
+            status_code: 404,
+            status: StatusHTTP.notFound_404,
+            errors: [{ field: 'file_delete', message: 'Error al eliminar imágenes' }],
+          });
+          await filesRepository
+            .createQueryBuilder('files')
+            .delete()
+            // .from(FilesEntity) // Reemplaza YourEntity con el nombre de tu entidad
+            .where('files.file_id IN (:...ids)', { ids: findDelete.map(e => e.file_id) })
+            .execute();
+        }
+
+        const files = await getFiles({ entity, location, name, typeFile, selected: false })
+
+        successHandler({
+          res,
+          dataDB: {
+            data: files,
+            delete: deleteBody,
+          },
+          json: {
+            field: 'file_create',
+            message: 'Imágenes actualizadas correctamente',
+            status_code: 201,
+            status: StatusHTTP.created_201,
+          },
+        });
+      }
+
     } catch (error) {
       console.error(error);
       errorHandlerCatch(error)

@@ -4,6 +4,7 @@ import { HandleChangeText, HandleClick } from '../../interfaces/global.interface
 import useMediaQuery from '../useMediaQuery';
 import './adminImages.scss';
 import { InitialStateAdminFiles } from './useAdminImages';
+import Svg from '../../components/assets/icons/Svg';
 
 interface ModalAdminImagesProps {
   setStateAdminFiles: Dispatch<SetStateAction<InitialStateAdminFiles>>
@@ -25,12 +26,11 @@ function ModalAdminImages({ stateAdminFiles, handleSelectedFiles, handleDeleteIm
     <div>
       {/* Botón para abrir el modal */}
       <button onClick={() => {
-        document.body.classList.add('body-scroll-locked');
         setModalOpen(true)
       }}>Archivos de {requestData.toStore.name}</button>
 
       {/* Modal */}
-      <div className={`admin-images_modal ${isOpen ? 'open' : ''}`}>
+      <div className={`admin-images_modal ${mediaQuery} ${isOpen ? 'open' : ''}`}>
         {/* <div className="modal__content"> */}
 
         <div className='modal-header'>
@@ -70,7 +70,7 @@ function ModalAdminImages({ stateAdminFiles, handleSelectedFiles, handleDeleteIm
             </div>
           </div>
 
-          <div className='modal-main__images-add'>
+          <div className={`modal-main__images-add ${mediaQuery}`}>
             <div className='modal-main__images-add-input'>
               <input
                 multiple
@@ -79,15 +79,16 @@ function ModalAdminImages({ stateAdminFiles, handleSelectedFiles, handleDeleteIm
                 type='file'
                 name='images'
                 onChange={handleUploadImage}
-                accept={requestData.toStore.typeFile === 'images' ? 'image/*' : requestData.toStore.typeFile === 'videos'? 'video/*': '.xlsx'}
+                accept={requestData.toStore.typeFile === 'images' ? 'image/*' : requestData.toStore.typeFile === 'videos' ? 'video/*' : '.xlsx'}
               />
             </div>
 
+            {/* *! RENDERIZA */}
             <div className='modal-main__images-add-render'>
               {requestData.toStore.file.map((image, index) => (
                 <div key={index}>
                   <div>
-                    {requestData.toStore.typeFile === 'images' ? <img src={URL.createObjectURL(image)} alt={`${index}`} /> : <video src={URL.createObjectURL(image)} controls width={200} height={100} />}
+                    {requestData.toStore.typeFile === 'images' ? <img src={URL.createObjectURL(image)} alt={`${index}`} /> : requestData.toStore.typeFile === 'videos' ? <video src={URL.createObjectURL(image)} controls width={200} height={100} /> : Svg({ type: 'excel' })}
                   </div>
                   <div>
                     <Button button={{ type: 'dark', text: "Eliminar", handleClick: handleDeleteImage, value: index }} />
@@ -95,6 +96,16 @@ function ModalAdminImages({ stateAdminFiles, handleSelectedFiles, handleDeleteIm
                 </div>
               ))}
             </div>
+
+              <div>
+                <Button
+                button={{
+                  type: 'dark',
+                  text: 'Guardar',
+                  handleClick: handleSaveImages
+                }}
+                />
+              </div>
           </div>
 
         </div>
@@ -102,9 +113,7 @@ function ModalAdminImages({ stateAdminFiles, handleSelectedFiles, handleDeleteIm
         <div className='modal-footer'>
           <button onClick={() => {
             onClose()
-            document.body.classList.remove('body-scroll-locked');
           }}>Cerrar</button>
-          <button onClick={handleSaveImages}>Guardar</button>
         </div>
 
       </div>

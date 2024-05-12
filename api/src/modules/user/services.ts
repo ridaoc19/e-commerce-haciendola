@@ -107,7 +107,7 @@ export default {
       await userRepository.save(userUpdate);
       // const userDB = await User.findOneAndUpdate({ email }, { password, verified: true }, { new: true })
       const userDB = userUpdate
-      if (!userDB) throw new Error(`Se produjo un problema al intentar cambiar la contraseña. Por favor, inténtalo de nuevo más tarde o ponte en contacto con nosotros al correo hilde.ecommerce@outlook.com. Disculpa las molestias.`)
+      if (!userDB) throw new Error(`Se produjo un problema al intentar cambiar la contraseña. Por favor, inténtalo de nuevo más tarde o ponte en contacto con nosotros al correo haciendola.ecommerce@outlook.com. Disculpa las molestias.`)
       await fetchCount({})
 
       successHandler({
@@ -137,7 +137,7 @@ export default {
       userUpdate.verified = false;
       await userRepository.save(userUpdate);
 
-      if (!userUpdate) throw new Error(`Se produjo un problema al restablecer la contraseña. Por favor, inténtalo de nuevo más tarde o ponte en contacto con nosotros al correo hilde.ecommerce@outlook.com. Disculpa las molestias.`)
+      if (!userUpdate) throw new Error(`Se produjo un problema al restablecer la contraseña. Por favor, inténtalo de nuevo más tarde o ponte en contacto con nosotros al correo haciendola.ecommerce@outlook.com. Disculpa las molestias.`)
       const { user_id, name, email } = userUpdate;
       await fetchCount({ user_id, name }) ///////////
 
@@ -248,7 +248,7 @@ export default {
       userUpdate.verified = true
       await userRepository.save(userUpdate);
 
-      if (!userUpdate) throw new Error(`Lamentablemente, se produjo un problema al intentar cambiar la contraseña. Por favor, inténtalo de nuevo más tarde o ponte en contacto con nosotros al correo hilde.ecommerce@outlook.com. Disculpa las molestias.`)
+      if (!userUpdate) throw new Error(`Lamentablemente, se produjo un problema al intentar cambiar la contraseña. Por favor, inténtalo de nuevo más tarde o ponte en contacto con nosotros al correo haciendola.ecommerce@outlook.com. Disculpa las molestias.`)
       await fetchCount({})
       successHandler({
         dataDB: [userUpdate], res, json: {
