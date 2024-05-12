@@ -17,6 +17,8 @@ const schemaLogin: { [key: string]: yup.Schema } = ({
       .getRepository(UserEntity)
       .findOne({ where: { email } });
 
+    console.log({ route: options?.route, userDB, options })
+
     switch (options?.route) {
       case 'login':
         if (!userDB) return ctx.createError({ message: `Lo sentimos, el usuario (${email}) no está registrado. Por favor, verifique que ha ingresado correctamente sus credenciales o regístrese para crear una nueva cuenta.` });
@@ -29,6 +31,16 @@ const schemaLogin: { [key: string]: yup.Schema } = ({
       case 'registre':
         if (userDB?.email === options.reqBody.email) return ctx.createError({ message: `Lo sentimos, el correo electrónico (${email}) ya se encuentra registrado. Por favor, verifique que ha ingresado correctamente el correo con el que desea registrarse` });
         break;
+
+      case 'accountInfo':
+
+        if (options.reqBody.newEmail !== options.reqBody.email) {
+          const userDBnewEmail = await AppDataSource
+            .getRepository(UserEntity)
+            .findOne({ where: { email: options.reqBody.newEmail } });
+          if (userDBnewEmail) return ctx.createError({ message: `Lo sentimos, el correo electrónico (${options.reqBody.newEmail}) ya se encuentra registrado. Por favor, verifique que ha ingresado correctamente el correo que desea cambiar` });
+        }
+        break
 
       default:
         break;
