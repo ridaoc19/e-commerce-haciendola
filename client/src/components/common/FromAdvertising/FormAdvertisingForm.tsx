@@ -3,8 +3,8 @@ import useValidations from "../../../hooks/useValidations/useValidations";
 import { HandleChangeText } from "../../../interfaces/global.interface";
 import Input from "../Input/Input";
 // import Button from "../button/Button";
+import RenderImages from "../../../hooks/useAdminImages/RenderImages";
 import useAdminImages from "../../../hooks/useAdminImages/useAdminImages";
-import Button from "../button/Button";
 import { InitialStateFormAdvertising } from "./utils";
 
 interface FormAdvertisingFormProps {
@@ -25,6 +25,7 @@ function FormAdvertisingForm({ initialStateFormAdvertising, stateInput, setState
 
   useEffect(() => {
     setStateInput(prevState => ({ ...prevState, change: { ...prevState.change, [selectedFiles.nameComponent]: selectedFiles.img[0] } }))
+    // eslint-disable-next-line
   }, [selectedFiles])
 
   // Función para manejar el estado de las imágenes
@@ -54,25 +55,44 @@ function FormAdvertisingForm({ initialStateFormAdvertising, stateInput, setState
       ))}
       {Object.entries(stateInput.change)
         .filter(([key]) => ['image_desktop', 'image_phone', 'image_tablet'].includes(key))
-        .map(([key, value], index) => (
-          <div key={index} className="advertising-form__input-images">
-            {ModalAdminImages}
-            <button onClick={() => {
-              openModal(key, 'images')
-            }}>Cargar {key}</button>
-            {/* <input id={`input__images`} multiple className={`input__images`} type="file" name={`images_${key}`} onChange={(event) => handleImageChange(key, event.target.files)} /> */}
-            <h5>{key}</h5>
-            <div>
-              {<img src={value} height={"100%"} alt={``} />}
-              <Button button={{
-                type: 'dark', text: "Eliminar Imagen", handleClick: () => {
-                  const inputElement = document.getElementById(`input__images`) as HTMLInputElement | null; //limpia input files
-                  if (inputElement) inputElement.value = '';
-                  setStateInput({ ...stateInput, change: { ...stateInput.change, [key]: "" } })
-                },
-              }} />
-            </div>
-          </div>
+        .map(([key, value]) => (
+
+          <RenderImages
+            modal={{
+              openModal,
+              ModalAdminImages,
+              title: key,
+              type: 'images'
+            }}
+            render={{
+              loading: false,
+              valueImages: [value]
+            }}
+            handleClickDeleteImage={() => {
+              const inputElement = document.getElementById(`input__images`) as HTMLInputElement | null; //limpia input files
+              if (inputElement) inputElement.value = '';
+              setStateInput({ ...stateInput, change: { ...stateInput.change, [key]: "" } })
+            }}
+          />
+
+          //  <div key={index} className="advertising-form__input-images">
+          //     {ModalAdminImages}
+          //     <button onClick={() => {
+          //       openModal(key, 'images')
+          //     }}>Cargar {key}</button>
+          //     {/* <input id={`input__images`} multiple className={`input__images`} type="file" name={`images_${key}`} onChange={(event) => handleImageChange(key, event.target.files)} /> */}
+          //     <h5>{key}</h5>
+          //     <div>
+          //       {<img src={value} height={"100%"} alt={``} />}
+          //       <Button button={{
+          //         type: 'dark', text: "Eliminar Imagen", handleClick: () => {
+          //           const inputElement = document.getElementById(`input__images`) as HTMLInputElement | null; //limpia input files
+          //           if (inputElement) inputElement.value = '';
+          //           setStateInput({ ...stateInput, change: { ...stateInput.change, [key]: "" } })
+          //         },
+          //       }} />
+          //     </div>
+          //   </div>
         ))}
     </>
   );

@@ -10,6 +10,7 @@ import { errorHandlerCatch, errorHandlerRes } from '../../core/utils/send/errorH
 import { successHandler } from '../../core/utils/send/successHandler';
 import { AppDataSource } from '../../data-source';
 import FilesEntity from './entity';
+import { excel } from '../excel/controller';
 
 interface Files {
   file_id: string,
@@ -31,6 +32,14 @@ export default {
     const filesRepository = AppDataSource.getRepository(FilesEntity);
 
     try {
+      console.log(req.query);
+
+      if (typeFile === 'excel') {
+        excel({ res })
+      }
+
+
+
       const imagesCreated: Omit<Files, 'file_id' | 'selected'>[] | [] = req.files && Array.isArray(req.files) ? req.files.map(file => {
         // const imagesCreated: { fileId: string, url: string, entity: string, location: string, name: string }[] | [] = req.files && Array.isArray(req.files) ? req.files.map(file => {
         return {

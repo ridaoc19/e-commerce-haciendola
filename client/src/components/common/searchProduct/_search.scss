@@ -79,6 +79,7 @@
               // align-items    : center;
               display           : flex;
               justify-content   : center;
+              background-color  : var(--neutral-2);
 
               >img {
                 // width: 100%;
@@ -93,7 +94,7 @@
               padding    : 0.5rem;
 
               .card__title {
-                color     : var(--font-brand);
+                color     : var(--font-dark);
                 font-size : x-small;
                 text-align: center;
               }
@@ -103,9 +104,15 @@
                 // grid-template-columns: 8rem 1fr;
 
                 .card__utils-price {
-                  display      : grid;
-                  place-content: center;
+                  display        : flex;
+                  justify-content: space-evenly;
+                  color          : var(--font-button);
+
+                  del {
+                    color        : #ccc;
+                    font-size    : small;
                 }
+              }
 
                 .card__utils-button {
                   display        : grid;

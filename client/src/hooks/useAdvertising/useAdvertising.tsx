@@ -30,9 +30,9 @@ function useAdvertising(): UseAdvertising {
     BannerPrimary: <Banner location={IAdvertising.LOCATION.banner_primary} isFetching={isFetching} isLoading={isLoading} advertising={dataAdvertising.filter(e => e.location === IAdvertising.LOCATION.banner_primary)} />,
     BannerSecondary: <Banner location={IAdvertising.LOCATION.banner_secondary} isFetching={isFetching} isLoading={isLoading} advertising={dataAdvertising.filter(e => e.location === IAdvertising.LOCATION.banner_secondary)} />,
     CarruselMultiple: <Carrusel itemPerPage={2} location={IAdvertising.LOCATION.carrusel_multiple} isFetching={isFetching} isLoading={isLoading} advertising={dataAdvertising.filter(e => e.location === IAdvertising.LOCATION.carrusel_multiple)} />,
-    ShowcaseProductView: topViewedProducts.length > 0 ? <Showcase title='Lo mas visto' products={topViewedProducts.map(({brand, images, price, product, product_id}) => {
+    ShowcaseProductView: topViewedProducts.length > 0 ? <Showcase title='Lo mas visto' products={topViewedProducts.map(({ images, price, product, product_id}) => {
       return {
-        product_id,brand, images, price, product
+        product_id, images, price, product
       }
     })} /> : null,
   };

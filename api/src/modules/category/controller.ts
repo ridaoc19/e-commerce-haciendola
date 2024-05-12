@@ -4,7 +4,7 @@ const { createCategory, updateCategory, deleteCategory, getCategory } = subcateg
 
 const router = Router();
 
-router.post('/create/:category_id', createCategory);
+router.post('/create', createCategory);
 router.put('/edit/:subcategory_id', updateCategory);
 router.delete('/delete/:subcategory_id', deleteCategory);
 router.get('/request/:subcategory_id', getCategory);

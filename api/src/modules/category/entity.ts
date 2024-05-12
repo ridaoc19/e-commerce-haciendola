@@ -9,6 +9,6 @@ export default class CategoryEntity {
   @Column({ type: 'varchar' })
   category: string;
 
-  @OneToMany(() => ProductEntity, product => product.category, { cascade: ['remove', 'recover'] })
+  @OneToMany(() => ProductEntity, product => product.category, { cascade: ['remove'], onDelete: 'CASCADE' })
   products: ProductEntity[];
 }

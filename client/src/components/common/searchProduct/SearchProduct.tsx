@@ -1,10 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ErrorNavigation, MakeNavigationRequestReturn, navigationRequest } from "../../../services/navigation/navigationApi";
 import { RequestMapNavigation, RouteNavigation } from "../../../services/navigation/navigationRequest";
 import Input from "../Input/Input";
 import SearchCard from "./SearchCard";
-import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 // import './search.scss';
 
 function SearchProduct() {
@@ -30,7 +30,8 @@ function SearchProduct() {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
   })
-
+  console.log(data);
+  
   return (
     <div className="search" onMouseLeave={() => setSearch("")}>
       <div className="search-input">
@@ -38,20 +39,18 @@ function SearchProduct() {
           handleOnChange: (event) => { setSearch(event.target.value) },
           name: "search",
           value: search,
-          placeholder: "Buscar en Hilde.com",
+          placeholder: "Buscar en Haciéndolo.com",
           type: 'text'
         }} errorMessage="" styleClass="header__search-input" svg={{ type: 'search', color: '#1e293b' }} />
       </div>
       {search && <div className="search-list">
         <div>
-          {data?.data.listProduct.map(pro => {
+          {data?.data.listProduct.map((product) => {
+            
             return (
-              <SearchCard
-                key={pro.product.product_id}
-                listProduct={pro}
-                // product_id={pro.product.product_id} 
-                // product={pro.product.product} 
-                // variants={pro.variants} 
+                <SearchCard
+                key={product.product_id}
+                listProduct={product}
                 handleOnClick={() => setSearch("")} />
             )
           })}

@@ -1,12 +1,12 @@
 .product-creation__form {
   // position        : fixed;
   // background-color: red;
-  top             : 0;
-  left            : 0;
-  max-width       : 100vw;
-  width           : 100%;
-  height          : 100%;
-  padding         : 1rem;
+  top                : 0;
+  left               : 0;
+  max-width          : 100vw;
+  // width           : 100%;
+  // height          : 100%;
+  padding            : 1rem;
 
 
   >h3 {
@@ -14,12 +14,20 @@
 
   }
 
-  >form {
-
-    >div {
-      // display  : grid;
-      // max-width: 100vw;
-
+  >form{
+    .product-creation__forms {
+      display       : flex;
+      flex-direction: column;
+  
+      &-images {
+        order: 999;
+      }
+  
+      >div {
+        // display  : grid;
+        // max-width: 100vw;
+  
+      }
     }
   }
 }

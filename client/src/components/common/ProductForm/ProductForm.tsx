@@ -3,21 +3,24 @@ import { RequestMapProduct, RouteProduct } from '../../../services/product/produ
 import useMutationProduct from '../../../services/product/useMutationProduct';
 import Button from '../button/Button';
 import useAdminImages from '../../../hooks/useAdminImages/useAdminImages';
-import { InitialStateProductCreation } from '../../../pages/dash/Inventory/ProductCreation/useProductCreationQuery';
+import { InitialStateProductCreation, UseProductCreationQueryReturn } from '../../../pages/dash/Inventory/ProductCreation/useProductCreationQuery';
 import { HandleClick } from '../../../interfaces/global.interface';
+import Input from '../Input/Input';
+import Spinner from '../spinner';
+import useValidations from '../../../hooks/useValidations/useValidations';
+import RenderImages from '../../../hooks/useAdminImages/RenderImages';
 
 // function ProductForm<T extends RouteProduct>({ route, options }: { route: T, options: Omit<RequestMapProduct[T], 'route' | 'data'> }) {
-function ProductForm<T extends RouteProduct>({ route, options, entity }: { route: T, options: Omit<RequestMapProduct[T], 'route' | 'data'>, entity: InitialStateProductCreation['mutation']['entity'] }) {
-  const { executeProductMutation } = useMutationProduct();
+function ProductForm<T extends RouteProduct>({ route, options, entity, query }: { query: UseProductCreationQueryReturn['query'], route: T, options: Omit<RequestMapProduct[T], 'route' | 'data'>, entity: InitialStateProductCreation['mutation']['entity'] }) {
+  const { executeProductMutation, status } = useMutationProduct();
+  const { getValidationErrors } = useValidations();
   const { ModalAdminImages, openModal, selectedFiles, typeFile } = useAdminImages({ entity, location: 'admin' })
 
   // Estado para almacenar los datos del formulario
   const [requestData, setRequestData] = useState('requestData' in options ? options.requestData : null);
 
-  // Estado para manejar los campos de tipo objeto
-  const [objectKey, setObjectKey] = useState<string>("");
-  const [objectValue, setObjectValue] = useState<string>("");
-  const [array, setArray] = useState<string>("")
+
+  const [error, setError] = useState<Record<string, string>>({})
 
   useEffect(() => {
     if ('requestData' in options) {
@@ -37,16 +40,16 @@ function ProductForm<T extends RouteProduct>({ route, options, entity }: { route
         };
       });
     }
-
+    // eslint-disable-next-line
   }, [selectedFiles])
 
   // Función para manejar cambios en los campos de texto
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setRequestData((prevState: any) => ({
-      ...prevState,
-      [name]: value
-    }));
+    const { message, stop } = getValidationErrors({ name, value })
+    if (stop) return setError(prevState => ({ ...prevState, [name]: message }))
+    setRequestData((prevState: any) => ({ ...prevState, [name]: value }));
+    setError(prevState => ({ ...prevState, [name]: message }))
   };
 
   // Función para manejar el envío del formulario
@@ -59,248 +62,120 @@ function ProductForm<T extends RouteProduct>({ route, options, entity }: { route
       executeProductMutation({ route, options });
     }
   };
-
-  // Función para manejar el estado de las imágenes
-  // const handleImageChange = (name: string, files: FileList | null): void => {
-  //   if (files && files.length > 0) {
-  //     setRequestData((prevState: any) => ({
-  //       ...prevState,
-  //       [name]: [...prevState[name], ...files]
-  //     }));
-  //   }
-  // };
-
+  console.log(requestData)
   return (
-    <form >
-      {ModalAdminImages}
-      {/* Renderizar campos de entrada */}
-      {!!requestData &&
-        Object.entries(requestData).map(([name, value], index) => {
-          if (name.includes('image') && Array.isArray(value)) {
+    <form>
+      <div className='product-creation__forms'>
+        {!!requestData &&
+          Object.entries(requestData).map(([name, value], index) => {
 
-            return (
-              <div key={index}>
-                <h5>{name}</h5>
-
-                <div key={index} className="advertising-form__input-images">
-                  <button onClick={(e) => {
-                    e.preventDefault()
-                    openModal(entity, 'images')
-                  }}>Agregar Imágenes a {entity}</button>
-                  {/* <input id={`input__images`} multiple className={`input__images`} type="file" name={`images`} onChange={(event) => { handleImageChange(name, event.target.files) }} /> */}
+            // IMAGENES
+            if (name.includes('image') && Array.isArray(value)) {
+              return (
+                <div key={index} className='product-creation__forms-images'>
                   <h5>{name}</h5>
-                  <div>
-                    <div className='list' style={{ display: 'flex' }}>
-                      {value.map((item, i) => {
-                        return (
-                          <div key={i}>
-                            {<img src={item} height={"100%"} alt={``} />}
-                            {/* {item instanceof File ? <img src={URL.createObjectURL(item)} alt="" /> : typeof item === 'string' ? <img src={item} height={"100%"} alt={``} /> : ''} */}
-                            <Button button={{
-                              type: 'dark', text: "Eliminar Imagen", handleClick: (e) => {
-                                e.preventDefault()
-                                setRequestData((prevData: { [x: string]: any[]; }) => ({
-                                  ...prevData,
-                                  [name]: prevData[name].filter((_, index) => index !== i)
-                                }));
-                              },
-                            }} />
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-            )
-            {
-              // Object.entries(stateInput.change).filter((e) => ['image_desktop', 'image_phone', 'image_tablet'].includes(e[0])).map(([key, value]: any, index) => (
 
-              // ))
-            }
-          } else if (name.includes('video') && Array.isArray(value)) {
-            return (
-              <div key={index}>
-                <h5>{name}</h5>
+                  {/* <div key={index} className="advertising-form__input-images"> */}
+                    {/* <Button
+                      button={{
+                        type: 'light',
+                        disabled: status.isLoadingProduct,
+                        text: status.isLoadingProduct ? <Spinner /> : `Agregar Imágenes a ${entity}`,
+                        handleClick: (e) => {
+                          e.preventDefault()
+                          openModal(entity, 'images')
+                        }
+                      }}
+                    /> */}
 
-                <div key={index} className="advertising-form__input-images">
-                  {/* <input id={`input__images`} multiple className={`input__images`} type="file" name={`images`} onChange={(event) => { handleImageChange(name, event.target.files) }} /> */}
-                  <button onClick={(e) => {
-                    e.preventDefault()
-                    openModal(entity, 'videos')
-                  }}>Agregar Videos a {entity}</button>
-                  <h5>{name}</h5>
-                  <div>
-                    <div className='list' style={{ display: 'flex' }}>
-                      {value.map((item, i) => {
-                        return (
-                          <div key={i}>
-                            {<iframe
-                              width="200px"
-                              height="100px"
-                              src={item}
-                              title="video"
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                            ></iframe>
-                            }
-                            {/* {item instanceof File ?
-                              <video src={URL.createObjectURL(item)} controls width={200} height={100} />
-                              : typeof item === 'string' ?
-                                <iframe
-                                  width="200px"
-                                  height="100px"
-                                  src={item}
-                                  title="video"
-                                  frameBorder="0"
-                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                  allowFullScreen
-                                ></iframe>
-                                : ''} */}
-                            <Button button={{
-                              type: 'dark', text: "Eliminar Imagen", handleClick: (e) => {
-                                e.preventDefault()
-                                setRequestData((prevData: { [x: string]: any[]; }) => ({
-                                  ...prevData,
-                                  [name]: prevData[name].filter((_, index) => index !== i)
-                                }));
-                              },
-                            }} />
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
+                    <RenderImages
+                      modal={{
+                        openModal,
+                        ModalAdminImages,
+                        title: entity,
+                        type: 'images'
+                      }}
+                      render={{
+                        loading: status.isLoadingProduct,
+                        valueImages: value
+                      }}
+                      handleClickDeleteImage={(indexImage) => {
+                        setRequestData((prevData: { [x: string]: any[]; }) => ({
+                          ...prevData,
+                          [name]: prevData[name].filter((_, index) => index !== indexImage)
+                        }));
+                      }}
+                    />
 
-              </div>
-
-            )
-            {
-              // Object.entries(stateInput.change).filter((e) => ['image_desktop', 'image_phone', 'image_tablet'].includes(e[0])).map(([key, value]: any, index) => (
-
-              // ))
-            }
-          } else if (typeof value === 'object' && !Array.isArray(value)) {
-            // Renderizar campos de objeto
-
-            return (
-              <div key={index} className='specification'>
-                <h5>{name}</h5>
-                <div className='list'>
-                  {Object.entries(value).map(([key, val], ind) => (
-                    <div key={ind} style={{ display: 'flex' }}>
-                      <h4>{key}</h4>: <p>{val as string}</p>
-
-                      <button type="button" onClick={() => {
-                        setRequestData((prevData: { [x: string]: { [x: string]: string; }; }) => {
-                          const updatedData = Object.keys(prevData).reduce((acc, curr) => {
-                            if (curr !== name) {
-                              acc[curr] = prevData[curr];
-                            } else {
-                              const filteredValue = Object.keys(prevData[curr]).reduce((acc2, curr2) => {
-                                if (curr2 !== key) {
-                                  acc2[curr2] = prevData[curr][curr2];
-                                }
-                                return acc2;
-                              }, {} as Record<string, string>);
-                              acc[curr] = filteredValue;
-                            }
-                            return acc;
-                          }, {} as Record<string, Record<string, string>>);
-                          return updatedData;
-                        });
-                      }}>Eliminar</button>
-
-                    </div>
-                  ))}
-                </div>
-                {/* Campos de entrada para agregar nuevos datos al objeto */}
-                <div>
-                  <input
-                    type="text"
-                    name="specificationKey"
-                    placeholder="clave"
-                    value={objectKey}
-                    onChange={(event) => setObjectKey(event.target.value)}
-                  />
-                  <input
-                    type="text"
-                    name="specificationValue"
-                    placeholder="valor"
-                    value={objectValue}
-                    onChange={(event) => setObjectValue(event.target.value)}
-                  />
-                </div>
-                <button
-                  disabled={false}
-                  name={`add`}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setRequestData({ ...requestData, [name]: { ...value, ...{ [objectKey]: objectValue } } })
-                    setObjectKey("")
-                    setObjectValue("")
-                  }}>Agregar {name}</button>
-              </div>
-            );
-          } else if (Array.isArray(value)) {
-            return (
-              <div key={index}>
-                <h5>{name}</h5>
-                <ul className='list'>
-                  {value.map((item, i) => {
-                    return (
-                      <div key={i}>
-                        <li key={i}>{item}</li>
-                        <button onClick={(e) => {
-                          e.preventDefault();
-                          setRequestData((prevData: { [x: string]: any[]; }) => ({
-                            ...prevData,
-                            [name]: prevData[name].filter((_, index) => index !== i)
-                          }));
-                        }}>Eliminar</button>
+                    {/* <h5>{name}</h5>
+                    <div>
+                      <div className='list' style={{ display: 'flex' }}>
+                        {value.map((item, i) => {
+                          return (
+                            <div key={i}>
+                              {<img src={item} height={"100%"} alt={``} />}
+                              <Button button={{
+                                type: 'dark', text: "Eliminar Imagen", handleClick: (e) => {
+                                  e.preventDefault()
+                                  setRequestData((prevData: { [x: string]: any[]; }) => ({
+                                    ...prevData,
+                                    [name]: prevData[name].filter((_, index) => index !== i)
+                                  }));
+                                },
+                              }} />
+                            </div>
+                          )
+                        })}
                       </div>
-                    )
-                  })}
-                </ul>
+                    </div> */}
+                  {/* </div> */}
 
-                <input
-                  type="text"
-                  name={'array'}
-                  placeholder={name}
-                  value={array}
-                  onChange={(event) => setArray(event.target.value)}
-                />
-                <button
-                  disabled={false}
-                  name={`add`}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setRequestData({ ...requestData, [name]: [...value, array] })
-                    setArray("")
-                  }}>Agregar {name}</button>
-              </div>
-            )
-          } else {
-            // Renderizar campos de texto
-            return (
-              <div key={index}>
-                <h5>{name}</h5>
-                <input
-                  type="text"
-                  name={name}
-                  placeholder={name}
-                  value={value}
-                  onChange={handleChange}
-                />
-              </div>
-            );
-          }
-        })}
-      {/* Botón de envío del formulario */}
-      <button type="submit" onClick={handleSubmit}>Submit</button>
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+              )
+
+            } else {
+              // TEXTO
+              return (
+                <div key={index} className='product-creation__forms-input'>
+                  <h5>{name}</h5>
+                  <Input input={{
+                    name: name,
+                    placeholder: name,
+                    disabled: query.isLoading || status.isLoadingProduct,
+                    value: value,
+                    handleOnChange: handleChange,
+                  }}
+                    errorMessage={error[name]}
+                    styleClass=""
+                  />
+                </div>
+              );
+            }
+          })}
+
+      </div>
+
+      <Button
+        button={{
+          type: 'dark',
+          disabled: status.isLoadingProduct,
+          text: status.isLoadingProduct ? <Spinner /> : 'Guardar',
+          handleClick: handleSubmit
+        }}
+      />
     </form>
   );
 }

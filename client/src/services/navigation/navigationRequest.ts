@@ -12,13 +12,7 @@ export enum RouteNavigation {
 export type RequestMapNavigation = {
   [RouteNavigation.NavigationMenu]: {
     route: RouteNavigation.NavigationMenu;
-    data: (Omit<IProduct.Department, 'categories'> & {
-      categories: (Omit<IProduct.Category, 'subcategories' | 'department'> & {
-        subcategories: (Omit<IProduct.Subcategory, 'products' | 'category'> & {
-          products: Pick<IProduct.Product, 'product_id' | 'product'>[]
-        })[]
-      })[]
-    })[]
+    data: (Pick<IProduct.Category, 'category_id' | 'category' > & {products: Pick<IProduct.Product, 'product_id' | 'product'>[]})[]
 
   },
   [RouteNavigation.NavigationListProduct]: {
@@ -26,7 +20,7 @@ export type RequestMapNavigation = {
     extensionRoute: `/${string}/${string}/${string}/${string}${string}`;
     data: {
       breadcrumb: MapEntityBreadcrumb[BreadcrumbType];
-      listProduct: IProduct.ListProduct[];
+      listProduct: IProduct.Product[];
       filters: {
         department: string[]
         category: string[]
@@ -46,7 +40,7 @@ export type RequestMapNavigation = {
     route: RouteNavigation.NavigationSearch;
     extensionRoute: `/${string}`;
     data: {
-      listProduct: (IProduct.ListProduct & { breadcrumb: MapEntityBreadcrumb[BreadcrumbType] })[];
+      listProduct: (IProduct.Product & { breadcrumb: MapEntityBreadcrumb[BreadcrumbType] })[];
       totalCount: number;
     }
   },
@@ -57,11 +51,8 @@ export type RequestMapNavigation = {
       breadcrumb: MapEntityBreadcrumb[BreadcrumbType] | null;
       listProduct: IProduct.ListProduct[] | null;
       filters: {
-        department: Array<IProduct.Department>
         category: Array<IProduct.Category>
-        subcategory: Array<IProduct.Subcategory>
         product: Array<IProduct.Product>
-        variant: Array<IProduct.Variant>
       }
       totalCount: number | null;
     }

@@ -21,7 +21,7 @@ const initialStateListProduct: InitialStateListProduct = {
   id: "",
   query: "",
   dataState: {
-    breadcrumb: { data: [], entity: BreadcrumbType.Department },
+    breadcrumb: { data: [], entity: BreadcrumbType.Category },
     filters: { department: [], category: [], subcategory: [], brand: [], attributes: {}, specifications: {} }
   }
 }
@@ -35,20 +35,7 @@ const useListProduct = (): ListProductHook => {
 
   const [stateListProduct, setStateListProduct] = useState<InitialStateListProduct>(initialStateListProduct)
   const { allProducts, currentIndex, pagination, paginationTotal, id, query, dataState, filterType } = stateListProduct;
-  // const { data, isLoading, isError, error, isSuccess, isFetching } = useQuery<MakeNavigationRequestReturn&{data: RequestMapNavigation[RouteNavigation.NavigationListProduct]['data']}, ErrorNavigation>(
-  //   ['list-product', id, currentIndex, query],
-  //   async () => navigationRequest(RouteNavigation.NavigationListProduct).options({
-  //     extensionRoute: `/${filterType}/${id}/${(((currentIndex - 1) * pagination) - 1) < 0 ? 0 : ((currentIndex - 1) * pagination) - 1}/${pagination}${query}`
-  //   }),
-  //   {
-  //     enabled: !!id && (!allProducts.some(e => e.allProducts_id === currentIndex) || !!query),
-  //     refetchOnWindowFocus: false,
-  //     refetchOnMount: false,
-  //     // onError(err: ErrorNavigation) {
-  //     //   return err;
-  //     // },
-  //   }
-  // );
+
   const { data, isLoading, isError, error, isSuccess, isFetching } = useQuery<MakeNavigationRequestReturn & { data: RequestMapNavigation[RouteNavigation.NavigationListProduct]['data'] }, ErrorNavigation>({
     queryKey: ['list-product', id, currentIndex, query],
     queryFn: async () => navigationRequest(RouteNavigation.NavigationListProduct).options({

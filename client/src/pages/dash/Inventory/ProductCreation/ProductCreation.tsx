@@ -48,7 +48,7 @@ function ProductCreation() {
 
           <div className="product-creation__form">
             <h3>{entity}</h3>
-            {!!entity && <ProductCreationForm route={stateProductCreation.mutation.route} options={{ ...productEdit, paramId }} entity={entity} />}
+            {!!entity && <ProductCreationForm query={query} route={stateProductCreation.mutation.route} options={{ ...productEdit, paramId }} entity={entity} />}
           </div>
         </div>
       )}

@@ -10,7 +10,7 @@ import Content from "./Components/Content";
 import Images from "./Components/Images";
 import Other from "./Components/Other";
 export interface InitialStateProductDetail {
-  selectedVariant: Omit<IProduct.Variant, "product"> | null;
+  selectedVariant: IProduct.Product | null;
   currentImage: number;
 }
 
@@ -38,19 +38,20 @@ function useProductDetail(): UseProductDetail {
   const { BreadcrumbComponent, listProducts } = useListProduct();
   const queryClient = useQueryClient();
   const [stateProductDetail, setStateProductDetail] = useState<InitialStateProductDetail>(initialStateProductDetail);
+  // productos vistos
   const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: async (productId: string) => await navigationRequest(RouteNavigation.NavigationProductView).options({ extensionRoute: `/${productId}` }),
     onSuccess() { queryClient.invalidateQueries({ queryKey: [IAdvertising.QUERY_KEY_PRODUCT.Advertising] }) },
   });
 
   useEffect(() => {
+    console.log(listProducts)
+    // productos vistos
     if (listProducts.length > 0) {
       if (!isPending && !isSuccess) {
-        mutate(listProducts[0].product.product_id)
+        mutate(listProducts[0].product_id)
       }
-      const selectProductStock = listProducts[0].variants.find(e => e.stock > 0)
-      const selectProductAllStock = listProducts[0].variants[0]
-      setStateProductDetail({ ...stateProductDetail, selectedVariant: selectProductStock || selectProductAllStock });
+      setStateProductDetail({ ...stateProductDetail, selectedVariant: listProducts[0] });
     }
     // eslint-disable-next-line
   }, [listProducts]);

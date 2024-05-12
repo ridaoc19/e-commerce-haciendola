@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Button from "../../../../components/common/button/Button";
 import Input from "../../../../components/common/Input/Input";
 import Select from "../../../../components/common/Select/Select";
@@ -6,9 +6,7 @@ import Spinner from "../../../../components/common/spinner";
 import { InitialStateProductCreation, UseProductCreationQueryReturn } from "./useProductCreationQuery";
 
 const options = [
-  { value: 'department', label: 'Departamento' },
   { value: 'category', label: 'Categoría' },
-  { value: 'subcategory', label: 'Subcategoría' },
   { value: 'product', label: 'Producto' },
 ];
 
@@ -20,6 +18,13 @@ interface ProductCreationSearchProps {
 
 function ProductCreationSearch({ stateProductCreation, setStateProductCreation, query }: ProductCreationSearchProps) {
   const [searchProductCreation, setSearchProductCreation] = useState('')
+
+  useEffect(() => {
+    if (query?.data && query.data.filters.category) {
+      setSearchProductCreation('')
+    }
+    // eslint-disable-next-line
+  }, [query.data?.filters.category])
 
   return (
     <div className="product-creation-search">
@@ -52,7 +57,7 @@ function ProductCreationSearch({ stateProductCreation, setStateProductCreation, 
           <Button
             button={{
               type: 'dark',
-              disabled: query.isLoading,
+              disabled: query.isLoading || !searchProductCreation,
               text: query.isLoading ? <Spinner /> : 'Buscar',
               handleClick: () => setStateProductCreation(prevState => ({ ...prevState, query: { ...prevState.query, type: 'search', search: searchProductCreation } }))
             }}

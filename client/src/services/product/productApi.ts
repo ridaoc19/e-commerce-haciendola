@@ -16,7 +16,7 @@ export type MakeProductRequestReturn = {
   status: string;
   status_code: number;
   message: string;
-  data: IProduct.Department[];
+  data: IProduct.Category[];
 };
 
 async function apiProduct<R extends keyof RequestMapProduct>(data: RequestMapProduct[R]): Promise<MakeProductRequestReturn> {

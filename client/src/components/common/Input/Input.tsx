@@ -36,11 +36,11 @@ function Input({ svg, svgTwo, styleClass, errorMessage, input }: InputProps) {
     event.preventDefault();
     setToggle((data) => (data ? false : true));
   };
-
+ 
   return (
     <div className={`user-input input__container--${styleClass}`}>
       <div className={`${errorMessage ? "input_error" : "input_brand"} input__content--${styleClass}`} >
-        <span style={{ border: errorMessage ? "1px solid #DB2424" : (input.value.toString().length === 0) ? "1px solid #ff0d58" : "1px solid #66B949" }}>
+        <span style={{ border: errorMessage ? "1px solid #DB2424" : (input.value.toString().length === 0 || (Number(input.value) === 0 && input.value.toString().length === 1)) ? "1px solid #ff0d58" : "1px solid #66B949" }}>
           <span className={`input__svg--${styleClass}`}>
             {svg &&
               Svg({
