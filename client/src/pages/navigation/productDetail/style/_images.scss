@@ -1,8 +1,7 @@
 .images {
-  display         : flex;
-  flex-direction  : column;
-  gap             : 0.5rem;
-  background-color: var(--neutral-2);
+  display       : flex;
+  flex-direction: column;
+  gap           : 0.5rem;
 
   &.desktop {
     max-width: 40%;
@@ -11,11 +10,12 @@
 
 
   &__parent {
-    max-height      : 50vh;
-    max-width       : 100vw;
-    padding         : 0.5rem;
-    display         : flex;
-    justify-content : center;
+    max-height     : 50vh;
+    max-width      : 100vw;
+    padding        : 0.5rem;
+    display        : flex;
+    justify-content: center;
+    height         : 100%;
 
     &.phone {
       height: 45vh;

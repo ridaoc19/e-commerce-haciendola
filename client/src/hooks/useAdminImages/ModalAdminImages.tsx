@@ -5,6 +5,7 @@ import useMediaQuery from '../useMediaQuery';
 import './adminImages.scss';
 import { InitialStateAdminFiles } from './useAdminImages';
 import Svg from '../../components/assets/icons/Svg';
+import Spinner from '../../components/common/spinner';
 
 interface ModalAdminImagesProps {
   setStateAdminFiles: Dispatch<SetStateAction<InitialStateAdminFiles>>;
@@ -16,6 +17,7 @@ interface ModalAdminImagesProps {
   onClose: () => void;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
   stateAdminFiles: InitialStateAdminFiles;
+  isLoading: boolean
 }
 
 function ModalAdminImages({
@@ -27,6 +29,7 @@ function ModalAdminImages({
   handleUploadImage,
   isOpen,
   onClose,
+  isLoading
 }: ModalAdminImagesProps) {
   const [activeBlock, setActiveBlock] = useState<'stored' | 'add' | 'all'>('all'); // Estado para controlar qué bloque está abierto
   const { requestData, responseData, selectedFiles } = stateAdminFiles;
@@ -145,7 +148,7 @@ function ModalAdminImages({
             </div>
 
             <div className='modal-main__images-add-button'>
-              <Button button={{ type: 'dark', text: 'Guardar', handleClick: handleSaveImages }} />
+              <Button button={{ type: 'dark', text: isLoading ? <Spinner /> : 'Guardar', handleClick: handleSaveImages }} />
             </div>
           </div>}
         </div>
@@ -157,6 +160,7 @@ function ModalAdminImages({
               button={{
                 type: 'light',
                 text: 'Cerrar',
+                disabled: isLoading,
                 handleClick: () => onClose()
               }}
             />

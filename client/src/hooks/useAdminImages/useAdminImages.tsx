@@ -52,7 +52,7 @@ function useAdminImages({ location, entity }: { location: string, entity: string
   const { requestData, selectedFiles } = stateAdminFiles;
 
 
-  const { mutate } = useMutation({
+  const { mutate, isPending: isLoading } = useMutation({
     mutationFn: async ({ route, options }: { route: RouteFiles, options: Omit<RequestMapFiles[RouteFiles], 'route' | 'data'> }) => {
       const requestData = await filesRequest(route).options(options);
       return requestData;
@@ -184,6 +184,7 @@ function useAdminImages({ location, entity }: { location: string, entity: string
         onClose={onClose}
         setModalOpen={setModalOpen}
         stateAdminFiles={stateAdminFiles}
+        isLoading={isLoading}
       />) : null,
     selectedFiles,
     openModal,
