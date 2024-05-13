@@ -26,7 +26,7 @@ function RenderImages({ render, modal, handleClickDeleteImage }: RenderImagesPro
       <h5 className="render-images__title">{title}</h5>
       <Button
         button={{
-          type: 'light',
+          type: 'dark',
           disabled: loading,
           text: loading ? <Spinner /> : `Agregar ${type === 'images' ? 'imágenes' : type} en ${title}`,
           handleClick: (e) => {

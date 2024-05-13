@@ -1,6 +1,7 @@
 export namespace IFiles {
   export enum QUERY_KEY_FILES {
     Files = 'files',
+    Excel = 'excel',
   }
 
 

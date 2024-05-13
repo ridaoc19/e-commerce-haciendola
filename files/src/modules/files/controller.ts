@@ -5,8 +5,12 @@ const { imagesCreateAndDelete, downloadImages, searchImages, requestFiles, addSe
 const router = Router();
 
 router.post('/create-delete', imagesCreateAndDelete);
-router.post('/add-selected', addSelected);
 router.get('/request', requestFiles)
+
+
+
+
+router.post('/add-selected', addSelected);
 router.get('/download', downloadImages)
 router.get('/search', searchImages)
 

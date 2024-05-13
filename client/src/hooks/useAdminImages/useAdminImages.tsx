@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { IFiles } from '../../interfaces/files.interface';
 import { HandleChangeText, HandleClick } from '../../interfaces/global.interface';
-import { filesRequest } from '../../services/files/filesApi';
+import { filesRequest, ErrorFiles } from '../../services/files/filesApi';
 import { RequestMapFiles, RouteFiles } from '../../services/files/filesRequest';
 import ModalAdminImages from './ModalAdminImages';
+import { CreateContext } from '../useContext';
+import { IMessagesReducer } from '../useContext/messages/reducer';
 export interface UseAdminImagesReturnProps {
   ModalAdminImages: ReactNode;
   selectedFiles: {
@@ -26,6 +28,7 @@ export interface InitialStateAdminFiles {
 
 function useAdminImages({ location, entity }: { location: string, entity: string }): UseAdminImagesReturnProps {
   const queryClient = useQueryClient();
+  const { messages: { messagesContextDispatch } } = useContext(CreateContext)
   const initialStateAdminFiles: InitialStateAdminFiles = {
     requestData: {
       toStore: {
@@ -47,12 +50,29 @@ function useAdminImages({ location, entity }: { location: string, entity: string
   const [modalOpen, setModalOpen] = useState(false);
   const [stateAdminFiles, setStateAdminFiles] = useState<InitialStateAdminFiles>(initialStateAdminFiles);
   const { requestData, selectedFiles } = stateAdminFiles;
-  const { mutate } = useMutation({
+
+
+  const { mutate, isPending: isLoading } = useMutation({
     mutationFn: async ({ route, options }: { route: RouteFiles, options: Omit<RequestMapFiles[RouteFiles], 'route' | 'data'> }) => {
       const requestData = await filesRequest(route).options(options);
       return requestData;
     },
-    onSuccess({ data }, { route }) {
+    onSuccess({ data, status_code, field, message }, { route }) {
+      
+      messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: [{ status_code, field, message }] })
+      if (field === 'file_create_excel') {
+        onClose()
+        // queryClient.setQueryData([IFiles.QUERY_KEY_FILES.Excel], data);
+      } else {
+        if (route === RouteFiles.FilesRequest) {
+          queryClient.setQueryData([IFiles.QUERY_KEY_FILES.Files], data);
+        } else {
+          const inputElement = document.getElementById(`input__images`) as HTMLInputElement | null; //limpia input files
+          if (inputElement) inputElement.value = '';
+          queryClient.invalidateQueries({ queryKey: [IFiles.QUERY_KEY_FILES.Files] })
+        }
+      }
+
       setStateAdminFiles({
         ...stateAdminFiles,
         responseData: data.data,
@@ -61,15 +81,13 @@ function useAdminImages({ location, entity }: { location: string, entity: string
           toStore: { ...initialStateAdminFiles.requestData.toStore, entity, location, name: requestData.toStore.name, typeFile: requestData.toStore.typeFile }
         }
       })
-      if (route === RouteFiles.FilesRequest) {
-        queryClient.setQueryData([IFiles.QUERY_KEY_FILES.Files], data);
-      } else {
-        const inputElement = document.getElementById(`input__images`) as HTMLInputElement | null; //limpia input files
-        if (inputElement) inputElement.value = '';
-        queryClient.invalidateQueries({ queryKey: [IFiles.QUERY_KEY_FILES.Files] })
-      }
+    },
+    onError(error: ErrorFiles) {
+      messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: error.errors.map(e => { return { ...e, status_code: error.status_code } }) })
+      return error;
     },
   });
+
 
   function requestMutation<T extends RouteFiles>({ route, options }: { route: T, options: Omit<RequestMapFiles[T], 'route' | 'data'> }) {
     mutate({ route, options })
@@ -144,8 +162,15 @@ function useAdminImages({ location, entity }: { location: string, entity: string
         }
       })
     }
+    document.body.classList.add('body-scroll-locked');
     setModalOpen(true);
   };
+
+  const onClose = () => {
+    document.body.classList.remove('body-scroll-locked');
+    setStateAdminFiles(initialStateAdminFiles)
+    setModalOpen(false)
+  }
 
   return {
     ModalAdminImages: modalOpen ? (
@@ -156,12 +181,10 @@ function useAdminImages({ location, entity }: { location: string, entity: string
         handleUploadImage={handleUploadImage}
         handleSelectedFiles={handleSelectedFiles}
         isOpen={modalOpen}
-        onClose={() => {
-          setStateAdminFiles(initialStateAdminFiles)
-          setModalOpen(false)
-        }}
+        onClose={onClose}
         setModalOpen={setModalOpen}
         stateAdminFiles={stateAdminFiles}
+        isLoading={isLoading}
       />) : null,
     selectedFiles,
     openModal,

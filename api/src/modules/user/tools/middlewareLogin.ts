@@ -17,8 +17,6 @@ const schemaLogin: { [key: string]: yup.Schema } = ({
       .getRepository(UserEntity)
       .findOne({ where: { email } });
 
-    console.log({ route: options?.route, userDB, options })
-
     switch (options?.route) {
       case 'login':
         if (!userDB) return ctx.createError({ message: `Lo sentimos, el usuario (${email}) no está registrado. Por favor, verifique que ha ingresado correctamente sus credenciales o regístrese para crear una nueva cuenta.` });

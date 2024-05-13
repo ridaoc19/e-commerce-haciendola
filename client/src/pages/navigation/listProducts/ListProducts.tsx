@@ -6,7 +6,7 @@ import useMediaQuery from "../../../hooks/useMediaQuery";
 import Card from "../../../components/common/card/Card";
 
 function ListProducts() {
-  const { filterType, listProducts, PaginationButton, BreadcrumbComponent, Filters, currentIndex, paginationTotal, setStateListProduct, totalProduct } = useListProduct()
+  const { filterType, setStateListProduct, listProducts, PaginationButton, BreadcrumbComponent, Filters, currentIndex, paginationTotal, totalProduct } = useListProduct()
   const { mediaQuery } = useMediaQuery()
   const [isButtonFilter, setIsButtonFilter] = useState(false)
 
@@ -33,18 +33,18 @@ function ListProducts() {
 
           {<div className="header__button">
             {/* {mediaQuery === 'phone' && <div className="header__button"> */}
-            <Button button={{
-              type: filterType === 'flexible' ? 'dark' : "light", text: "filtro flexible", handleClick: () => {
+            {mediaQuery === 'phone' && <Button button={{
+              type: filterType === 'flexible' ? 'dark' : "light", text: "filtro", handleClick: () => {
                 setIsButtonFilter(true)
                 setStateListProduct(prevState => ({ ...prevState, filterType: 'flexible' }))
               }
-            }} />
-            <Button button={{
+            }} />}
+            {/* <Button button={{
               type: filterType === 'strict' ? 'dark' : "light", text: "filtro estricto", handleClick: () => {
                 setIsButtonFilter(true)
                 setStateListProduct(prevState => ({ ...prevState, filterType: 'strict' }))
               }
-            }} />
+            }} /> */}
             {/* <Button button={{ type: "light", text: "Orden", handleClick: () => { } }} /> */}
             <div className={`header__button-close ${isButtonFilter && mediaQuery === 'phone' ? "open" : "close"}`}>
               <Button button={{ type: "dark", text: "", handleClick: () => setIsButtonFilter(false) }} svgLeft={{ type: "close", color: 'white' }} />
@@ -57,7 +57,7 @@ function ListProducts() {
         </header>
 
         <main className={`list-product__card ${mediaQuery}`} >
-          {listProducts.map(({product_id, product, images, price, listPrice}) => {
+          {listProducts.map(({ product_id, product, images, price, listPrice }) => {
             return (
               <Card key={product_id} product_id={product_id} product={product} images={images} price={price} listPrice={listPrice} />
             )

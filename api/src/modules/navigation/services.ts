@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 // import { v4 as uuidv4 } from 'uuid';
-import { errorHandlerCatch } from '../../core/utils/send/errorHandler';
-import { successHandler } from '../../core/utils/send/successHandler';
+import { Brackets } from 'typeorm';
 import { getBreadcrumbs } from '../../core/utils/breadcrumb/breadcrumb';
 import { findParentUUID } from '../../core/utils/findParentUUID';
-import { stringEmpty } from '../../core/utils/functionsGlobal';
 import { generateFilters, GenerateFiltersReturn } from '../../core/utils/navigation/generateFilters';
 import { StatusHTTP } from '../../core/utils/send/enums';
+import { errorHandlerCatch } from '../../core/utils/send/errorHandler';
+import { successHandler } from '../../core/utils/send/successHandler';
 import { AppDataSource } from '../../data-source';
 import CategoryEntity from '../category/entity';
 import ProductEntity from '../product/entity';
@@ -48,11 +48,11 @@ export default {
   async getListProduct(req: Request, res: Response) {
     const { id, skip, take } = req.params;
 
-    const filtersQuery = Object.entries(req.query).map(([key, value]) => {
+    const filtersQuery = Object.entries(req.query).map(([_key, value]) => {
       const values = Array.isArray(value) ? value : [value];
-      return values.map((element: string) => `${stringEmpty(key)}${stringEmpty(element)}`);
+      return values.map((element: string) => element);
     }).flat();
-
+    // 
     try {
       const breadcrumb = await getBreadcrumbs(id);
 
@@ -79,16 +79,21 @@ export default {
       if (findParentUUID(id)) {
         queryBuilder.where(`${breadcrumb?.entity}.${breadcrumb?.entity}_id = :id`, { id });
 
-        if (Object.keys(req.query).length > 0) {
-          queryBuilder.andWhere(`LOWER(category.category::text) ~ LOWER(:regex)`, { regex: `(${filtersQuery.join('|')})` })
-        }
       } else {
         const searchTerms = id.split(' ').join('|');
         queryBuilder.where(`LOWER(product.product::text) ~ LOWER(:regex)`, { regex: `(${searchTerms})` })
+      }
 
-        if (Object.keys(req.query).length > 0) {
-          queryBuilder.andWhere(`LOWER(category.category::text) ~ LOWER(:regex)`, { regex: `(${filtersQuery.join('|')})` })
-        }
+      if (filtersQuery.length > 0) {
+        queryBuilder.andWhere(new Brackets(qb => {
+          filtersQuery.forEach((term: string, index: number) => {
+            if (index > 0) {
+              qb.orWhere(`category.category::text ILIKE :category${index}`, { [`category${index}`]: `%${term}%` });
+            } else {
+              qb.where(`category.category::text ILIKE :category${index}`, { [`category${index}`]: `%${term}%` });
+            }
+          });
+        }));
       }
 
       // // Seleccionar campos específicos
@@ -189,10 +194,10 @@ export default {
         queryBuilder.leftJoinAndSelect('product.category', 'category')
       }
 
-   await queryBuilder
+      await queryBuilder
         // .skip(0)
         // .take(15)
-        .getMany();       
+        .getMany();
 
       // // Obtener el recuento total
       // totalCount = await queryBuilder.getCount();
@@ -204,8 +209,8 @@ export default {
       category = category.length > 0 && category[0].category_id ? category : []
 
       let product = await queryBuilder
-      // .select(['DISTINCT ON (product.product) product.product, product.product_id, product.price, product.'])
-      .select(['DISTINCT ON (product.product) product.product_id, product.product, product.description, product.price, product.listPrice, product.images, product.stock, product.handle, product.barcode, product.sku, product.grams'])
+        // .select(['DISTINCT ON (product.product) product.product, product.product_id, product.price, product.'])
+        .select(['DISTINCT ON (product.product) product.product_id, product.product, product.description, product.price, product.listPrice, product.images, product.stock, product.handle, product.barcode, product.sku, product.grams'])
         .getRawMany();
 
       product = product.length > 0 && product[0].product_id ? product : []

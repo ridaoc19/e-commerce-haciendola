@@ -4,7 +4,7 @@ import { CreateContext } from "../../../hooks/useContext";
 import useMutationUser from "../../../hooks/useMutationUser";
 import { IUser, TypeDashboard } from "../../../interfaces/user.interface";
 import { RouteUser } from "../../../services/user/userRequest";
-import { InitialStateUserAdmin } from "./AdminUser";
+import { initialStateUserAdmin, InitialStateUserAdmin } from "./AdminUser";
 
 interface SearchUserProps {
   setStateUserAdmin: Dispatch<SetStateAction<InitialStateUserAdmin>>
@@ -15,6 +15,13 @@ function SearchUser({ setStateUserAdmin, stateUserAdmin }: SearchUserProps) {
   const { dashboard: { dispatchDashboard, stateDashboard: { login: { userAll } } } } = useContext(CreateContext)
   const [searchUser, setSearchUser] = useState<string>('')
   const { tools } = useMutationUser()
+
+  useEffect(() => {
+    if (userAll.length === 0) {
+      setStateUserAdmin(initialStateUserAdmin)
+    }
+    // eslint-disable-next-line
+  }, [userAll])
 
   useEffect(() => {
     !stateUserAdmin.change.name && setSearchUser('')

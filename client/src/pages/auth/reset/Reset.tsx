@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Svg from '../../../components/assets/icons/Svg';
 import Button from '../../../components/common/button/Button';
 import Input from '../../../components/common/Input/Input';
@@ -42,7 +42,10 @@ function Reset() {
   const handleClickReset: HandleClick = (event) => {
     event.preventDefault();
     const id = (event.target as HTMLFormElement).id.split("--")[1] as ResetButtonName;
-    if (id === ResetButtonName.Back) return navigate('/login');
+    if (id === ResetButtonName.Back) {
+      dispatchDashboard({ type: TypeDashboard.DASHBOARD_LOGIN_DELETE_ERROR_ALL, payload: 'No' })
+      return navigate('/login');
+    }
     tools.fetch(RouteUser.Reset).options({ requestData: stateReset.change })
   };
 
@@ -52,7 +55,9 @@ function Reset() {
         <div className="reset__form--content">
 
           <header className="form__header--content">
-            {Svg({ type: "logo", height: 80, width: 80, color: '#ff0d58' })}
+            <Link to={'/'}>
+              {Svg({ type: 'logo' })}
+            </Link>
             <h2>Recuperar contraseña</h2>
             <p>Ingresa el correo electrónico que tienes registrado</p>
           </header>

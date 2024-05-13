@@ -15,7 +15,9 @@ function Navbar() {
       </div>
 
       <div className='navbar__logo'>
-        <Link to={'/'}>{Svg({ type: "logo", width: 50, height: 50, color: "white" })}</Link>
+        <Link to={'/'}>
+          {Svg({ type: 'logo' })}
+        </Link>
       </div>
       {/* <div className='navbar__cart--container'>
         {Svg({ type: "shop", color: "white" })}

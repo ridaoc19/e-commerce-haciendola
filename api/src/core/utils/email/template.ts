@@ -61,7 +61,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                         .pass h2 {
                             margin: 0 auto;
                             padding: 10px;
-                            background-color: #FFA451;
+                            background-color: #e3e8ef;
                             width: min-content;
                             border-radius: 5px;
                         }
@@ -104,7 +104,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                             </div>
                         </div>
                         <p>Calle 30. Anorí, Antioquia, Colombia. © 2023, e-commerce.
-                            Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/hilde">E-commerce Hilde.</a>
+                            Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/haciéndola">E-commerce Haciéndola.</a>
                         </p>
                     </div>
                 </body>
@@ -170,7 +170,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                         .pass h2 {
                             margin: 0 auto;
                             padding: 10px;
-                            background-color: #FFA451;
+                            background-color: #e3e8ef;
                             width: min-content;
                             border-radius: 5px;
                         }
@@ -215,7 +215,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                             </div>
                         </div>
                         <p>Calle 30. Anorí, Antioquia, Colombia. © 2023, e-commerce.
-                            Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/hilde">E-commerce Hilde.</a>
+                            Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/haciéndola">E-commerce Haciéndola.</a>
                         </p>
                     </div>
                 </body>
@@ -309,7 +309,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                         </div>
                     </div>
                     <p>Calle 30. Anorí, Antioquia, Colombia. © 2023, e-commerce.
-                        Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/hilde">E-commerce Hilde.</a>
+                        Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/haciéndola">E-commerce Haciéndola.</a>
                     </p>
                 </div>
             </body>
@@ -405,7 +405,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                         </div>
                     </div>
                     <p>Calle 30. Anorí, Antioquia, Colombia. © 2023, e-commerce.
-                        Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/hilde">E-commerce Hilde.</a>
+                        Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/haciéndola">E-commerce Haciéndola.</a>
                     </p>
                 </div>
             </body>
@@ -498,7 +498,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                         </div>
                     </div>
                     <p>Calle 30. Anorí, Antioquia, Colombia. © 2023, e-commerce.
-                        Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/hilde">E-commerce Hilde.</a>
+                        Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/haciéndola">E-commerce Haciéndola.</a>
                     </p>
                 </div>
             </body>
@@ -590,7 +590,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                         </div>
                     </div>
                     <p>Calle 30. Anorí, Antioquia, Colombia. © 2023, e-commerce.
-                        Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/hilde">E-commerce Hilde.</a>
+                        Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/haciéndola">E-commerce Haciéndola.</a>
                     </p>
                 </div>
             </body>
@@ -656,7 +656,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                         .pass h2 {
                             margin: 0 auto;
                             padding: 10px;
-                            background-color: #FFA451;
+                            background-color: #e3e8ef;
                             width: min-content;
                             border-radius: 5px;
                         }
@@ -694,7 +694,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                                 </div>
                         </div>
                         <p>Calle 30. Anorí, Antioquia, Colombia. © 2023, e-commerce.
-                            Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/hilde">E-commerce Hilde.</a>
+                            Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/haciéndola">E-commerce Haciéndola.</a>
                         </p>
                     </div>
                 </body>
@@ -783,7 +783,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                                 </div>
                             </div>
                             <p>Calle 30. Anorí, Antioquia, Colombia. © 2023, e-commerce.
-                                Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/hilde">E-commerce Hilde.</a>
+                                Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/haciéndola">E-commerce Haciéndola.</a>
                             </p>
                         </div>
                     </body>
@@ -872,7 +872,7 @@ export const templateRegistre = ({ name, password, type, tokenEmail }: Pick<User
                                 </div>
                             </div>
                             <p>Calle 30. Anorí, Antioquia, Colombia. © 2023, e-commerce.
-                                Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/hilde">E-commerce Hilde.</a>
+                                Todos los derechos reservados. <a href="${process.env.URL_CLIENT}/haciéndola">E-commerce Haciéndola.</a>
                             </p>
                         </div>
                     </body>

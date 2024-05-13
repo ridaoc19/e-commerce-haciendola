@@ -61,6 +61,7 @@ export enum TypeDashboard {
   DASHBOARD_LOGIN = 'login',
   DASHBOARD_LOGOUT = 'logout',
   DASHBOARD_LOGIN_DELETE_ERROR = 'DASHBOARD_LOGIN_DELETE_ERROR',
+  DASHBOARD_LOGIN_DELETE_ERROR_ALL = 'DASHBOARD_LOGIN_DELETE_ERROR_ALL',
   DASHBOARD_LOGIN_DELETE_USER_ALL = 'DASHBOARD_LOGIN_DELETE_USER_ALL'
 }
 
@@ -71,6 +72,7 @@ export type PayloadDashboard = {
   [TypeDashboard.DASHBOARD_LOGIN]: StateDashboard['login'],
   [TypeDashboard.DASHBOARD_LOGOUT]: { isLogin: false },
   [TypeDashboard.DASHBOARD_LOGIN_DELETE_ERROR]: { field: string }
+  [TypeDashboard.DASHBOARD_LOGIN_DELETE_ERROR_ALL]: 'No'
   [TypeDashboard.DASHBOARD_LOGIN_DELETE_USER_ALL]: ''
 }
 
