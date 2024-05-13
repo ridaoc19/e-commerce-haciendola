@@ -6,13 +6,13 @@ import useMediaQuery from "../../../hooks/useMediaQuery";
 import Card from "../../../components/common/card/Card";
 
 function ListProducts() {
-  const { filterType, listProducts, PaginationButton, BreadcrumbComponent, Filters, currentIndex, paginationTotal, setStateListProduct, totalProduct } = useListProduct()
+  const { listProducts, PaginationButton, BreadcrumbComponent, Filters, currentIndex, paginationTotal, totalProduct } = useListProduct()
   const { mediaQuery } = useMediaQuery()
   const [isButtonFilter, setIsButtonFilter] = useState(false)
 
   return (
     <div className="list-product">
-
+      
       <div className={`list-product__filter ${mediaQuery} ${isButtonFilter ? "open" : "close"}`}>
         {Filters}
       </div>
@@ -33,7 +33,7 @@ function ListProducts() {
 
           {<div className="header__button">
             {/* {mediaQuery === 'phone' && <div className="header__button"> */}
-            <Button button={{
+            {/* <Button button={{
               type: filterType === 'flexible' ? 'dark' : "light", text: "filtro flexible", handleClick: () => {
                 setIsButtonFilter(true)
                 setStateListProduct(prevState => ({ ...prevState, filterType: 'flexible' }))
@@ -44,7 +44,7 @@ function ListProducts() {
                 setIsButtonFilter(true)
                 setStateListProduct(prevState => ({ ...prevState, filterType: 'strict' }))
               }
-            }} />
+            }} /> */}
             {/* <Button button={{ type: "light", text: "Orden", handleClick: () => { } }} /> */}
             <div className={`header__button-close ${isButtonFilter && mediaQuery === 'phone' ? "open" : "close"}`}>
               <Button button={{ type: "dark", text: "", handleClick: () => setIsButtonFilter(false) }} svgLeft={{ type: "close", color: 'white' }} />

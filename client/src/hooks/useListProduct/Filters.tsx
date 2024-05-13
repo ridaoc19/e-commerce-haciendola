@@ -17,6 +17,7 @@ function Filters({ filters }: { filters: RequestMapNavigation[RouteNavigation.Na
   return (
     <div className="filters">
       <div className="filters__content">
+        Filtros
         {Object.entries(filters).map(([title, value], index) => {
           if (Array.isArray(value)) {
             if (value.length === 0) return null

@@ -6,6 +6,8 @@
   overflow-y      : auto;
   height          : 100%;
   background-color: var(--brand-1);
+  box-shadow: 4px 0 3px rgba(0, 0, 0, 0.2);
+  
 
   .filters__content {
     padding: 10px;
