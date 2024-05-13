@@ -1,16 +1,15 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import '../dotenv'
-import FilesEntity from "./modules/files/entity"
-import { ProductEntity, CategoryEntity } from "./modules/excel/entity"
+import FilesEntity, { CategoryEntity, ProductEntity } from "./modules/files/entity"
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: process.env.DB_host,
-    port: process.env.DB_port ? parseInt(process.env.DB_port) : 5432,
-    username: process.env.DB_username,
-    password: process.env.DB_password,
-    database: process.env.DB_database,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
     synchronize: true,
     logging: false,
     entities: [

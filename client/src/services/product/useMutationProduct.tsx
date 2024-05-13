@@ -42,7 +42,8 @@ function useMutationProduct() {
       // if (route === RouteProduct.AccountAdminGet || route === RouteProduct.AccountAdminDelete || route === RouteProduct.AccountAdminPut) {
       //   console.log(route, "entro muchos")
       messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: [{ status_code, field, message }] })
-      queryClient.invalidateQueries({ queryKey: [IProduct.QUERY_KEY_PRODUCT.NavigationDashboard] })
+      // queryClient.invalidateQueries({ queryKey: [IProduct.QUERY_KEY_PRODUCT.NavigationDashboard] })
+      // toolsSection.removeQuery()
       // } else {
       //   console.log(route, "entro uno")
       //   queryClient.setQueryData([IProduct.QUERY_KEY_PRODUCT.SingleProduct], data);

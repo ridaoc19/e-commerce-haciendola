@@ -68,7 +68,6 @@ const filesMiddleware = async (req: Request, res: Response, next: NextFunction) 
           if (filteredFilesDB.length > 0) {
 
             if (method === 'DELETE' && filteredFilesDB.length > 0) {
-              // console.log({ filteredFilesDB }, 'delete')
               await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filteredFilesDB })
             }
 
