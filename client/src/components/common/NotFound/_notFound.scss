@@ -1,14 +1,19 @@
 // NotFound.scss
 .not-found-container {
-  text-align: center;
-  
+  display        : grid;
+  justify-content: center;
+  justify-items  : center;
+  align-items    : center;
+  gap            : 1rem;
+  padding        : 2rem;
+
   h1 {
-    font-size: 36px;
+    font-size    : 36px;
     margin-bottom: 20px;
   }
-  
+
   p {
     font-size: 18px;
-    color: #555;
+    color    : #555;
   }
 }

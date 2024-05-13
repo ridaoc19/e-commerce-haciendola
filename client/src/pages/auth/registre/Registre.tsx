@@ -9,6 +9,7 @@ import useValidations from '../../../hooks/useValidations/useValidations';
 import { HandleChangeText, HandleClick } from '../../../interfaces/global.interface';
 import { IUser, TypeDashboard } from '../../../interfaces/user.interface';
 import { RouteUser } from '../../../services/user/userRequest';
+import { Link } from 'react-router-dom';
 
 export enum RegistreButtonName {
   Save = 'save',
@@ -51,7 +52,9 @@ function Registre() {
           <div className="registre__form--content">
 
             <header className="form__header--content">
-              {Svg({ type: "logo", height: 80, width: 80, color: '#ff0d58' })}
+              <Link to={'/'}>
+                {Svg({ type: 'logo' })}
+              </Link>
               <h2>Regístrate</h2>
               <p>Ingresa tus datos personales para crear tu cuenta</p>
             </header>
