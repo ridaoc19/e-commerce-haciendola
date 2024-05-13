@@ -18,6 +18,7 @@
     .product-creation__forms {
       display       : flex;
       flex-direction: column;
+      gap: 1rem;
   
       &-images {
         order: 999;

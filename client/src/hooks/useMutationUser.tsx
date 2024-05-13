@@ -29,8 +29,8 @@ function useMutationUser() {
     },
     onSuccess(data, { route }) {
       if (route === RouteUser.AccountAdminDelete || route === RouteUser.AccountAdminPut) {// para admin de usuarios
-        // if (route === RouteUser.AccountAdminGet || route === RouteUser.AccountAdminDelete || route === RouteUser.AccountAdminPut) {// para admin de usuarios
-        queryClient.invalidateQueries({ queryKey: [IUser.QUERY_KEY_USER.MultipleUsers] })
+        dispatchDashboard({ type: TypeDashboard.DASHBOARD_LOGIN_DELETE_USER_ALL, payload: '' })
+        queryClient.removeQueries({ queryKey: [IUser.QUERY_KEY_USER.MultipleUsers] });
       }
       if (route !== RouteUser.AccountAdminGet) {
         queryClient.setQueryData([IUser.QUERY_KEY_USER.SingleUser], data);
@@ -109,8 +109,6 @@ function useMutationUser() {
 
   return {
     mutateUser,
-    // data: dataSection,
-    // status: statusSection,
     tools: toolsSection,
   };
 }
