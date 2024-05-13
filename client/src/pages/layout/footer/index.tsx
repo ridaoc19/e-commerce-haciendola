@@ -17,11 +17,11 @@ function Footer() {
           <div className="footer__top-center">
             <div className="footer__top-center-container">
               <div className="footer__top-center-title">
-                <h4>Hilde</h4>
+                <h4>Haciéndola</h4>
               </div>
               <div className="footer__top-center-content">
                 <Button button={{ type: 'link', text: "(+57) 312 000 00 00", handleClick: () => { } }} svgRight={{ type: 'phone' }} />
-                <Button button={{ type: 'link', text: 'hilde.ecommerce@outlook.com', handleClick: () => { } }} svgRight={{ type: 'email' }} />
+                <Button button={{ type: 'link', text: 'haciéndola.ecommerce@outlook.com', handleClick: () => { } }} svgRight={{ type: 'email' }} />
                 <Button button={{ type: 'link', text: 'Cra 77 No. 48-06', handleClick: () => { } }} svgRight={{ type: 'location' }} />
                 <Button button={{ type: 'link', text: 'Lunes - Viernes de 8 AM - 6 PM', handleClick: () => { } }} svgRight={{ type: 'time' }} />
               </div>
@@ -50,7 +50,7 @@ function Footer() {
         <div className="footer__bottom">
           <div className="footer__bottom-text">
             <p>El formato de los precios puede verse afectado por las configuraciones y diferencia de navegadores</p>
-            <p>© 2023 hilde.com, Todos los derechos reservados.</p>
+            <p>© 2023 haciéndola.com, Todos los derechos reservados.</p>
           </div>
         </div>
       </div>

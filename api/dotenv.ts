@@ -18,7 +18,8 @@ const envVars = z.object({
   EMAIL_SEND_FROM: z.string().email(),
   URL_CLIENT: z.string(),
   SECRET_KEY_JWT: z.string(),
-  SECRET_KEY_JWT_EMAIL: z.string()
+  SECRET_KEY_JWT_EMAIL: z.string(),
+  EMAIL_RESEND: z.string().email()
 });
 
 const envVarsSchema = Object.entries(process.env).reduce((acc, [key, value]) => {

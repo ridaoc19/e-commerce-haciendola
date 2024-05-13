@@ -84,6 +84,8 @@ function useMutationProduct() {
     // },
     removeQuery() {
       queryClient.removeQueries({ queryKey: [IProduct.QUERY_KEY_PRODUCT.NavigationDashboard] });
+      queryClient.removeQueries({ queryKey: [IProduct.QUERY_KEY_PRODUCT.Navigation] });
+      queryClient.removeQueries({ queryKey: [IProduct.QUERY_KEY_PRODUCT.MultipleProducts] });
     },
     resetError() {
       resetProductMutation();
