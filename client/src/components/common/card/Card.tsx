@@ -13,7 +13,7 @@ function Card({ product_id, images, price, product, listPrice }: CardProps) {
 
       <div className={`global__card-content ${mediaQuery}`}>
 
-        <div className="card__images">
+        <div className="card__images" style={images.length === 0 ? {backgroundColor: '#DFE8F6'}: {}}>
           {images.length > 0 && urlRegex.test(images[0])
             ? <img src={images[0]} alt="" />
             : <img src={`${process.env.REACT_APP_SERVER_FILE}/${images[0]}`} alt="" />}

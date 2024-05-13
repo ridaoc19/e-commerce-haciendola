@@ -10,7 +10,7 @@ function Footer() {
         <div className="footer__top">
           <div className="footer__top-left">
             <div className="footer__top-left-logo">
-              {Svg({ type: "logo", height: 80, width: 80 })}
+              {Svg({ type: "logo_secundary", height: 80, width: 80 })}
             </div>
           </div>
 
@@ -34,13 +34,13 @@ function Footer() {
                 <h4>Síguenos</h4>
               </div>
               <div className="footer__top-right-social-networks-icon">
-                {Svg({ type: "instagram", height: 20, width: 20, color: "white" })}
-                {Svg({ type: "facebook", height: 20, width: 20, color: "white" })}
-                {Svg({ type: "linkedIn", height: 20, width: 20, color: "white" })}
-                {Svg({ type: "twitter", height: 20, width: 20, color: "white" })}
-                {Svg({ type: "snapchat", height: 20, width: 20, color: "white" })}
-                {Svg({ type: "messenger", height: 20, width: 20, color: "white" })}
-                {Svg({ type: "whatsapp", height: 20, width: 20, color: "white" })}
+                {Svg({ type: "instagram", height: 20, width: 20 })}
+                {Svg({ type: "facebook", height: 20, width: 20 })}
+                {Svg({ type: "linkedIn", height: 20, width: 20 })}
+                {Svg({ type: "twitter", height: 20, width: 20 })}
+                {Svg({ type: "snapchat", height: 20, width: 20 })}
+                {Svg({ type: "messenger", height: 20, width: 20 })}
+                {Svg({ type: "whatsapp", height: 20, width: 20 })}
               </div>
             </div>
           </div>
