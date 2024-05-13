@@ -13,7 +13,7 @@ function Images({ handleClick, stateProductDetail: { selectedVariant, currentIma
 
   return (
     <div className={`images ${mediaQuery}`}>
-      <div className={`images__parent ${mediaQuery}`}>
+      <div className={`images__parent ${mediaQuery}`} style={!selectedVariant.images[currentImage]? {backgroundColor: '#DFE8F6'}:{}}>
         <img src={selectedVariant.images[currentImage]} alt="" />
       </div>
 
