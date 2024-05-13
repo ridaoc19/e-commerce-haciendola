@@ -47,7 +47,10 @@ function PassChange() {
   const handleClickChange: HandleClick = (event) => {
     event.preventDefault();
     const id = (event.target as HTMLFormElement).id.split("--")[1] as ChangeButtonName;
-    if (id === ChangeButtonName.Back) return clearUser({ pathname: '/login' });
+    if (id === ChangeButtonName.Back) {
+      dispatchDashboard({ type: TypeDashboard.DASHBOARD_LOGIN_DELETE_ERROR_ALL, payload: 'No' })
+      return clearUser({ pathname: '/login' });
+    }
     tools.fetch(RouteUser.Change).options({ requestData: stateChange.change })
   };
 

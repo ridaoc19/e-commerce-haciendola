@@ -98,6 +98,9 @@ function StateContextDashboard() {
           setStateDashboard({ ...stateDashboard, login: { ...stateDashboard.login, errors: updateError } })
         }
         return
+      case TypeDashboard.DASHBOARD_LOGIN_DELETE_ERROR_ALL:
+        setStateDashboard({ ...stateDashboard, login: { ...stateDashboard.login, errors: [] } })
+      return
       case TypeDashboard.DASHBOARD_LOGIN_DELETE_USER_ALL:
         setStateDashboard({ ...stateDashboard, login: { ...stateDashboard.login, userAll: [] } })
         return

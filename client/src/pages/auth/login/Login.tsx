@@ -52,7 +52,7 @@ function Login() {
   const handleClickLogin: HandleClick = (event) => {
     const id = (event.target as HTMLFormElement).id.split("--")[1];
     event.preventDefault();
-
+    dispatchDashboard({ type: TypeDashboard.DASHBOARD_LOGIN_DELETE_ERROR_ALL, payload: 'No' })
     switch (id) {
       case "login": return tools.fetch(RouteUser.Login).options({ requestData: stateLogin.change });
       case "reset": return clearUser({ pathname: '/reset' })

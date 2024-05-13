@@ -41,7 +41,10 @@ function Registre() {
   const handleClickRegistre: HandleClick = (event) => {
     event.preventDefault();
     const id = (event.target as HTMLFormElement).id.split("--")[1] as RegistreButtonName;
-    if (id === RegistreButtonName.Back) return clearUser({ pathname: '/login' });
+    if (id === RegistreButtonName.Back) {
+      dispatchDashboard({ type: TypeDashboard.DASHBOARD_LOGIN_DELETE_ERROR_ALL, payload: 'No' })
+      return clearUser({ pathname: '/login' });
+    }
     tools.fetch(RouteUser.Registre).options({ requestData: stateRegistre.change })
   };
 

@@ -42,7 +42,10 @@ function Reset() {
   const handleClickReset: HandleClick = (event) => {
     event.preventDefault();
     const id = (event.target as HTMLFormElement).id.split("--")[1] as ResetButtonName;
-    if (id === ResetButtonName.Back) return navigate('/login');
+    if (id === ResetButtonName.Back) {
+      dispatchDashboard({ type: TypeDashboard.DASHBOARD_LOGIN_DELETE_ERROR_ALL, payload: 'No' })
+      return navigate('/login');
+    }
     tools.fetch(RouteUser.Reset).options({ requestData: stateReset.change })
   };
 
