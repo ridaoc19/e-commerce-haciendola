@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Svg from '../../../components/assets/icons/Svg';
 import Button from '../../../components/common/button/Button';
 import Input from '../../../components/common/Input/Input';
@@ -57,7 +57,9 @@ function PassChange() {
         <div className="pass-change__form--content">
 
           <header className="form__header--content">
-            {Svg({ type: "logo", height: 80, width: 80, color: '#ff0d58' })}
+            <Link to={'/'}>
+              {Svg({ type: 'logo' })}
+            </Link>
             <h2>Cambio de Contraseña</h2>
             <p>Cambia tu contraseña para acceder a tu cuenta</p>
           </header>

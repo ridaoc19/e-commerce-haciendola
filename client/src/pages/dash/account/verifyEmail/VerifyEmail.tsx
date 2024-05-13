@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Button from "../../../../components/common/button/Button";
 import useMutationUser from "../../../../hooks/useMutationUser";
 import { RouteUser } from "../../../../services/user/userRequest";
@@ -19,7 +19,9 @@ function VerifyEmail() {
   return (
     <div className="verify-email-container">
       <header className="verify-email-title">
-        {Svg({ type: "logo", height: 80, width: 80, color: '#ff0d58' })}
+      <Link to={'/'}>
+        {Svg({ type: 'logo' })}
+      </Link>
         <h2>¡Bienvenido!</h2>
         <p>Valida el correo electrónico</p>
       </header>

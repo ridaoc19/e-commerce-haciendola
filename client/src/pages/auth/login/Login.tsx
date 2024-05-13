@@ -9,6 +9,7 @@ import useValidations from '../../../hooks/useValidations/useValidations';
 import { HandleChangeText, HandleClick } from '../../../interfaces/global.interface';
 import { TypeDashboard } from '../../../interfaces/user.interface';
 import { RequestMapUser, RouteUser } from '../../../services/user/userRequest';
+import { Link } from 'react-router-dom';
 
 export enum LoginButtonName {
   Reset = 'reset',
@@ -67,7 +68,9 @@ function Login() {
         <div className="login__form--content">
 
           <header className="form__header--content">
-            {Svg({ type: "logo", height: 80, width: 80, color: '#ff0d58' })}
+            <Link to={'/'}>
+              {Svg({ type: 'logo' })}
+            </Link>
             <h2>¡Bienvenido!</h2>
             <p>Ingresa tus datos para iniciar sesión</p>
           </header>
