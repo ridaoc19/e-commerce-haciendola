@@ -192,7 +192,7 @@ export default {
           },
           json: {
             field: 'file_create',
-            message: 'Imágenes actualizadas correctamente',
+            message: `Se ${imagesCreated.length === 1 ? `guardo ${imagesCreated.length} archivo` : `guardarón ${imagesCreated.length} archivos`}  y en ${entity} - ${location} hay un totoal de ${files.length === 1 ? `${files.length} archivo`: `${files.length} archivos` }`,
             status_code: 201,
             status: StatusHTTP.created_201,
           },
@@ -224,7 +224,7 @@ export default {
         },
         json: {
           field: 'file_create',
-          message: 'Imágenes actualizadas correctamente',
+          message: `Se cargarón ${files.length} archivos, en ${entity} - ${location}`,
           status_code: 201,
           status: StatusHTTP.created_201,
         },
