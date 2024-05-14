@@ -20,7 +20,7 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
   return (
     <>
       {listProduct.length > 0 && listProduct.map(([key, value]: [string, Value], index: number) => {
-        const typedKey = key as Key; // Type assertion
+        const typedKey = key as Key;
         return (
           <div key={index} className="product-creation-list">
             <div className="product-creation-list__title">

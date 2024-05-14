@@ -19,9 +19,6 @@ function Navbar() {
           {Svg({ type: 'logo' })}
         </Link>
       </div>
-      {/* <div className='navbar__cart--container'>
-        {Svg({ type: "shop", color: "white" })}
-      </div> */}
       <div className='navbar__login'>
         <Login />
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import './select.scss'; // Importamos los estilos de SCSS
+import './select.scss';
 
 interface Option {
   value: string | number;
@@ -15,7 +15,7 @@ interface SelectProps {
 
 const Select: React.FC<SelectProps> = ({ options, value, onChange, disabled }) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(e.target.value); // Aquí no hay problemas, ya que el valor siempre será un string o un número en HTMLSelectElement
+    onChange(e.target.value);
   };
 
   return (

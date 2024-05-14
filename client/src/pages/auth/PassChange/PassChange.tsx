@@ -25,8 +25,7 @@ function PassChange() {
   const { getValidationErrors } = useValidations();
   const { dashboard: { dispatchDashboard, stateDashboard: { login }, clearUser } } = useContext(CreateContext)
   const { tools } = useMutationUser();
-  // const { userData } = getUserQueryData();
-
+  
   const initialStateChange: InitialStateChange = {
     change: { email: login.user?.email || "", password: "", newPassword: "" },
     error: { email: "", password: "", newPassword: "" },
@@ -35,6 +34,7 @@ function PassChange() {
 
   useEffect(() => {
     if (!login.user.email) return navigate('/login')
+      // eslint-disable-next-line
   }, [login])
 
   const handleChangeChange: HandleChangeText = ({ target: { name, value } }) => {

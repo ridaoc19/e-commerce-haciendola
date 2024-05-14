@@ -80,12 +80,9 @@ export default {
         return product.images
       }).filter(Boolean);
       
-      console.log(filteredFilesDB)
       if (filteredFilesDB.length > 0) {
         await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filteredFilesDB })
       }
-
-      // await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filterDelete })
 
       successHandler({
         res,

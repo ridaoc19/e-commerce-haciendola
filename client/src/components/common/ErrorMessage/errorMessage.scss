@@ -1,4 +1,3 @@
-/* Estilos para el scrollbar */
 .messages-general__container {
   position        : fixed;
   top             : 20px;
@@ -57,37 +56,25 @@
   }
 }
 
-/* Establecer animación de salida */
 .error-container.hide {
   animation: slideOut 0.5s ease-in-out forwards;
   right    : -1%;
 }
 
 .error-container::-webkit-scrollbar {
-  width        : 0.5rem;
-  /* Ancho del scrollbar */
-  height       : 12px;
-  /* Altura del scrollbar para que aparezca a la izquierda */
-  // overflow-x: hidden;
-  /* Oculta el scrollbar horizontal */
-  direction    : rtl;
-  /* Cambia la orientación a derecha-izquierda */
-  /* Ancho del scrollbar */
+  width    : 0.5rem;
+  height   : 12px;
+  direction: rtl;
 }
 
 .error-container::-webkit-scrollbar-thumb {
   background-color: #888;
-  /* Color de fondo del thumb (barra deslizante) */
-  // border-radius: 6px; /* Bordes redondeados del thumb */
 }
 
 .error-container::-webkit-scrollbar-track {
   background-color: #f1f1f1;
-  /* Color de fondo del track (barra completa) */
 }
 
-/* Estilos adicionales para Firefox */
-/* Es necesario agregar esto para que los estilos se apliquen correctamente en Firefox */
 .error-container * {
   scrollbar-color: #888 #f1f1f1;
   scrollbar-width: thin;

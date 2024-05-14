@@ -7,8 +7,6 @@ const { useEffect, useState, RouteAdvertising } = react;
 const { useLocation } = RouterDom;
 
 interface FormAdvertisingProps extends ParamsChildren {
-  // advertising: Partial<IContextData['advertising']['advertisingContextState']['advertisingData']['data']['dataAdvertising']>;
-  // location: IAdvertising.TotalLocation;
   componentMount?: RefObject<HTMLDivElement>;
   title: string
 }
@@ -16,7 +14,6 @@ interface FormAdvertisingProps extends ParamsChildren {
 function FormAdvertising({ advertising, location, componentMount, title }: FormAdvertisingProps) {
   const { dashboard: { stateDashboard: { permits: { edit } } } } = useContext(CreateContext)
   const { tools: { mutate }, isLoading, error, status } = useMutationAdvertising();
-  // const { tools: { mutate, resetError }, isLoading, error, status } = useMutationAdvertising();
   const { ModalComponent, closeModal, openModal } = useModalConfirm()
   const { mediaQuery } = useMediaQuery();
   const { pathname } = useLocation();
@@ -35,7 +32,7 @@ function FormAdvertising({ advertising, location, componentMount, title }: FormA
   useEffect(() => {
     if (status === 'success') {
       setStateInput(initialStateFormAdvertising);
-      const inputElement = document.getElementById(`input__images`) as HTMLInputElement | null; //limpia input files
+      const inputElement = document.getElementById(`input__images`) as HTMLInputElement | null;
       if (inputElement) inputElement.value = '';
     } else if (status === 'error' && error?.errors) {
       const restructureError = Object.keys(stateInput.error).reduce((acc, key) => {

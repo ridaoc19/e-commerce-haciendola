@@ -24,10 +24,6 @@ function useMutationAdvertising() {
     },
   });
 
-  // function mutate<T extends RouteAdvertising>({ route, options }: { route: T, options: Omit<RequestMapAdvertising[T], 'route' | 'data'> }) {
-  //   getMutate({ route, options })
-  // }
-
   const tools = {
     mutate<T extends RouteAdvertising>({ route, options }: { route: T, options: Omit<RequestMapAdvertising[T], 'route' | 'data'> }) {
       getMutate({ route, options })
@@ -39,7 +35,6 @@ function useMutationAdvertising() {
       reset();
     },
   }
-
 
 
   return { isLoading: isPending, error, isSuccess, isError, status, tools };

@@ -4,7 +4,7 @@ import UserEntity from "../entity";
 
 function stopExecutionTemporarily() {
   return new Promise(resolve => {
-    setTimeout(resolve, 5 * 60 * 1000); // Esperar 10 minutos (10 * 60 segundos * 1000 milisegundos)
+    setTimeout(resolve, 5 * 60 * 1000); 
   });
 }
 
@@ -16,7 +16,7 @@ export async function userCreatedVerified({ user_id }: UserCreatedVerified) {
   const userRepository = AppDataSource.getRepository(UserEntity);
   try {
     await stopExecutionTemporarily();
-    // const userDBOne = await User.findById(_id)
+    
     const responseUserOne = await userRepository.findBy({ user_id })
     if (!responseUserOne) throw new Error(`se presento un inconveniente al solicitar información del usuario`)
     const userDBOne = responseUserOne[0]
@@ -26,7 +26,7 @@ export async function userCreatedVerified({ user_id }: UserCreatedVerified) {
     } else if (userDBOne?.verified) return
 
     await stopExecutionTemporarily();
-    // const userDBTwo = await User.findById(_id)
+    
     const responseUserTwo = await userRepository.findBy({ user_id })
     if (!responseUserTwo) throw new Error(`se presento un inconveniente al solicitar información del usuario en la segunda notificación`)
     const userDBTwo = responseUserOne[0]
@@ -34,7 +34,7 @@ export async function userCreatedVerified({ user_id }: UserCreatedVerified) {
       const responseEmailTwo: boolean = await sendEmail({ name: userDBTwo.name, email: userDBTwo?.email, type: 'secondNotificationRegistre' })
       if (!responseEmailTwo) throw new Error(`Error al enviar el segundo correo`)
       await userRepository.softRemove(userDBTwo);
-      // await User.findByIdAndDelete(_id)
+      
     } else if (userDBOne?.verified) return
 
   } catch (error) {

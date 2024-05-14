@@ -55,7 +55,6 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query, se
     // eslint-disable-next-line
   }, [status])
 
-  // Función para manejar cambios en los campos de texto
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     const { message, stop } = getValidationErrors({ name, value })
@@ -64,10 +63,8 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query, se
     setError(prevState => ({ ...prevState, [name]: message }))
   };
 
-  // Función para manejar el envío del formulario
   const handleSubmit: HandleClick = (e) => {
     e.preventDefault();
-    // Agregar los campos de objeto al estado de datos del formulario
     if (requestData) {
       executeProductMutation({ route, options: { ...options, requestData } });
     } else {
@@ -85,20 +82,6 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query, se
               return (
                 <div key={index} className='product-creation__forms-images'>
                   <h5>{name}</h5>
-
-
-                  {/* <div key={index} className="advertising-form__input-images"> */}
-                  {/* <Button
-                      button={{
-                        type: 'light',
-                        disabled: status.isLoadingProduct,
-                        text: status.isLoadingProduct ? <Spinner /> : `Agregar Imágenes a ${entity}`,
-                        handleClick: (e) => {
-                          e.preventDefault()
-                          openModal(entity, 'images')
-                        }
-                      }}
-                    /> */}
 
                   <RenderImages
                     modal={{
@@ -118,43 +101,7 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query, se
                       }));
                     }}
                   />
-
-                  {/* <h5>{name}</h5>
-                    <div>
-                      <div className='list' style={{ display: 'flex' }}>
-                        {value.map((item, i) => {
-                          return (
-                            <div key={i}>
-                              {<img src={item} height={"100%"} alt={``} />}
-                              <Button button={{
-                                type: 'dark', text: "Eliminar Imagen", handleClick: (e) => {
-                                  e.preventDefault()
-                                  setRequestData((prevData: { [x: string]: any[]; }) => ({
-                                    ...prevData,
-                                    [name]: prevData[name].filter((_, index) => index !== i)
-                                  }));
-                                },
-                              }} />
-                            </div>
-                          )
-                        })}
-                      </div>
-                    </div> */}
-                  {/* </div> */}
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
-
               )
 
             } else {

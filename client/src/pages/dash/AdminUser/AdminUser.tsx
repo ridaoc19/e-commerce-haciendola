@@ -47,8 +47,6 @@ function AdminUser() {
           <SelectedUser stateUserAdmin={stateUserAdmin} />
         </div>
 
-
-
         <div className="admin-user__select">
           <label htmlFor="roles">Roles:</label>
           <select id="roles" disabled={!stateUserAdmin.change.roles} name="roles" value={stateUserAdmin.change.roles} onChange={handleChangeUserAdmin}>

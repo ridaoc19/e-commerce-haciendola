@@ -27,25 +27,16 @@ function ListProducts() {
 
             <div className="header__group-totalizer">
               Viendo {currentIndex} de {paginationTotal} páginas - {listProducts.length} de {totalProduct} productos
-              {/* De un total de {totalProduct} Productos filtrados, estamos Mostrando {listProducts.length} productos, en la posición {currentIndex} de {paginationTotal} paginas */}
             </div>
           </div>
 
           {<div className="header__button">
-            {/* {mediaQuery === 'phone' && <div className="header__button"> */}
             {mediaQuery === 'phone' && <Button button={{
               type: filterType === 'flexible' ? 'dark' : "light", text: "filtro", handleClick: () => {
                 setIsButtonFilter(true)
                 setStateListProduct(prevState => ({ ...prevState, filterType: 'flexible' }))
               }
             }} />}
-            {/* <Button button={{
-              type: filterType === 'strict' ? 'dark' : "light", text: "filtro estricto", handleClick: () => {
-                setIsButtonFilter(true)
-                setStateListProduct(prevState => ({ ...prevState, filterType: 'strict' }))
-              }
-            }} /> */}
-            {/* <Button button={{ type: "light", text: "Orden", handleClick: () => { } }} /> */}
             <div className={`header__button-close ${isButtonFilter && mediaQuery === 'phone' ? "open" : "close"}`}>
               <Button button={{ type: "dark", text: "", handleClick: () => setIsButtonFilter(false) }} svgLeft={{ type: "close", color: 'white' }} />
             </div>

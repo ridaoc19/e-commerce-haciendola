@@ -30,7 +30,6 @@ const reducer: IMessagesReducer.Reducer = (state, action) => {
 
   switch (action.type) {
     case IMessagesReducer.keyDashboard.MESSAGE_UPDATE:
-      // const messagesPayload = action.payload.filter(e => e.field === 'general')
       const messages = action.payload.length === 0 ? [] : [...state.messages, ...action.payload]
       return { ...state, messages }
 

@@ -15,7 +15,7 @@ app.use(morgan('dev'));
 app.use(cors())
 
 app.use(validatorsMiddlewareGlobal)
-app.use(filesMiddleware) // limpiar imágenes
+app.use(filesMiddleware)
 
 app.use("/", router)
 

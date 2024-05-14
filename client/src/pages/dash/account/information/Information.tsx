@@ -80,12 +80,10 @@ export default Information;
 
 
 function compareUserAndAccount(user: IUser.UserData, stateAccountInfo: InitialStateAccountInfo['change']): boolean {
-  // Verificar que los IDs de usuario sean iguales
   if (user.user_id !== stateAccountInfo.user_id) {
     return false;
   }
 
-  // Verificar que los campos específicos sean iguales o hayan cambiado
   if (user.name !== stateAccountInfo.name ||
     user.lastName !== stateAccountInfo.lastName ||
     user.email !== stateAccountInfo.email ||
@@ -93,11 +91,9 @@ function compareUserAndAccount(user: IUser.UserData, stateAccountInfo: InitialSt
     return false;
   }
 
-  // Verificar si el campo newEmail está presente en stateAccountInfo y es diferente
   if (stateAccountInfo.newEmail !== undefined && stateAccountInfo.newEmail !== user.email) {
     return false;
   }
 
-  // Si no se encontraron diferencias, entonces los objetos son iguales o tienen la misma información
   return true;
 }

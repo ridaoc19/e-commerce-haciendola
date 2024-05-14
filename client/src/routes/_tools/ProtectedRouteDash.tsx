@@ -3,8 +3,6 @@ import { Navigate, Outlet } from "react-router-dom";
 import { CreateContext } from "../../hooks/useContext";
 
 function ProtectedRouteDash() {
-  // const { data: { getUserQueryData } } = useMutationUser();
-  // const { userData } = getUserQueryData()
   const { dashboard: { stateDashboard: { login: {user} } } } = useContext(CreateContext)
 
 
@@ -16,14 +14,3 @@ function ProtectedRouteDash() {
 }
 
 export default ProtectedRouteDash;
-
-
-// function ProtectedRouteDash() {
-//   return (
-//     <div>
-      
-//     </div>
-//   );
-// }
-
-// export default ProtectedRouteDash;

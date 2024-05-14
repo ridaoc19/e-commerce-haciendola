@@ -74,7 +74,6 @@ export default {
       }
 
       await advertisingRepository.delete(existingAdvertising);
-      // await advertisingRepository.softRemove(existingAdvertising);
 
       const allAdvertising = await getAllAdvertising()
 
@@ -115,23 +114,6 @@ export default {
 export const getAllAdvertising = async () => {
   const advertisingRepository = AppDataSource.getRepository(AdvertisingEntity);
   const allAdvertising = await advertisingRepository.find();
-
-  // const getTopViewedProducts = await AppDataSource
-  //   .getRepository(NavigationEntity)
-  //   .createQueryBuilder("navigation")
-  //   .orderBy("navigation.product_view", "DESC")
-  //   .leftJoinAndSelect('navigation.product', 'product')
-  //   .leftJoinAndSelect('product.variants', 'variants')
-  //   .take(15)
-  //   .getMany();
-
-  // const topViewedProducts = getTopViewedProducts.map(({ product: { product_id, brand, product, variants } }) => {
-  //   return {
-  //     product_id, product, brand,
-  //     images: variants[0].images[0],
-  //     price: variants.map(e => e.price)
-  //   }
-  // })
 
   return { dataAdvertising: allAdvertising, topViewedProducts: [] }
 }

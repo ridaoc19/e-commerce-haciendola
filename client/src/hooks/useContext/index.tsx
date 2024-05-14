@@ -7,20 +7,12 @@ import StateNavigation from "./navigation/State";
 import { INavigatorReducer, initialStateNavigation } from "./navigation/reducer";
 import { IMessagesReducer, initialStateMessages } from "./messages/reducer";
 
-// Obtén el tipo de retorno de la función StateDashboard
 type StateDashboardReturnType = ReturnType<typeof StateContextDashboard>;
 export interface IContextData {
   dashboard: StateDashboardReturnType
-  // dashboard: {
-  //   state: IDashReducer.AppState;
-  //   dispatch: React.Dispatch<IDashReducer.AppAction>;
-  // };
   navigation: {
     navigationContextState: INavigatorReducer.AppState,
     navigationContextDispatch: React.Dispatch<INavigatorReducer.AppAction<INavigatorReducer.AppState>>
-    // tools: {
-    //   solicitud: () => void
-    // }
   };
   advertising: {
     advertisingContextState: IAdvertisingReducer.AppState,

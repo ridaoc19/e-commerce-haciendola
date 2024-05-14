@@ -57,7 +57,6 @@ async function apiUser<R extends keyof RequestMapUser>(data: RequestMapUser[R]):
 }
 
 
-// Función que realiza las solicitudes a la API
 export function userRequest<T extends RouteUser>(route: T): { options: (options: Omit<RequestMapUser[T], 'route' | 'method'>) => Promise<MakeUserRequestReturn> } {
   return {
     options: async (options: Omit<RequestMapUser[T], 'route' | 'method'>) => {

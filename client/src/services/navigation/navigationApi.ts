@@ -55,7 +55,6 @@ async function apiNavigation<R extends keyof RequestMapNavigation>(data: Omit<Re
 }
 
 
-// Función que realiza las solicitudes a la API
 export function navigationRequest<T extends RouteNavigation>(route: T): {
   options: (options: Omit<RequestMapNavigation[T], 'route' | 'data'>) => Promise<MakeNavigationRequestReturn & { data: RequestMapNavigation[T]['data'] }>
 } {

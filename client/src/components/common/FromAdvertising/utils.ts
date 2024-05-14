@@ -23,15 +23,7 @@ interface InitialStateFormAdvertising {
   status: "save" | "edit" | "delete"
 }
 
-// interface FormAdvertisingProps {
-//   advertising: Partial<IContextData['advertising']['advertisingContextState']['advertisingData']['data']['dataAdvertising']>;
-//   location: IAdvertising.TotalLocation;
-//   componentMount?: RefObject<HTMLDivElement>;
-//   title: string
-// }
-
 export type {
-  // FormAdvertisingProps,
   InitialStateFormAdvertising
 };
 

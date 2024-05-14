@@ -6,7 +6,7 @@ import UserEntity from "../entity";
 
 function stopExecutionTemporarily() {
   return new Promise(resolve => {
-    setTimeout(resolve, 5 * 60 * 1000); // Esperar 10 minutos (10 * 60 segundos * 1000 milisegundos)
+    setTimeout(resolve, 5 * 60 * 1000); 
   });
 }
 
@@ -15,7 +15,7 @@ export async function userEmailVerified({ user_id, newEmail, res, req }: { user_
 
   try {
     await stopExecutionTemporarily();
-    // const userDBOne = await User.findById(_id)
+    
     const userDBOne = await userRepository.findOne({ where: { user_id } })
 
     if (!userDBOne) throw new Error(`se presento un inconveniente al solicitar información del usuario`)
@@ -26,13 +26,13 @@ export async function userEmailVerified({ user_id, newEmail, res, req }: { user_
     } else if (userDBOne?.email === newEmail) return
 
     await stopExecutionTemporarily();
-    // const userDBTwo = await User.findById(_id)
+    
     const userDBTwo = await userRepository.findOne({ where: { user_id } })
 
     if (!userDBTwo) throw new Error(`se presento un inconveniente al solicitar información del usuario en la segunda notificación`)
     userDBTwo.verifiedEmail = true
     await userRepository.save(userDBTwo);
-    // await User.findByIdAndUpdate(_id, { verifiedEmail: true })
+    
 
     if (userDBTwo?.email !== newEmail) {
       const responseEmailTwo: boolean = await sendEmail({ name: userDBTwo.name, email: newEmail, type: 'secondNotificationEmail' })
