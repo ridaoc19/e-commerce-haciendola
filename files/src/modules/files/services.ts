@@ -30,6 +30,7 @@ export default {
         }
       }) : []
 
+    
       //! EXCEL
       if (typeFile === 'excel') {
         if (imagesCreated.length === 0) {
@@ -192,8 +193,11 @@ export default {
   },
 
   async addSelected(req: Request, res: Response) {
+
     try {
       const selected = req.query.selected === 'false' ? false : true
+
+      console.log({query: req.query, body: req.body})
 
 
       if (Array.isArray(req.body.add) && req.body.add.length > 0) {
