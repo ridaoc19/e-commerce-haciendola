@@ -58,15 +58,15 @@ function useAdminImages({ location, entity }: { location: string, entity: string
       return requestData;
     },
     onSuccess({ data, status_code, field, message }, { route }) {
-      
-      messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: [{ status_code, field, message }] })
+      console.log({ route, field })
       if (field === 'file_create_excel') {
+        messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: [{ status_code, field, message }] })
         onClose()
-        // queryClient.setQueryData([IFiles.QUERY_KEY_FILES.Excel], data);
       } else {
         if (route === RouteFiles.FilesRequest) {
           queryClient.setQueryData([IFiles.QUERY_KEY_FILES.Files], data);
         } else {
+          messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: [{ status_code, field, message }] })
           const inputElement = document.getElementById(`input__images`) as HTMLInputElement | null; //limpia input files
           if (inputElement) inputElement.value = '';
           queryClient.invalidateQueries({ queryKey: [IFiles.QUERY_KEY_FILES.Files] })
