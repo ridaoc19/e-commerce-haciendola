@@ -25,13 +25,11 @@ async function apiFiles<R extends keyof RequestMapFiles>(data: Omit<RequestMapFi
   try {
     const fetchOptions: RequestInit = {
       method: method,
-      // headers: { 'Content-Type': 'application/json' }
     };
     if (method !== Method.Get && 'requestData' in data) {
       const convert = convertFromData(data.requestData as RequestMapFiles[RouteFiles.FilesCreateDelete]['requestData'])
 
       fetchOptions.body = convert!
-      // fetchOptions.body = JSON.stringify(data.requestData)
     };
 
     const responseApi = await fetch(`${process.env.REACT_APP_SERVER_FILE}/${route}${'extensionRoute' in data ? `${data.extensionRoute}` : ""}`, fetchOptions)
@@ -60,7 +58,6 @@ async function apiFiles<R extends keyof RequestMapFiles>(data: Omit<RequestMapFi
 }
 
 
-// Función que realiza las solicitudes a la API
 export function filesRequest<T extends RouteFiles>(route: T): {
   options: (options: Omit<RequestMapFiles[T], 'route' | 'data'>) => Promise<MakeFilesRequestReturn & { data: RequestMapFiles[T]['data'] }>
 } {

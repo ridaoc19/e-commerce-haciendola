@@ -45,20 +45,16 @@
         margin    : 3px 10px;
       }
     }
-
   }
 
   &__id {
     margin-top: 1rem;
   }
 
-  &__title {}
-
   &__brand {
     display: flex;
     gap    : 0.5rem;
   }
-
 
   &__price {
     color: var(--font-button);
@@ -70,7 +66,5 @@
 
     }
   }
-
-  &__benefits {}
 
 }

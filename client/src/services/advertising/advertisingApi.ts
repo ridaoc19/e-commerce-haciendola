@@ -29,9 +29,6 @@ async function apiAdvertising<R extends keyof RequestMapAdvertising>(data: Omit<
       headers: { 'Content-Type': 'application/json' }
     };
     if (method !== Method.Get && 'requestData' in data) {
-      // const convert = convertFromData(data.requestData as Omit<IAdvertising.advertising, 'advertising_id'>)
-
-      // fetchOptions.body = convert!
       fetchOptions.body = JSON.stringify(data.requestData)
     };
 
@@ -61,7 +58,6 @@ async function apiAdvertising<R extends keyof RequestMapAdvertising>(data: Omit<
 }
 
 
-// Función que realiza las solicitudes a la API
 export function advertisingRequest<T extends RouteAdvertising>(route: T): {
   options: (options: Omit<RequestMapAdvertising[T], 'route' | 'data'>) => Promise<MakeAdvertisingRequestReturn & { data: RequestMapAdvertising[T]['data'] }>
 } {

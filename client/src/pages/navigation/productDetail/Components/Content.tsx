@@ -40,12 +40,6 @@ function Content({ stateProductDetail, listProductsData: { listProducts } }: Con
           <li>Peso: {grams}</li>
           <li>Stock: {stock}</li>
         </ul>
-        {/* {benefits.length > 0 && <h3>Acerca de este producto</h3>}
-        {benefits.map((ben, index) => (
-          <ul key={index}>
-            <li>{ben}</li>
-          </ul>
-        ))} */}
       </div>
 
     </div>

@@ -16,7 +16,6 @@ export const validatorsLocal: ValidateLocal = async ({ req, validationSchemas })
 
       if (!validationSchema) return;
 
-      // Pasamos el cuerpo completo de la solicitud al test
       const pathWithoutSlashAndExtras = req.path.match(/^\/([^\/]+)/);
       const capturedPart = pathWithoutSlashAndExtras ? pathWithoutSlashAndExtras[1] : null;
       await validationSchema.validate(fieldValue, { context: { reqBody: requestBody, route: capturedPart } });

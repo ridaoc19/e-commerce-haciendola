@@ -15,7 +15,7 @@ function useQueryUser<T extends RouteUser.Token>(route: T, options: Omit<Request
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     enabled,
-    retry: (_failureCount, error) => { //retry se configura para repetir si sale error y cuantas veces
+    retry: (_failureCount, error) => { 
       if (error.status_code === 401) localStorage.removeItem("token")
       return false
     },

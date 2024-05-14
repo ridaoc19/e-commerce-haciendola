@@ -2,7 +2,6 @@ import { SelectQueryBuilder } from "typeorm";
 import { findParentUUID } from "../findParentUUID";
 import ProductEntity from "../../../modules/product/entity";
 
-
 export interface GenerateFiltersReturn {
   category: string[]
 }
@@ -20,7 +19,6 @@ export const generateFilters = async (queryBuilder: SelectQueryBuilder<ProductEn
     .getMany();
 
   const uniqueCategories = await queryBuilder
-    // .andWhere(/* Otras condiciones si es necesario */)
     .select(['DISTINCT category.category'])
     .getRawMany();
 

@@ -22,10 +22,10 @@
         position        : absolute;
         left            : 0;
         width           : 100%;
-        background-color: #ffffff; // Color de fondo de la lista
+        background-color: #ffffff; 
         border          : 1px solid #ccc;
-        border-top      : none; // Eliminar el borde superior para que parezca una continuación del input
-        border-radius   : 0 0 5px 5px; // Bordes redondeados en la parte inferior
+        border-top      : none; 
+        border-radius   : 0 0 5px 5px; 
 
         &-ul {
           list-style: none;
@@ -40,15 +40,15 @@
             outline      : none;
 
             &:last-child {
-              border-bottom: none; // Eliminar el borde inferior del último elemento
+              border-bottom: none; 
             }
 
             &.selected {
-              background-color: #f0f0f0; // Color de fondo para el elemento seleccionado
+              background-color: #f0f0f0; 
             }
 
             &:hover {
-              background-color: #f9f9f9; // Cambia el color de fondo al pasar el ratón
+              background-color: #f9f9f9; 
             }
           }
 
@@ -73,7 +73,6 @@
         & li {
           padding      : 0.5rem;
           border-bottom: 1px solid var(--neutral-2);
-          // cursor: pointer;
           user-select  : none;
           outline      : none;
           display      : flex;
@@ -126,7 +125,6 @@
         &:focus {
           outline     : none;
           border-color: var(--brand-9);
-          /* Cambia el color del borde al enfocar */
         }
       }
     }

@@ -58,9 +58,7 @@ function SearchUser({ setStateUserAdmin, stateUserAdmin }: SearchUserProps) {
                 className={`admin-user__search-list-ul-li ${stateUserAdmin.change.user_id === user.user_id ? 'selected' : ''}`}
                 onClick={() => {
                   setStateUserAdmin(prevState => ({ ...prevState, change: user }))
-                }
-                  // onClick={() => setStateUserAdmin(prevState => ({ ...prevState, change: { user_id: user.user_id, roles: user.roles } }))
-                }>
+                }}>
                 <span>{user.name} {user.lastName}</span>
                 <span> {user.email}</span>
               </li>

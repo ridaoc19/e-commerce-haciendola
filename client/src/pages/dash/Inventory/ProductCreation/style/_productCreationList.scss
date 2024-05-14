@@ -23,7 +23,6 @@
   &__item {
     display      : flex;
     align-items  : center;
-    // padding: 0.5rem 0;
     border-bottom: 1px solid #eee;
 
     &-button {
@@ -35,20 +34,13 @@
 
     &:nth-child(odd) {
       background-color: var(--brand-2);
-      /* Color claro para las filas impares */
     }
 
     &:nth-child(even) {
       background-color: var(--brand-3);
-      /* Color oscuro para las filas pares */
     }
   }
 }
-
-
-
-
-
 
 .product-creation-list__edit,
 .product-creation-list__delete,

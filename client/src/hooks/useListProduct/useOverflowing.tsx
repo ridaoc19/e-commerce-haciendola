@@ -20,7 +20,6 @@ const useOverflowDetection = () => {
       resizeObserver.observe(overflowRef.current);
     }
 
-    // Cleanup the ResizeObserver on component unmount
     return () => {
       resizeObserver.disconnect();
     };

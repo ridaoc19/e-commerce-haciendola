@@ -8,7 +8,7 @@ import UserEntity from '../entity';
 
 function stopExecutionTemporarily() {
   return new Promise(resolve => {
-    setTimeout(resolve, 5 * 60 * 1000); // Esperar 10 minutos (10 * 60 segundos * 1000 milisegundos)
+    setTimeout(resolve, 5 * 60 * 1000); 
   });
 }
 
@@ -22,7 +22,7 @@ export async function userResetVerified({ user_id }: UserResetVerified) {
     const userRepository = AppDataSource.getRepository(UserEntity);
 
     await stopExecutionTemporarily();
-    // const userDBOne = await User.findById(_id)
+    
     const userDBOne = await userRepository.findOne({ where: { user_id } })
 
     if (!userDBOne) throw new Error(`se presento un inconveniente al solicitar información del usuario`)
@@ -32,18 +32,18 @@ export async function userResetVerified({ user_id }: UserResetVerified) {
     } else if (userDBOne?.verified) return
 
     await stopExecutionTemporarily();
-    // const userDBTwo = await User.findById(_id)
+    
     const userDBTwo = await userRepository.findOne({ where: { user_id } })
 
     if (!userDBTwo) throw new Error(`se presento un inconveniente al solicitar información del usuario en la segunda notificación`)
     if (!userDBTwo.verified) {
-      // crea y actualiza contraseña
+      
       const temporaryPassword: string = uuidv4().split("-", 1)[0];
       const password = await generateHashPassword(temporaryPassword)
 
       userDBTwo.password = password;
       await userRepository.save(userDBTwo);
-      // const userDB = await User.findByIdAndUpdate({ _id }, { password }, { new: true })
+      
       if (!userDBTwo) throw new Error(`Problema al guardar contraseña por no cambiar`)
 
       const responseEmailTwo: boolean = await sendEmail({ name: userDBTwo.name, email: userDBTwo?.email, type: "secondNotificationReset" })

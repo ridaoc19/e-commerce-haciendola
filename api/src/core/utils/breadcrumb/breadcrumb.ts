@@ -23,7 +23,6 @@ type Search = {
   data: Data[];
 }
 
-// Define el tipo de retorno para la función de breadcrumbs
 export type GetBreadcrumbsReturn =  Category | Product | Search | null;
 type GetEntityBreadcrumbs =  Category | Product | Search;
 
