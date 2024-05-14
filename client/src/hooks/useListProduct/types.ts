@@ -15,9 +15,6 @@ export interface ListProductHook {
   paginationTotal: number;
   totalProduct: number;
   setStateListProduct: Dispatch<SetStateAction<InitialStateListProduct>>
-  // handleClickFilterType: (filterType: InitialStateListProduct['filterType']) => void;
-  // heightContentFilter: number;
-  // setHeightContentFilter: Dispatch<SetStateAction<number>>
 }
 
 interface AllProducts {

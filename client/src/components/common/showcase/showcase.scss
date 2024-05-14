@@ -9,7 +9,7 @@
 
 
     >button {
-      width: 1.5rem;
+      width : 1.5rem;
       height: 1rem;
     }
   }
@@ -17,11 +17,8 @@
   .showcase__main {
     display           : grid;
     grid-auto-flow    : column;
-    /* Distribuye los elementos en columnas */
     grid-auto-columns : 1fr;
-    /* Columnas automáticas */
     grid-template-rows: 1fr;
-    /* Una sola fila */
     gap               : 1rem;
   }
 
@@ -31,7 +28,7 @@
     right   : 0;
 
     >button {
-      width: 1.5rem;
+      width : 1.5rem;
       height: 1rem;
     }
   }

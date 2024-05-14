@@ -164,20 +164,5 @@
 
   &.button_link {
     @include button_repeat(button_link);
-
-    //   background-color: transparent;
-    //   color           : #1677ff;
-    //   border          : 1px solid transparent;
-    //   text-decoration : underline;
-    //   white-space     : nowrap;
-    //   cursor          : pointer;
-    //   user-select     : none;
-    //   touch-action    : manipulation;
-    //   padding         : 0;
-
-    //   &:disabled {
-    //     color : var(--neutral-4);
-    //     cursor: default;
-    //   }
   }
 }

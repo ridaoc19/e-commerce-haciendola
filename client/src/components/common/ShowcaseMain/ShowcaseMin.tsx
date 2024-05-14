@@ -4,7 +4,6 @@ import './showcaseMin.scss';
 
 
 function ShowcaseMin({ children }: { children: ReactNode[], isButton?: boolean }) {
-  // function ShowcaseMin({ children }: { children: ReactNode, listProducts: ListProductHook['listProducts'], handleOnClick: (variant_id: Omit<IProduct.Variant, 'product'>) => {} }) {
   const [isOverflowed, setIsOverflowed] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 

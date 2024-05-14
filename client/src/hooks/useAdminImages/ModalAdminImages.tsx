@@ -63,7 +63,6 @@ function ModalAdminImages({
 
           {activeBlock === 'all' || activeBlock === 'stored' ? <BlockClose block='add' title={`Hay ${responseData.length} archivos guardados`} /> : <div
             className={`modal-main__images-stored`}
-          // onClick={() => toggleActiveBlock('stored')} // Manejo de clic para abrir/cerrar el bloque "stored"
           >
             <div className="modal-main__images-stored-title">
               <h3>Imágenes Almacenadas</h3>
@@ -108,7 +107,6 @@ function ModalAdminImages({
 
           {activeBlock === 'all' || activeBlock === 'add' ? <BlockClose block='stored' title={`Hay ${requestData.toStore.file.length} archivos pendientes para guardar`} /> : <div
             className={`modal-main__images-add ${mediaQuery}`}
-          // onClick={() => toggleActiveBlock('add')} // Manejo de clic para abrir/cerrar el bloque "add"
           >
             <div className="modal-main__images-add-input">
               <input

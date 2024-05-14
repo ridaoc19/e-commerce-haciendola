@@ -4,7 +4,6 @@ import { HandleClick } from '../../../interfaces/global.interface';
 
 
 
-// Interfaz para las props del componente Breadcrumb
 interface BreadcrumbProps {
   breadcrumb: RequestMapNavigation[RouteNavigation.NavigationListProduct]['data']['breadcrumb'] | undefined;
   handleOnClick?: HandleClick
@@ -13,7 +12,6 @@ interface BreadcrumbProps {
   redirect?: boolean;
 }
 
-// Componente Breadcrumb
 function Breadcrumb({ breadcrumb, viewHome = true, viewProduct = true, handleOnClick, redirect = true }: BreadcrumbProps) {
   const navigate = useNavigate()
   const homeObject = {

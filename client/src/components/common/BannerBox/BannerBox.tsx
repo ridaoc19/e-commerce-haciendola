@@ -3,16 +3,9 @@ import { ParamsChildren } from "../../../hooks/useAdvertising/useAdvertising";
 import InputAdvertising from "../FromAdvertising/FormAdvertising";
 import useMediaQuery from "../../../hooks/useMediaQuery";
 
-// interface BannerBoxProps {
-//   advertising: IContextData['advertising']['advertisingContextState'],
-//   location: IAdvertising.TotalLocation
-// }
 
 function BannerBox({ advertising, location, isFetching, isLoading }: ParamsChildren) {
   const { mediaQuery } = useMediaQuery()
-  // const advertisingData = { ...advertising.advertisingData, data: advertising.advertisingData.data.filter(e => e.location === location) }
-  // const { isFetching, isLoading, data } = advertisingData;
-  // if (advertising.length === 0) return null
   return (
     <>
       <div className="banner-box">
