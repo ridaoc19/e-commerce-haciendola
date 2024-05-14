@@ -13,10 +13,8 @@ function InitialNavigation() {
     useQuery<MakeNavigationRequestReturn & { data: RequestMapNavigation[RouteNavigation.NavigationMenu]['data'] }, ErrorNavigation>({
       queryKey: [IProduct.QUERY_KEY_PRODUCT.Navigation],
       queryFn: async () => await navigationRequest(RouteNavigation.NavigationMenu).options({}),
-      // onError: (error: ErrorNavigation) => error,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
-      // enabled: true,
     });
 
   useEffect(() => {

@@ -1,27 +1,20 @@
 .filters {
-  // font-family: 'Arial', sans-serif;
-  // border: 1px solid var(--brand-7);
-  // border-radius: 8px;
-  // margin: 20px;
   overflow-y      : auto;
   height          : 100%;
   background-color: var(--brand-1);
-  box-shadow: 4px 0 3px rgba(0, 0, 0, 0.2);
-  
+  box-shadow      : 4px 0 3px rgba(0, 0, 0, 0.2);
+
 
   .filters__content {
     padding: 10px;
 
     .filters__accordion-item {
-      // margin-bottom: 10px;
-      border          : 1px solid var(--brand-4);
-      // border-radius: 4px;
+      border: 1px solid var(--brand-4);
 
       .filters__accordion-header {
         padding         : 10px;
         background-color: var(--brand-3);
         cursor          : pointer;
-        // border-bottom: 1px solid var(--brand-4);
 
         &:hover {
           background-color: var(--brand-4);
@@ -37,11 +30,8 @@
         }
 
         .filters__items {
-          display              : flex;
-          flex-wrap            : wrap;
-          // align-items    : center;
-          // justify-content   : space-evenly;
-          // row-gap        : 0.8rem;
+          display  : flex;
+          flex-wrap: wrap;
 
           .filters__checked-container {
             flex            : auto;
@@ -59,15 +49,10 @@
             }
 
             label {
-              // background-color: var(--brand-5);
-              // padding         : 3px 5px;
               border-radius: 4px;
               cursor       : pointer;
 
-              &.filters__checked {
-                // background-color: var(--brand-9);
-                // color           : var(--font-light);
-              }
+              &.filters__checked {}
             }
           }
         }

@@ -100,7 +100,6 @@ function Login() {
                     handleClick: handleClickLogin,
                     id: `button__login--${item}`,
                     disabled: login.isLoading
-                    // disabled: (login.isLoading || item === LoginButtonName.Login) && login.errors.length > 0
                   }}
                 />
               ))}

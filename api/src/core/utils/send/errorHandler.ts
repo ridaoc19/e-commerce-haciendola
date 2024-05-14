@@ -23,7 +23,6 @@ export const errorHandlerCatch = ({ res, error }: { req: Request, res: Response,
 };
 
 export const errorHandlerArray = <T extends StatusHTTPError>({ res, json }: { req: Request, res: Response, json: MapStatusCode<string>[T] }) => {
-  
   res
     .status(json.status_code)
     .json(json);
@@ -31,7 +30,6 @@ export const errorHandlerArray = <T extends StatusHTTPError>({ res, json }: { re
 
 
 export const errorHandlerRes = <T extends StatusHTTPError>({ res, status_code, status, errors }: MapStatusCode<string>[T] & { req: Request, res: Response }) => {
-
   res
     .status(status_code)
     .json({

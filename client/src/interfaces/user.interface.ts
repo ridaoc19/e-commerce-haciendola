@@ -76,11 +76,6 @@ export type PayloadDashboard = {
   [TypeDashboard.DASHBOARD_LOGIN_DELETE_USER_ALL]: ''
 }
 
-
-
-
-// }
-
 /////////////////////////////////////////////
 export type PermitsRoles = {
   id: 'super' | 'admin' | 'edit' | 'visitant'

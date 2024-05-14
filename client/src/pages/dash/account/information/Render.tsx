@@ -3,10 +3,7 @@ import Svg from '../../../../components/assets/icons/Svg';
 import { CreateContext } from '../../../../hooks/useContext';
 
 function Render() {
-  // const { data: { getUserQueryData } } = useMutationUser();
-  // const { user } = getUserQueryData()
   const { dashboard: { stateDashboard: { login: { user } } } } = useContext(CreateContext)
-
 
   return (
     <div className='account-information__main-render'>

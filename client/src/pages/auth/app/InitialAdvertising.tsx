@@ -13,10 +13,8 @@ function InitialAdvertising() {
     useQuery<MakeAdvertisingRequestReturn & { data: RequestMapAdvertising[RouteAdvertising.AdvertisingRequest]['data'] }, ErrorAdvertising>({
       queryKey: [IAdvertising.QUERY_KEY_PRODUCT.Advertising],
       queryFn: async () => await advertisingRequest(RouteAdvertising.AdvertisingRequest).options({}),
-      // onError: (error: ErrorNavigation) => error,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
-      // enabled: true,
     });
 
   useEffect(() => {

@@ -20,7 +20,7 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
   return (
     <>
       {listProduct.length > 0 && listProduct.map(([key, value]: [string, Value], index: number) => {
-        const typedKey = key as Key; // Type assertion
+        const typedKey = key as Key;
         return (
           <div key={index} className="product-creation-list">
             <div className="product-creation-list__title">
@@ -28,7 +28,7 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
               {typedKey === 'category' && (
                 <div className="product-creation-list__title-new-department">
                   <button onClick={() => {
-                    setStateProductCreation(prevState => ({ ...prevState, mutation: { ...prevState.mutation, entity: 'category', paramId: '', route: RouteProduct.CategoryCreate } }))
+                    setStateProductCreation(prevState => ({ ...prevState, openModalForm: true, mutation: { ...prevState.mutation, entity: 'category', paramId: '', route: RouteProduct.CategoryCreate } }))
                   }}>
                     {Svg({ type: "increase", width: 16, height: 16 })}
                   </button>
@@ -62,6 +62,7 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
                       <button onClick={() => {
                         setStateProductCreation(prevState => ({
                           ...prevState,
+                          openModalForm: true,
                           mutation: {
                             ...prevState.mutation,
                             entity: typedKey,
@@ -77,6 +78,7 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
                       <button onClick={() => {
                           setStateProductCreation(prevState => ({
                             ...prevState,
+                            openModalForm: true,
                             mutation: {
                               ...prevState.mutation,
                               entity: typedKey,
@@ -92,6 +94,7 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
                         <button onClick={() => {
                           setStateProductCreation(prevState => ({
                             ...prevState,
+                            openModalForm: true,
                             mutation: {
                               ...prevState.mutation,
                               entity:'product',

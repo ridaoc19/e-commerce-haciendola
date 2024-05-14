@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import Message from "../../../../components/common/Message/Message";
 import ProductCreationForm from "../../../../components/common/ProductForm/ProductForm";
 import ProductCreationList from "./ProductCreationList";
 import ProductCreationSearch from "./ProductCreationSearch";
@@ -46,10 +47,13 @@ function ProductCreation() {
 
           <hr />
 
-          <div className="product-creation__form">
-            <h3>{entity}</h3>
-            {!!entity && <ProductCreationForm query={query} route={stateProductCreation.mutation.route} options={{ ...productEdit, paramId }} entity={entity} />}
-          </div>
+          <Message open={stateProductCreation.openModalForm} onClose={() => setStateProductCreation(prevState => ({ ...prevState, openModalForm: false }))} >
+            <div className="product-creation__form">
+              <h3>{entity}</h3>
+              {!!entity && <ProductCreationForm setStateProductCreation={setStateProductCreation} query={query} route={stateProductCreation.mutation.route} options={{ ...productEdit, paramId }} entity={entity} />}
+            </div>
+          </Message>
+
         </div>
       )}
     </div>

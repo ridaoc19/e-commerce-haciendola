@@ -5,23 +5,9 @@ import { ErrorNavigation, MakeNavigationRequestReturn, navigationRequest } from 
 import { RequestMapNavigation, RouteNavigation } from "../../../services/navigation/navigationRequest";
 import Input from "../Input/Input";
 import SearchCard from "./SearchCard";
-// import './search.scss';
 
 function SearchProduct() {
   const [search, setSearch] = useState("");
-
-  // const { data } = useQuery(
-  //   ['search', search],
-  //   async () => navigationRequest(RouteNavigation.NavigationSearch).options({ extensionRoute: `/${search}` }),
-  //   {
-  //     enabled: !!search,
-  //     refetchOnWindowFocus: false,
-  //     refetchOnMount: false,
-  //     onError(err: ErrorNavigation) {
-  //       return err;
-  //     },
-  //   }
-  // );
 
   const { data } = useQuery<MakeNavigationRequestReturn & { data: RequestMapNavigation[RouteNavigation.NavigationSearch]['data'] }, ErrorNavigation>({
     queryKey: ['search', search],
@@ -30,7 +16,6 @@ function SearchProduct() {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
   })
-  console.log(data);
   
   return (
     <div className="search" onMouseLeave={() => setSearch("")}>

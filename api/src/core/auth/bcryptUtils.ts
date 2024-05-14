@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 
-const saltRounds = 10; // Número de rondas de hashing (puedes ajustarlo según tus necesidades)
+const saltRounds = 10;
 
 export function generateHashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, saltRounds);

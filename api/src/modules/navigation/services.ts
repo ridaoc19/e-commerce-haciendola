@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-// import { v4 as uuidv4 } from 'uuid';
 import { Brackets } from 'typeorm';
 import { getBreadcrumbs } from '../../core/utils/breadcrumb/breadcrumb';
 import { findParentUUID } from '../../core/utils/findParentUUID';
@@ -52,7 +51,6 @@ export default {
       const values = Array.isArray(value) ? value : [value];
       return values.map((element: string) => element);
     }).flat();
-    // 
     try {
       const breadcrumb = await getBreadcrumbs(id);
 
@@ -75,7 +73,6 @@ export default {
         generateFiltersResponse = await generateFilters(filtersQueryBuilder, id, breadcrumb?.entity);
       }
 
-      // // Condición para el ID de navigation
       if (findParentUUID(id)) {
         queryBuilder.where(`${breadcrumb?.entity}.${breadcrumb?.entity}_id = :id`, { id });
 
@@ -96,13 +93,11 @@ export default {
         }));
       }
 
-      // // Seleccionar campos específicos
       let product = await queryBuilder
         .skip(Number(skip))
         .take(Number(take))
         .getMany();
 
-      // // Obtener el recuento total
       const totalCount = await queryBuilder.getCount();
 
       successHandler({
@@ -136,13 +131,11 @@ export default {
       const searchTerms = search.split(' ').join('|');
       queryBuilder
         .where(`LOWER(product.product::text) ~ LOWER(:regex)`, { regex: `(${searchTerms})` })
-      // Seleccionar campos específicos
       const filteredProducts = await queryBuilder
         .skip(0)
         .take(4)
         .getMany();
 
-      // Obtener el recuento total
       const totalCount = await queryBuilder.getCount();
 
       successHandler({
@@ -184,7 +177,6 @@ export default {
         } else {
           const searchTerms = id.split(' ').join('|');
           queryBuilder.where(`LOWER(${entity}.${entity}::text) ~ LOWER(:regex)`, { regex: `(${searchTerms})` })
-          // queryBuilder.where(`${entity}.${entity} ILIKE :productName`, { productName: `%${id}%` });
         }
       }
 
@@ -195,12 +187,8 @@ export default {
       }
 
       await queryBuilder
-        // .skip(0)
-        // .take(15)
         .getMany();
 
-      // // Obtener el recuento total
-      // totalCount = await queryBuilder.getCount();
 
       let category = await queryBuilder
         .select(['DISTINCT ON (category.category) category.category, category.category_id'])
@@ -209,7 +197,6 @@ export default {
       category = category.length > 0 && category[0].category_id ? category : []
 
       let product = await queryBuilder
-        // .select(['DISTINCT ON (product.product) product.product, product.product_id, product.price, product.'])
         .select(['DISTINCT ON (product.product) product.product_id, product.product, product.description, product.price, product.listPrice, product.images, product.stock, product.handle, product.barcode, product.sku, product.grams'])
         .getRawMany();
 

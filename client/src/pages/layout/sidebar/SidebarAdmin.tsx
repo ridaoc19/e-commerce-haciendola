@@ -12,7 +12,6 @@ export namespace ISidebar {
     value: StateDashboard['component'];
     type: string;
     svg: SvgType;
-    // roles: PermitsRoles['roles'];
   };
 }
 
@@ -25,8 +24,6 @@ const item: ISidebar.ItemRole[] = [
 
 function SidebarAdmin({ handleOnClick, isOpenMenu }: { handleOnClick: () => void, isOpenMenu: boolean }) {
   const { dashboard: { dispatchDashboard, stateDashboard: { permits, login } } }: IContextData = useContext(CreateContext)!
-  // const { data: { getUserQueryData } } = useMutationUser();
-  // const { userData } = getUserQueryData()
 
   return (
     <div className='sidebar__section-left'>
@@ -68,15 +65,3 @@ function SidebarAdmin({ handleOnClick, isOpenMenu }: { handleOnClick: () => void
 }
 
 export default SidebarAdmin;
-
-
-
-// function SidebarAdmin() {
-//   return (
-//     <div>
-      
-//     </div>
-//   );
-// }
-
-// export default SidebarAdmin;

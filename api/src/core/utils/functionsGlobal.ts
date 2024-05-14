@@ -13,9 +13,6 @@ export const objectString = (data: Record<string, string>) => {
 
 
 export const stringEmpty = (text: string): string => {
-  // Eliminar caracteres especiales y espacios, conservando letras con tilde y la letra ñ
   const sinCaracteresEspeciales = text.replace(/[^\wáéíóúüñ]+/g, '');
-
-  // Convertir a minúsculas
   return sinCaracteresEspeciales.toLowerCase();
 };

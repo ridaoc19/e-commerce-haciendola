@@ -1,18 +1,12 @@
 import { Router } from "express";
 import filesServices from './services';
-const { imagesCreateAndDelete, downloadImages, searchImages, requestFiles, addSelected } = filesServices;
+const { imagesCreateAndDelete, requestFiles, addSelected } = filesServices;
 
 const router = Router();
 
-router.post('/create-delete', imagesCreateAndDelete);
 router.get('/request', requestFiles)
-
-
-
-
+router.post('/create-delete', imagesCreateAndDelete);
 router.post('/add-selected', addSelected);
-router.get('/download', downloadImages)
-router.get('/search', searchImages)
 
 export { router };
 

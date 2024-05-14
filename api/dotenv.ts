@@ -11,15 +11,11 @@ const envVars = z.object({
   DB_USERNAME: z.string(),
   DB_PASSWORD: z.string(),
   DB_DATABASE: z.string(),
-  EMAIL_HOST: z.string(),
-  EMAIL_PORT: z.number(),
-  EMAIL_AUTH_USER: z.string().email(),
-  EMAIL_AUTH_PASS: z.string(),
-  EMAIL_SEND_FROM: z.string().email(),
   URL_CLIENT: z.string(),
   SECRET_KEY_JWT: z.string(),
   SECRET_KEY_JWT_EMAIL: z.string(),
-  EMAIL_RESEND: z.string().email()
+  EMAIL_RESEND: z.string().email(),
+  ADMIN_USER_EMAIL: z.string().email()
 });
 
 const envVarsSchema = Object.entries(process.env).reduce((acc, [key, value]) => {

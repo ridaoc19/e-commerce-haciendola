@@ -105,7 +105,7 @@ export default {
       userUpdate.password = password;
       userUpdate.verified = true;
       await userRepository.save(userUpdate);
-      // const userDB = await User.findOneAndUpdate({ email }, { password, verified: true }, { new: true })
+
       const userDB = userUpdate
       if (!userDB) throw new Error(`Se produjo un problema al intentar cambiar la contraseña. Por favor, inténtalo de nuevo más tarde o ponte en contacto con nosotros al correo haciendola.ecommerce@outlook.com. Disculpa las molestias.`)
       await fetchCount({})
@@ -126,20 +126,20 @@ export default {
     const userRepository = AppDataSource.getRepository(UserEntity);
     try {
       const userUpdate = await userRepository.findOne({ where: { email: req.body.email } })
-      // const userDB = await User.findOne({ email: req.body.email })
+
       if (!userUpdate) return
 
       const temporaryPassword: string = uuidv4().split("-", 1)[0];
       const password = await generateHashPassword(temporaryPassword)
 
-      // const userUpdateDB = await User.findByIdAndUpdate(userDB!._id, { password, verified: false }, { new: true })
+
       userUpdate.password = password;
       userUpdate.verified = false;
       await userRepository.save(userUpdate);
 
       if (!userUpdate) throw new Error(`Se produjo un problema al restablecer la contraseña. Por favor, inténtalo de nuevo más tarde o ponte en contacto con nosotros al correo haciendola.ecommerce@outlook.com. Disculpa las molestias.`)
       const { user_id, name, email } = userUpdate;
-      await fetchCount({ user_id, name }) ///////////
+      await fetchCount({ user_id, name })
 
       const responseEmail: boolean = await sendEmail({ name, email, password: temporaryPassword, type: "reset" })
       if (!responseEmail) return errorHandlerRes<StatusHTTP.badRequest_400>({
@@ -190,7 +190,7 @@ export default {
       let { user_id, name, lastName, email, newEmail, phone } = req.body;
 
       let verifiedEmailUpdate = true
-      // enviar mensaje para validar correo 
+
       if (newEmail !== email) {
         let token = generateTokenEmail({ user_id, email: newEmail })
         const responseEmail: boolean = await sendEmail({ tokenEmail: token, name, email: newEmail, type: 'validateEmail' })
@@ -218,7 +218,7 @@ export default {
       userUpdate.phone = phone;
       userUpdate.verifiedEmail = verifiedEmailUpdate
       await userRepository.save(userUpdate);
-      // const userDB = await User.findByIdAndUpdate(_id, { name, lastName, phone, verifiedEmail: verifiedEmailUpdate }, { new: true })
+
       if (!userUpdate) throw new Error(`Se presento un inconveniente al realizar el registro`)
       await fetchCount({})
 
@@ -241,7 +241,7 @@ export default {
     try {
       let { user_id, newPassword: temporaryPassword } = req.body;
       const password = await generateHashPassword(temporaryPassword)
-      // const userDB = await User.findByIdAndUpdate({ _id }, { password, verified: true }, { new: true })
+
       const userUpdate = await userRepository.findOne({ where: { user_id } })
       if (!userUpdate) return
       userUpdate.password = password;
@@ -277,7 +277,7 @@ export default {
       previousRoles = userUpdate.roles
       userUpdate.roles = roles
       await userRepository.save(userUpdate);
-      // await User.findByIdAndUpdate(_id, { roles }, { new: true })
+
       const userDB = await userRepository.find()
       if (!userDB) throw new Error(`Se presento un inconveniente en actualizar los datos`)
       await fetchCount({})
@@ -300,7 +300,7 @@ export default {
 
     try {
       let { user_id } = req.params;
-      // await User.findByIdAndDelete(_id)
+
       const userDelete = await userRepository.findOne({ where: { user_id } })
       if (!userDelete) return
       await userRepository.softRemove(userDelete);
@@ -353,7 +353,7 @@ export default {
       userUpdate.email = decoded.email;
       userUpdate.verifiedEmail = true;
       await userRepository.save(userUpdate);
-      // const userDB = await User.findByIdAndUpdate({ _id: decoded._id }, { email: decoded.email, verifiedEmail: true }, { new: true })
+
       if (!userUpdate) throw new Error(`Se produjo un error al validar el nuevo correo electrónico, por favor solicita el cambio de correo nuevamente`)
       successHandler({
         dataDB: [userUpdate], res, json: {

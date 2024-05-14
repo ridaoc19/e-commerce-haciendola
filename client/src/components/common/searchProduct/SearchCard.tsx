@@ -9,13 +9,11 @@ interface SearchCardProps {
 
 function SearchCard({ listProduct, handleOnClick }: SearchCardProps) {
   const navigate = useNavigate()
-  const { product, product_id, images, price, listPrice, sku  } = listProduct;
-  
+  const { product, product_id, images, price, listPrice, sku } = listProduct;
+
 
   const handleCardClick = () => {
-    // Navegar a la ruta deseada
     navigate(`/product-detail/${product_id}`);
-    // También puedes ejecutar otras acciones si es necesario
     handleOnClick();
   };
 
@@ -23,14 +21,6 @@ function SearchCard({ listProduct, handleOnClick }: SearchCardProps) {
     <div className="search__card-content" onClick={handleCardClick}>
       <div className="card__breadcrumb">
         <p><strong>sku:</strong> {sku} - </p>
-        {/* <Breadcrumb viewHome={false} viewProduct={false} handleOnClick={handleOnClick} breadcrumb={{
-          entity: BreadcrumbType.Product,
-          data: [
-            { _id: category.category_id, name: category.category, name_id: 'category' },
-            { _id: product_id, name: product, name_id: 'product' },
-          ]
-        }}
-        /> */}
       </div>
       <div className="card__main">
         <div className="card__images">
@@ -46,7 +36,7 @@ function SearchCard({ listProduct, handleOnClick }: SearchCardProps) {
               <h4>{price}</h4>
             </div>
             {/* <div className="card__utils-button"> */}
-              {/* <Button button={{ type: "dark", text: 'Agregar', handleClick: () => { } }} /> */}
+            {/* <Button button={{ type: "dark", text: 'Agregar', handleClick: () => { } }} /> */}
             {/* </div> */}
           </div>
         </div>

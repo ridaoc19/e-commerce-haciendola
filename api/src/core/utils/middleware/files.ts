@@ -24,12 +24,9 @@ const filesMiddleware = async (req: Request, res: Response, next: NextFunction) 
         return [];
       }).filter(Boolean);
 
-      // console.log({ filterFilesBody }, 'body')
-
       if (method === 'POST' && filterFilesBody.length > 0) {
         await axios.post(`${process.env.URL_SERVER_FILES}/files/add-selected?selected=true`, { add: filterFilesBody })
       }
-
 
       if (method === 'PUT' || method === 'DELETE') {
         try {
@@ -40,10 +37,8 @@ const filesMiddleware = async (req: Request, res: Response, next: NextFunction) 
             errors: [{ field: `file_${method}`, message: `Error al enviar el ID de ${entity} del método ${method} por parámetro` }],
           });
 
-          // Importar la entidad dinámicamente
           let dynamicEntity = await import(`../../../modules/${entity}/entity`);
 
-          // Obtener el objeto de db
           const findElementDB = await AppDataSource
             .getRepository(dynamicEntity.default)
             .createQueryBuilder(entity)
@@ -68,35 +63,36 @@ const filesMiddleware = async (req: Request, res: Response, next: NextFunction) 
           if (filteredFilesDB.length > 0) {
 
             if (method === 'DELETE' && filteredFilesDB.length > 0) {
-              // console.log({ filteredFilesDB }, 'delete')
               await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filteredFilesDB })
             }
 
             if (method === 'PUT' && filterFilesBody.length > 0) {
-              // console.log({ filteredFilesDB })
               const filterDelete = filteredFilesDB.filter(e => !filterFilesBody.includes(e))
-              // console.log({ filterDelete }, 'put')
               if (filterDelete.length > 0) {
                 await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filterDelete })
               }
 
               await axios.post(`${process.env.URL_SERVER_FILES}/files/add-selected?selected=true`, { add: filterFilesBody })
+            } else if (method === 'PUT' && filteredFilesDB.length > 0) {
+              await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filteredFilesDB })
             }
             return next()
+
+          } else if (filterFilesBody.length > 0) {
+            await axios.post(`${process.env.URL_SERVER_FILES}/files/add-selected?selected=true`, { add: filterFilesBody })
           }
           return next()
         } catch (error) {
           console.error('Error en el middleware:', error);
-          errorHandlerCatch({error, req, res})
+          errorHandlerCatch({ error, req, res })
         }
       }
     }
 
     return next();
   } catch (error) {
-    // Manejar errores generales
     console.error('Error en el middleware:', error);
-    errorHandlerCatch({error, req, res})
+    errorHandlerCatch({ error, req, res })
   }
 };
 

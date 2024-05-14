@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import useValidations from "../../../hooks/useValidations/useValidations";
 import { HandleChangeText } from "../../../interfaces/global.interface";
 import Input from "../Input/Input";
-// import Button from "../button/Button";
 import RenderImages from "../../../hooks/useAdminImages/RenderImages";
 import useAdminImages from "../../../hooks/useAdminImages/useAdminImages";
 import { InitialStateFormAdvertising } from "./utils";
@@ -27,21 +26,6 @@ function FormAdvertisingForm({ initialStateFormAdvertising, stateInput, setState
     setStateInput(prevState => ({ ...prevState, change: { ...prevState.change, [selectedFiles.nameComponent]: selectedFiles.img[0] } }))
     // eslint-disable-next-line
   }, [selectedFiles])
-
-  // Función para manejar el estado de las imágenes
-  // const handleImageChange = (key: keyof InitialStateFormAdvertising['change'], files: FileList | null): void => {
-  //   if (files && files.length > 0) {
-  //     setStateInput((prevState) => ({
-  //       ...prevState,
-  //       change: {
-  //         ...prevState.change,
-  //         [key]: files[0],
-  //       },
-  //     }));
-  //   }
-  // };
-
-
 
   return (
     <>
@@ -74,25 +58,6 @@ function FormAdvertisingForm({ initialStateFormAdvertising, stateInput, setState
               setStateInput({ ...stateInput, change: { ...stateInput.change, [key]: "" } })
             }}
           />
-
-          //  <div key={index} className="advertising-form__input-images">
-          //     {ModalAdminImages}
-          //     <button onClick={() => {
-          //       openModal(key, 'images')
-          //     }}>Cargar {key}</button>
-          //     {/* <input id={`input__images`} multiple className={`input__images`} type="file" name={`images_${key}`} onChange={(event) => handleImageChange(key, event.target.files)} /> */}
-          //     <h5>{key}</h5>
-          //     <div>
-          //       {<img src={value} height={"100%"} alt={``} />}
-          //       <Button button={{
-          //         type: 'dark', text: "Eliminar Imagen", handleClick: () => {
-          //           const inputElement = document.getElementById(`input__images`) as HTMLInputElement | null; //limpia input files
-          //           if (inputElement) inputElement.value = '';
-          //           setStateInput({ ...stateInput, change: { ...stateInput.change, [key]: "" } })
-          //         },
-          //       }} />
-          //     </div>
-          //   </div>
         ))}
     </>
   );

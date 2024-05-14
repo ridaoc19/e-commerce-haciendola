@@ -39,14 +39,7 @@ function useMutationProduct() {
       return error;
     },
     onSuccess({ status_code, field, message }) {
-      // if (route === RouteProduct.AccountAdminGet || route === RouteProduct.AccountAdminDelete || route === RouteProduct.AccountAdminPut) {
-      //   console.log(route, "entro muchos")
       messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: [{ status_code, field, message }] })
-      queryClient.invalidateQueries({ queryKey: [IProduct.QUERY_KEY_PRODUCT.NavigationDashboard] })
-      // } else {
-      //   console.log(route, "entro uno")
-      //   queryClient.setQueryData([IProduct.QUERY_KEY_PRODUCT.SingleProduct], data);
-      // }
     },
   });
 
@@ -56,11 +49,6 @@ function useMutationProduct() {
       const productQueryData = queryClient.getQueryData<MakeProductRequestReturn | undefined>([IProduct.QUERY_KEY_PRODUCT.NavigationDashboard]);
       return { productData: productQueryData?.data[0] || null, productQueryData, isFetchingProduct: !!isFetchingProduct };
     },
-    // getAllProductQueryData() {
-    //   const isFetchingAllProduct = queryClient.isFetching({ queryKey: [IProduct.QUERY_KEY_PRODUCT.MultipleProducts] })
-    //   const allProductQueryData = queryClient.getQueryData<MakeProductRequestReturn | undefined>([IProduct.QUERY_KEY_PRODUCT.MultipleProducts]);
-    //   return { allProductData: allProductQueryData?.data || null, allProductQueryData, isFetchingAllProduct: !!isFetchingAllProduct };
-    // },
   };
 
   const statusSection: StatusSection = {
@@ -79,9 +67,6 @@ function useMutationProduct() {
         },
       };
     },
-    // removeAllQueries() {
-    //   queryClient.removeQueries({ queryKey: [IProduct.QUERY_KEY_PRODUCT.MultipleProducts] });
-    // },
     removeQuery() {
       queryClient.removeQueries({ queryKey: [IProduct.QUERY_KEY_PRODUCT.NavigationDashboard] });
       queryClient.removeQueries({ queryKey: [IProduct.QUERY_KEY_PRODUCT.Navigation] });

@@ -9,10 +9,10 @@ function Filters({ filters }: { filters: RequestMapNavigation[RouteNavigation.Na
   const handleAccordionToggle = (section: string) => {
     setOpenAccordion(openAccordion === section ? null : section);
   };
-  // Esta función se memoizará y no se recreará en cada renderizado
+
   const devAllSelectedBrands = useCallback((itemKey: string) => {
     return searchParams.getAll(itemKey)
-  }, [searchParams]); // La función se memoizará solo si 'searchParams' cambia
+  }, [searchParams]);
 
   return (
     <div className="filters">
@@ -28,7 +28,6 @@ function Filters({ filters }: { filters: RequestMapNavigation[RouteNavigation.Na
                 </div>
                 <div className={`filters__accordion-content ${openAccordion === title ? 'filters__accordion-content--open' : ''}`}>
                   <div className={`filters__${title} filters__items`}>
-                    {/* <label>Brand:</label> */}
                     {value.map((item, index) => {
                       const allSelectedBrands = searchParams.getAll(title)
                       return (
@@ -41,7 +40,7 @@ function Filters({ filters }: { filters: RequestMapNavigation[RouteNavigation.Na
                             onChange={() => {
                               const updatedBrands = [...allSelectedBrands];
 
-                              // Si la marca ya está seleccionada, quitarla; de lo contrario, agregarla
+
                               if (updatedBrands.includes(item)) {
                                 const index = updatedBrands.indexOf(item);
                                 updatedBrands.splice(index, 1);
@@ -49,16 +48,13 @@ function Filters({ filters }: { filters: RequestMapNavigation[RouteNavigation.Na
                                 updatedBrands.push(item);
                               }
 
-                              // Actualizar los parámetros de búsqueda
                               setSearchParams((prevSearchParams) => {
                                 const newSearchParams = new URLSearchParams(prevSearchParams);
-                                newSearchParams.delete(title); // Limpiar el parámetro existente
+                                newSearchParams.delete(title);
 
-                                // Agregar las marcas seleccionadas al nuevo parámetro
                                 updatedBrands.forEach((brand) => {
                                   newSearchParams.append(title, brand);
                                 });
-
                                 return newSearchParams;
                               });
                             }}
@@ -83,10 +79,9 @@ function Filters({ filters }: { filters: RequestMapNavigation[RouteNavigation.Na
                   </div>
                   <div className={`filters__accordion-content ${openAccordion === itemKey ? 'filters__accordion-content--open' : ''}`}>
                     <div className={`filters__${itemKey} filters__items`}>
-                      {/* <label>Brand:</label> */}
                       {itemValue.map((item, index) => {
                         const allSelectedBrands = devAllSelectedBrands(itemKey)
-                        // const allSelectedBrands = searchParams.getAll(itemKey)
+
                         return (
                           <div key={index} className={`filters__checked-container ${allSelectedBrands.includes(item) ? 'filters__checked-container--selected' : ''}`}>
                             <input
@@ -97,7 +92,6 @@ function Filters({ filters }: { filters: RequestMapNavigation[RouteNavigation.Na
                               onChange={() => {
                                 const updatedBrands = [...allSelectedBrands];
 
-                                // Si la marca ya está seleccionada, quitarla; de lo contrario, agregarla
                                 if (updatedBrands.includes(item)) {
                                   const index = updatedBrands.indexOf(item);
                                   updatedBrands.splice(index, 1);
@@ -105,16 +99,13 @@ function Filters({ filters }: { filters: RequestMapNavigation[RouteNavigation.Na
                                   updatedBrands.push(item);
                                 }
 
-                                // Actualizar los parámetros de búsqueda
                                 setSearchParams((prevSearchParams) => {
                                   const newSearchParams = new URLSearchParams(prevSearchParams);
-                                  newSearchParams.delete(itemKey); // Limpiar el parámetro existente
+                                  newSearchParams.delete(itemKey);
 
-                                  // Agregar las marcas seleccionadas al nuevo parámetro
                                   updatedBrands.forEach((brand) => {
                                     newSearchParams.append(itemKey, brand);
                                   });
-
                                   return newSearchParams;
                                 });
                               }}

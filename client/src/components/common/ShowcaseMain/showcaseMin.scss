@@ -1,9 +1,7 @@
 .showcase-min {
-  position   : relative;
-  // padding    : 0 1.5rem;
-  // border  : 1px solid red;
-  max-width  : 100%;
-  overflow   : auto;
+  position : relative;
+  max-width: 100%;
+  overflow : auto;
 
   &__content {
     display        : flex;
@@ -13,19 +11,6 @@
     overflow-x     : auto;
     scroll-behavior: smooth;
     white-space    : nowrap;
-
-    // animation      : scroll 20s linear infinite;
-
-    // @keyframes scroll {
-    //   0% {
-    //     transform: translateX(0);
-    //   }
-
-    //   100% {
-    //     transform: translateX(-100%); // Ajusta según la anchura de tus elementos
-    //   }
-    // }
-
 
     &::-webkit-scrollbar {
       height: 4px;
@@ -46,20 +31,13 @@
 
 
       .showcase-min__card {
-        // all             : unset;
-        background-color            : var(--font-light);
-        // padding               : 1rem;
-        // border-radius            : 0.5rem;
-        min-width                   : 5rem;
-        max-width                   : 10rem;
-        // display         : grid;
-        // justify-content : center;
-        // text-align      : center;
-        // cursor             : pointer;
-        border                      : 1px solid var(--brand-6);
-        border-radius               : 0.5rem;
-        user-select                 : none;
-        outline                     : none;
+        background-color: var(--font-light);
+        min-width       : 5rem;
+        max-width       : 10rem;
+        border          : 1px solid var(--brand-6);
+        border-radius   : 0.5rem;
+        user-select     : none;
+        outline         : none;
 
         * {
           border-radius: 0.5rem;

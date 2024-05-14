@@ -17,15 +17,6 @@
 
   grid-template-rows: 3rem 1fr 3rem;
 
-  // &.phone {
-  //   grid-template-rows: 2rem 1fr 2rem;
-  // }
-
-  // background : rgb(245, 242, 242);
-
-  // grid-template-rows : 2.5rem 1fr 3rem;
-
-
   .modal-header {
     background-color   : var(--brand-6);
     color              : var(--font-button);
@@ -50,11 +41,7 @@
       grid-template-columns: 1fr 30%;
     }
 
-    &.phone {
-      // display              : flex;
-      // flex-direction       : column-reverse;
-      // grid-template-columns: 1fr;
-    }
+    &.phone {}
 
     &__block-close {
       border         : 1px solid var(--font-button);
@@ -78,21 +65,18 @@
       }
 
       &-content {
-        // padding        : 1rem;
         display        : flex;
         flex-wrap      : wrap;
         justify-content: space-around;
         gap            : 0.5rem;
 
         .images-stored__container {
-          max-width               : 120px;
-          // // padding           : 20px;
-          border                  : 1px solid var(--brand-5);
-          border-radius           : 5px;
-          background              : #fff;
-          // box-sizing           : border-box;
-          display                 : grid;
-          grid-template-rows      : 1fr min-content;
+          max-width         : 120px;
+          border            : 1px solid var(--brand-5);
+          border-radius     : 5px;
+          background        : #fff;
+          display           : grid;
+          grid-template-rows: 1fr min-content;
 
           &.selected {
             border: 1px solid green;
@@ -120,29 +104,19 @@
       flex-direction: column;
       gap           : 0.5rem;
 
-      &.desktop {
-        // overflow          : hidden;
-        // display           : grid;
-        // grid-template-rows: min-content 1fr min-content;
-      }
+      &.desktop {}
 
-      &.close {
-        // background-color: aqua;
-        // height          : 10rem;
-      }
+      &.close {}
 
       &-input {
-        // padding         : 10px;
         background-color: var(--brand-5);
       }
 
       &-render {
-        // padding        : 1rem;
-        display              : flex;
-        flex-wrap            : wrap;
-        justify-content      : space-around;
-        gap                  : 0.5rem;
-        // overflow          : auto;
+        display        : flex;
+        flex-wrap      : wrap;
+        justify-content: space-around;
+        gap            : 0.5rem;
 
 
         >div {
@@ -184,9 +158,9 @@
   .modal-footer {
     background-color: var(--brand-6);
     height          : 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    display         : flex;
+    justify-content : flex-start;
+    align-items     : center;
   }
 
 }

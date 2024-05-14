@@ -11,10 +11,6 @@ const userSchemas: { [key: string]: Yup.Schema } = {
     .required('La contraseña es requerida')
     .min(6, 'La contraseña debe tener al menos 6 caracteres')
     .max(15, 'La contraseña debe tener máximo 15 caracteres'),
-  // .matches(
-  //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-  //   'La contraseña debe contener al menos una letra, un número y un carácter especial (@$!%*?&)'
-  // ),
   newPassword: Yup.string(),
   name: Yup.string()
     .required('El nombre es obligatorio')

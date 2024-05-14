@@ -45,7 +45,6 @@ function useProductDetail(): UseProductDetail {
   });
 
   useEffect(() => {
-    console.log(listProducts)
     // productos vistos
     if (listProducts.length > 0) {
       if (!isPending && !isSuccess) {
