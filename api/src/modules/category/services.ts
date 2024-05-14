@@ -4,6 +4,7 @@ import { errorHandlerCatch, errorHandlerRes } from '../../core/utils/send/errorH
 import { successHandler } from '../../core/utils/send/successHandler';
 import { AppDataSource } from '../../data-source';
 import CategoryEntity from './entity';
+import axios from 'axios';
 
 export default {
   async createCategory(req: Request, res: Response) {
@@ -74,6 +75,17 @@ export default {
       }
 
       await categoryRepository.remove(existingCategory);
+
+      const filteredFilesDB = existingCategory.products.flatMap((product) => {
+        return product.images
+      }).filter(Boolean);
+      
+      console.log(filteredFilesDB)
+      if (filteredFilesDB.length > 0) {
+        await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filteredFilesDB })
+      }
+
+      // await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filterDelete })
 
       successHandler({
         res,

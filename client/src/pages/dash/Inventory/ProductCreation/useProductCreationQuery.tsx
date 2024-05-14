@@ -10,6 +10,7 @@ import { RequestMapNavigation, RouteNavigation } from "../../../../services/navi
 import { RouteProduct } from "../../../../services/product/productRequest";
 
 export interface InitialStateProductCreation {
+  openModalForm: boolean;
   query: {
     type: 'search' | 'selected'
     search: string;
@@ -24,6 +25,7 @@ export interface InitialStateProductCreation {
 }
 
 export const initialStateProductCreation: InitialStateProductCreation = {
+  openModalForm: false,
   query: {
     type: 'search',
     search: '',
@@ -56,7 +58,7 @@ function useProductCreationQuery(): UseProductCreationQueryReturn {
   const { query: { type, search, entity } } = stateProductCreation
   ///////
   const { data, isLoading, isError, error, isSuccess, isFetching } = useQuery<MakeNavigationRequestReturn & { data: RequestMapNavigation[RouteNavigation.NavigationListProductDashboard]['data'] }, ErrorNavigation>({
-    queryKey: [IProduct.QUERY_KEY_PRODUCT.NavigationDashboard, type, entity, search],
+    queryKey: [IProduct.QUERY_KEY_PRODUCT.NavigationDashboard],
     queryFn: async () => navigationRequest(RouteNavigation.NavigationListProductDashboard).options({
       extensionRoute: `/${search}/${entity}/${type}`
     }),
@@ -65,13 +67,12 @@ function useProductCreationQuery(): UseProductCreationQueryReturn {
     refetchOnMount: false,
   }
   );
-  /////
+
   useEffect(() => {
     setStateProductCreation(prevState => ({ ...prevState, mutation: { ...prevState.mutation, entity: '' } }))
   }, [search])
 
   useEffect(() => {
-    console.log(data)
     if (error?.errors && error.errors.length > 0 ) {
       messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: error.errors.map(e => { return { ...e, status_code: error.status_code } }) })
       return

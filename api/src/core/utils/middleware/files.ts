@@ -24,7 +24,7 @@ const filesMiddleware = async (req: Request, res: Response, next: NextFunction) 
         return [];
       }).filter(Boolean);
 
-      // console.log({ filterFilesBody }, 'body')
+      console.log({ filterFilesBody, method }, 'body')
 
       if (method === 'POST' && filterFilesBody.length > 0) {
         await axios.post(`${process.env.URL_SERVER_FILES}/files/add-selected?selected=true`, { add: filterFilesBody })
@@ -65,24 +65,31 @@ const filesMiddleware = async (req: Request, res: Response, next: NextFunction) 
             return [];
           }).filter(Boolean);
 
+        console.log({filterFilesBody, filteredFilesDB},"pasando")
+
+
           if (filteredFilesDB.length > 0) {
 
             if (method === 'DELETE' && filteredFilesDB.length > 0) {
-              // console.log({ filteredFilesDB }, 'delete')
               await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filteredFilesDB })
             }
 
             if (method === 'PUT' && filterFilesBody.length > 0) {
-              // console.log({ filteredFilesDB })
+              console.log({ filteredFilesDB })
               const filterDelete = filteredFilesDB.filter(e => !filterFilesBody.includes(e))
-              // console.log({ filterDelete }, 'put')
+              console.log({ filterDelete }, 'put')
               if (filterDelete.length > 0) {
                 await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filterDelete })
               }
 
               await axios.post(`${process.env.URL_SERVER_FILES}/files/add-selected?selected=true`, { add: filterFilesBody })
+            } else if(method === 'PUT' && filteredFilesDB.length > 0){
+              await axios.post(`${process.env.URL_SERVER_FILES}/files/create-delete?entity=back&location=back&name=back&selected=false`, { delete: filteredFilesDB })
             }
             return next()
+
+          } else if(filterFilesBody.length > 0){
+            await axios.post(`${process.env.URL_SERVER_FILES}/files/add-selected?selected=true`, { add: filterFilesBody })
           }
           return next()
         } catch (error) {

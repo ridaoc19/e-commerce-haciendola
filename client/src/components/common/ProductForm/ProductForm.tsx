@@ -1,25 +1,28 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
+import RenderImages from '../../../hooks/useAdminImages/RenderImages';
+import useAdminImages from '../../../hooks/useAdminImages/useAdminImages';
+import useValidations from '../../../hooks/useValidations/useValidations';
+import { HandleClick } from '../../../interfaces/global.interface';
+import { initialStateProductCreation, InitialStateProductCreation, UseProductCreationQueryReturn } from '../../../pages/dash/Inventory/ProductCreation/useProductCreationQuery';
 import { RequestMapProduct, RouteProduct } from '../../../services/product/productRequest';
 import useMutationProduct from '../../../services/product/useMutationProduct';
 import Button from '../button/Button';
-import useAdminImages from '../../../hooks/useAdminImages/useAdminImages';
-import { InitialStateProductCreation, UseProductCreationQueryReturn } from '../../../pages/dash/Inventory/ProductCreation/useProductCreationQuery';
-import { HandleClick } from '../../../interfaces/global.interface';
 import Input from '../Input/Input';
 import Spinner from '../spinner';
-import useValidations from '../../../hooks/useValidations/useValidations';
-import RenderImages from '../../../hooks/useAdminImages/RenderImages';
 
-// function ProductForm<T extends RouteProduct>({ route, options }: { route: T, options: Omit<RequestMapProduct[T], 'route' | 'data'> }) {
-function ProductForm<T extends RouteProduct>({ route, options, entity, query }: { query: UseProductCreationQueryReturn['query'], route: T, options: Omit<RequestMapProduct[T], 'route' | 'data'>, entity: InitialStateProductCreation['mutation']['entity'] }) {
-  const { executeProductMutation, status } = useMutationProduct();
+interface ProductFormProps<T extends RouteProduct> {
+  query: UseProductCreationQueryReturn['query'],
+  route: T, options: Omit<RequestMapProduct[T], 'route' | 'data'>,
+  entity: InitialStateProductCreation['mutation']['entity']
+  setStateProductCreation: Dispatch<SetStateAction<InitialStateProductCreation>>
+}
+
+function ProductForm<T extends RouteProduct>({ route, options, entity, query, setStateProductCreation }: ProductFormProps<T>) {
+  const { executeProductMutation, status, tools } = useMutationProduct();
   const { getValidationErrors } = useValidations();
   const { ModalAdminImages, openModal, selectedFiles, typeFile } = useAdminImages({ entity, location: 'admin' })
 
-  // Estado para almacenar los datos del formulario
   const [requestData, setRequestData] = useState('requestData' in options ? options.requestData : null);
-
-
   const [error, setError] = useState<Record<string, string>>({})
 
   useEffect(() => {
@@ -28,7 +31,8 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query }: 
     } else {
       setRequestData(null)
     }
-  }, [options])
+    // eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     if (selectedFiles.img.length > 0) {
@@ -42,6 +46,14 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query }: 
     }
     // eslint-disable-next-line
   }, [selectedFiles])
+
+  useEffect(() => {
+    if (status.isProductSuccess || status.isProductError) {
+      tools.removeQuery()
+      setStateProductCreation(initialStateProductCreation)
+    }
+    // eslint-disable-next-line
+  }, [status])
 
   // Función para manejar cambios en los campos de texto
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -62,7 +74,6 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query }: 
       executeProductMutation({ route, options });
     }
   };
-  console.log(requestData)
   return (
     <form>
       <div className='product-creation__forms'>
@@ -77,7 +88,7 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query }: 
 
 
                   {/* <div key={index} className="advertising-form__input-images"> */}
-                    {/* <Button
+                  {/* <Button
                       button={{
                         type: 'light',
                         disabled: status.isLoadingProduct,
@@ -89,26 +100,26 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query }: 
                       }}
                     /> */}
 
-                    <RenderImages
-                      modal={{
-                        openModal,
-                        ModalAdminImages,
-                        title: entity,
-                        type: 'images'
-                      }}
-                      render={{
-                        loading: status.isLoadingProduct,
-                        valueImages: value
-                      }}
-                      handleClickDeleteImage={(indexImage) => {
-                        setRequestData((prevData: { [x: string]: any[]; }) => ({
-                          ...prevData,
-                          [name]: prevData[name].filter((_, index) => index !== indexImage)
-                        }));
-                      }}
-                    />
+                  <RenderImages
+                    modal={{
+                      openModal,
+                      ModalAdminImages,
+                      title: entity,
+                      type: 'images'
+                    }}
+                    render={{
+                      loading: status.isLoadingProduct,
+                      valueImages: value
+                    }}
+                    handleClickDeleteImage={(indexImage) => {
+                      setRequestData((prevData: { [x: string]: any[]; }) => ({
+                        ...prevData,
+                        [name]: prevData[name].filter((_, index) => index !== indexImage)
+                      }));
+                    }}
+                  />
 
-                    {/* <h5>{name}</h5>
+                  {/* <h5>{name}</h5>
                     <div>
                       <div className='list' style={{ display: 'flex' }}>
                         {value.map((item, i) => {

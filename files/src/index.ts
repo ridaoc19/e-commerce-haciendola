@@ -1,6 +1,6 @@
 import app from "./app";
 import { AppDataSource } from "./data-source";
-import { checkFolderAccess } from "./modules/files/services";
+import { checkFolderAccess } from "./modules/files/help";
 
 const PORT = process.env.PORT;
 
