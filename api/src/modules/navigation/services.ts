@@ -77,8 +77,7 @@ export default {
         queryBuilder.where(`${breadcrumb?.entity}.${breadcrumb?.entity}_id = :id`, { id });
 
       } else {
-        const searchTerms = id.split(' ').join('|');
-        queryBuilder.where(`LOWER(product.product::text) ~ LOWER(:regex)`, { regex: `(${searchTerms})` })
+        queryBuilder.where(`product.product ILIKE :search`, { search: `%${id}%` })
       }
 
       if (filtersQuery.length > 0) {
@@ -127,10 +126,8 @@ export default {
       const queryBuilder = AppDataSource
         .getRepository(ProductEntity)
         .createQueryBuilder('product')
+        .where(`product.product ILIKE :search`, { search: `%${search}%` })
 
-      const searchTerms = search.split(' ').join('|');
-      queryBuilder
-        .where(`LOWER(product.product::text) ~ LOWER(:regex)`, { regex: `(${searchTerms})` })
       const filteredProducts = await queryBuilder
         .skip(0)
         .take(4)
@@ -175,8 +172,7 @@ export default {
         if (findParentUUID(id)) {
           queryBuilder.where(`${entity}.${entity}_id = :id`, { id });
         } else {
-          const searchTerms = id.split(' ').join('|');
-          queryBuilder.where(`LOWER(${entity}.${entity}::text) ~ LOWER(:regex)`, { regex: `(${searchTerms})` })
+          queryBuilder.where(`${entity}.${entity} ILIKE :search`, { search: `%${id}%` })
         }
       }
 

@@ -71,10 +71,10 @@ const Showcase: React.FC<ShowcaseProps> = ({ products, title }) => {
             <Card
               key={index}
               product_id={item.product_id}
-              images={[item.images]}
+              images={item.images}
               product={item.product}
-              price={item.price[0]}
-              listPrice={0}
+              price={item.price}
+              listPrice={item.listPrice}
             />
           )
         })}

@@ -58,7 +58,6 @@ function useAdminImages({ location, entity }: { location: string, entity: string
       return requestData;
     },
     onSuccess({ data, status_code, field, message }, { route }) {
-      console.log({ route, field })
       if (field === 'file_create_excel') {
         messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: [{ status_code, field, message }] })
         onClose()

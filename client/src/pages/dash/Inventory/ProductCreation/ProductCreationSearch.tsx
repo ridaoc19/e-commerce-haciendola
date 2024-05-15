@@ -1,9 +1,9 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../../components/common/button/Button";
 import Input from "../../../../components/common/Input/Input";
 import Select from "../../../../components/common/Select/Select";
 import Spinner from "../../../../components/common/spinner";
-import { InitialStateProductCreation, UseProductCreationQueryReturn } from "./useProductCreationQuery";
+import { MutationFn, UseProductCreationQueryReturn } from "./useProductCreationQuery";
 
 const options = [
   { value: 'category', label: 'Categoría' },
@@ -11,20 +11,18 @@ const options = [
 ];
 
 interface ProductCreationSearchProps {
-  stateProductCreation: InitialStateProductCreation
-  setStateProductCreation: Dispatch<SetStateAction<InitialStateProductCreation>>
   query: UseProductCreationQueryReturn['query']
 }
 
-function ProductCreationSearch({ stateProductCreation, setStateProductCreation, query }: ProductCreationSearchProps) {
-  const [searchProductCreation, setSearchProductCreation] = useState('')
+function ProductCreationSearch({ query }: ProductCreationSearchProps) {
+  const [search, setSearch] = useState('')
+  const [selectEntity, setSelectEntity] = useState<MutationFn['entity']>('category')
 
-  useEffect(() => {
-    if (query?.data && query.data.filters.category) {
-      setSearchProductCreation('')
+  useEffect(() =>{
+    if(query.isSuccess || query.isError){
+      setSearch('')
     }
-    // eslint-disable-next-line
-  }, [query.data?.filters.category])
+  },[query.isSuccess, query.isError])
 
   return (
     <div className="product-creation-search">
@@ -34,8 +32,8 @@ function ProductCreationSearch({ stateProductCreation, setStateProductCreation, 
             name: 'search',
             placeholder: 'ID o nombre',
             disabled: query.isLoading,
-            value: searchProductCreation,
-            handleOnChange: (event) => setSearchProductCreation(event.target.value),
+            value: search,
+            handleOnChange: (event) => setSearch(event.target.value),
           }}
             errorMessage=""
             styleClass=""
@@ -45,21 +43,18 @@ function ProductCreationSearch({ stateProductCreation, setStateProductCreation, 
           <Select
             options={options}
             disabled={query.isLoading}
-            value={stateProductCreation.query.entity}
+            value={selectEntity}
             onChange={(value) => {
-              setStateProductCreation(prevState => ({
-                ...prevState,
-                query: { ...prevState.query, type: 'search', entity: value as InitialStateProductCreation['query']['entity'] }
-              }))
+              setSelectEntity(value as MutationFn['entity'])
             }} />
         </div>
         <div className="product-creation-search__button">
           <Button
             button={{
               type: 'dark',
-              disabled: query.isLoading || !searchProductCreation,
+              disabled: query.isLoading || !search,
               text: query.isLoading ? <Spinner /> : 'Buscar',
-              handleClick: () => setStateProductCreation(prevState => ({ ...prevState, query: { ...prevState.query, type: 'search', search: searchProductCreation } }))
+              handleClick: () => query.mutate({ search, entity: selectEntity, type: 'search' })
             }}
           />
         </div>

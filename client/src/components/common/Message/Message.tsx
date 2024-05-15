@@ -17,8 +17,8 @@ const Message: React.FC<MessageProps> = ({ children, open, onClose }) => {
   useEffect(() => {
     if (open) {
       document.body.classList.add('body-scroll-locked');
-      setVisible(true)
     }
+    setVisible(open)
   }, [open])
 
   const handleClose = () => {
