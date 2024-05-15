@@ -52,6 +52,8 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query, se
       if(dataSave && !!entity){
         const id = 'product_id' in dataSave.data[0]? dataSave.data[0].product_id as string : dataSave.data[0].category_id
         !!id && query.mutate({entity, search: id, type: 'search'})
+      } else{
+        query.reset()
       }
       tools.removeQuery()
       setStateProductCreation(initialStateProductCreation)

@@ -41,6 +41,7 @@ export interface UseProductCreationQueryReturn {
     isSuccess: boolean
     isFetching: boolean,
     mutate: (data: MutationFn) => void
+    reset: () => void
   },
   Breadcrumb: ReactNode,
   setStateProductCreation: Dispatch<SetStateAction<InitialStateProductCreation>>,
@@ -51,8 +52,8 @@ function useProductCreationQuery(): UseProductCreationQueryReturn {
   const { messages: { messagesContextDispatch } } = useContext(CreateContext)
   const [stateProductCreation, setStateProductCreation] = useState<InitialStateProductCreation>(initialStateProductCreation)
 
-  const { mutate, isPending: isLoading, error, isSuccess, isError, data } = useMutation({
-    mutationFn: ({ search, entity, type  }: MutationFn) => {
+  const { mutate, isPending: isLoading, error, isSuccess, isError, data, reset: resetear } = useMutation({
+    mutationFn: ({ search, entity, type }: MutationFn) => {
       const requestData = navigationRequest(RouteNavigation.NavigationListProductDashboard).options({
         extensionRoute: `/${search}/${entity}/${type}`
       });
@@ -62,7 +63,7 @@ function useProductCreationQuery(): UseProductCreationQueryReturn {
       messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: error.errors.map(e => { return { ...e, status_code: error.status_code } }) })
       return error;
     },
-    onSuccess(data, {search, entity}) {
+    onSuccess(data, { search, entity }) {
       if (data?.data && data.data.filters.category.length === 0) {
         messagesContextDispatch({ type: IMessagesReducer.keyDashboard.MESSAGE_UPDATE, payload: [{ status_code: 204, field: 'search_creation_product', message: `La solicitud se ha completado con éxito, pero no hay ${entity === 'category' ? 'categorías creadas' : 'productos creados'} con el nombre "${search}".` }] })
       }
@@ -70,8 +71,12 @@ function useProductCreationQuery(): UseProductCreationQueryReturn {
     },
   });
 
+  const reset = () => {
+    resetear()
+  }
+
   return {
-    query: { data: data?.data, isLoading, isError, error, isSuccess, isFetching: isLoading, mutate },
+    query: { data: data?.data, isLoading, isError, error, isSuccess, isFetching: isLoading, mutate, reset },
     Breadcrumb: <Breadcrumb redirect={false} viewHome={false} breadcrumb={data?.data.breadcrumb || { data: [], entity: BreadcrumbType.Category }} />,
     setStateProductCreation,
     stateProductCreation,
