@@ -4,6 +4,7 @@ import { errorHandlerCatch, errorHandlerRes } from '../../core/utils/send/errorH
 import { successHandler } from '../../core/utils/send/successHandler';
 import { AppDataSource } from '../../data-source';
 import AdvertisingEntity from './entity';
+import ProductEntity from '../product/entity';
 
 export default {
   async createAdvertising(req: Request, res: Response) {
@@ -114,6 +115,13 @@ export default {
 export const getAllAdvertising = async () => {
   const advertisingRepository = AppDataSource.getRepository(AdvertisingEntity);
   const allAdvertising = await advertisingRepository.find();
+  
+  const getTopViewedProducts = await AppDataSource
+  .getRepository(ProductEntity)
+  .createQueryBuilder("product")
+  .orderBy("product.product_view", "DESC")
+  .take(15)
+  .getMany();
 
-  return { dataAdvertising: allAdvertising, topViewedProducts: [] }
+  return { dataAdvertising: allAdvertising, topViewedProducts: getTopViewedProducts }
 }

@@ -1,6 +1,7 @@
 import { RefObject, useContext } from "react";
 import { ParamsChildren } from "../../../hooks/useAdvertising/useAdvertising";
 import { CreateContext } from "../../../hooks/useContext";
+import FormAdvertisingModal from "./FormAdvertisingModal";
 import { Components, InitialStateFormAdvertising, RouterDom, react, } from "./utils";
 const { FormAdvertisingButton, FormAdvertisingForm, FormAdvertisingList, useMediaQuery, useModalConfirm, useMutationAdvertising } = Components
 const { useEffect, useState, RouteAdvertising } = react;
@@ -86,7 +87,8 @@ function FormAdvertising({ advertising, location, componentMount, title }: FormA
 
   return (
     <>
-      {edit ? <div ref={componentMount} className="advertising-form">
+      {edit ? <FormAdvertisingModal title={title} >
+        <div ref={componentMount} className="advertising-form">
         {/* {error && <ErrorMessage errors={error.errors.map(e => { return { ...e, status_code: error.status_code } })} emptyMessage={() => resetError()} />} */}
         {isLoading && <div>Loading...</div>}
         <div className="advertising-form-title">
@@ -106,7 +108,8 @@ function FormAdvertising({ advertising, location, componentMount, title }: FormA
         <div className={`advertising-form__button`} >
           <FormAdvertisingButton handleItemClick={handleItemClick} handleClickEmpty={() => setStateInput(initialStateFormAdvertising)} status={stateInput.status} />
         </div>
-      </div> : null}
+      </div>
+      </FormAdvertisingModal> : null}
     </>
   );
 }
