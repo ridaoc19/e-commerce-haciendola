@@ -3,18 +3,18 @@ import Svg from "../../../../components/assets/icons/Svg";
 import Button from "../../../../components/common/button/Button";
 import { RequestMapNavigation, RouteNavigation } from "../../../../services/navigation/navigationRequest";
 import { RouteProduct } from "../../../../services/product/productRequest";
-import { InitialStateProductCreation } from "./useProductCreationQuery";
+import { InitialStateProductCreation, UseProductCreationQueryReturn } from "./useProductCreationQuery";
 
 interface ProductCreationListProps {
   data: RequestMapNavigation[RouteNavigation.NavigationListProductDashboard]['data'];
-  stateProductCreation: InitialStateProductCreation
   setStateProductCreation: Dispatch<SetStateAction<InitialStateProductCreation>>
+  query: UseProductCreationQueryReturn['query']
 }
 
 type Key = keyof RequestMapNavigation[RouteNavigation.NavigationListProductDashboard]['data']['filters'];
 type Value = RequestMapNavigation[RouteNavigation.NavigationListProductDashboard]['data']['filters'][Key];
 
-function ProductCreationList({ data, setStateProductCreation }: ProductCreationListProps) {
+function ProductCreationList({ data, setStateProductCreation, query }: ProductCreationListProps) {
   const listProduct = data?.filters ? Object.entries(data.filters) : [];
 
   return (
@@ -46,15 +46,7 @@ function ProductCreationList({ data, setStateProductCreation }: ProductCreationL
                       type: 'highlighter',
                       text,
                       handleClick: () => {
-                        setStateProductCreation(prevState => ({
-                          ...prevState,
-                          query: {
-                            ...prevState.query,
-                            entity: typedKey,
-                            search: id,
-                            type: 'selected',
-                          }
-                        }))
+                        query.mutate({entity: typedKey, search: id, type: 'selected'})
                       }
                     }} />
 

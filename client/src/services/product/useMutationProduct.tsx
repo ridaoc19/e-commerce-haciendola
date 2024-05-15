@@ -22,6 +22,7 @@ function useMutationProduct() {
   const { messages: { messagesContextDispatch } } = useContext(CreateContext)
 
   const {
+    data,
     mutate: executeProductMutation,
     reset: resetProductMutation,
     isPending: isLoadingProduct,
@@ -78,6 +79,7 @@ function useMutationProduct() {
   }
 
   return {
+    dataSave: data,
     data: dataSection,
     status: statusSection,
     tools: toolsSection,
