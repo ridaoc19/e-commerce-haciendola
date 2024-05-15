@@ -1,5 +1,5 @@
 import { MouseEvent, useState } from "react";
-import { HandleChangeText } from "../../../interfaces/global.interface";
+import { HandleChangeText, handleOnKeyDown } from "../../../interfaces/global.interface";
 import Svg, { SvgType } from "../../assets/icons/Svg";
 
 export interface InputProps {
@@ -22,6 +22,7 @@ export interface InputProps {
     placeholder: string;
     value: string | number;
     handleOnChange: HandleChangeText
+    handleOnKeyDown?: handleOnKeyDown
     name: string;
     dataset_extra?: string;
     dataset_index?: string;
@@ -36,7 +37,7 @@ function Input({ svg, svgTwo, styleClass, errorMessage, input }: InputProps) {
     event.preventDefault();
     setToggle((data) => (data ? false : true));
   };
- 
+
   return (
     <div className={`user-input input__container--${styleClass}`}>
       <div className={`${errorMessage ? "input_error" : "input_brand"} input__content--${styleClass}`} >
@@ -51,6 +52,7 @@ function Input({ svg, svgTwo, styleClass, errorMessage, input }: InputProps) {
               })}
           </span>
           <input
+            onKeyDown={(event) => input.handleOnKeyDown && input.handleOnKeyDown(event)}
             type={input.type !== "password" ? input.type : toggle ? "text" : input.type}
             placeholder={input.placeholder}
             value={input.value}

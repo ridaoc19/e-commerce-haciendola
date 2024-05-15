@@ -1,14 +1,14 @@
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
-import RenderImages from '../../../hooks/useAdminImages/RenderImages';
-import useAdminImages from '../../../hooks/useAdminImages/useAdminImages';
-import useValidations from '../../../hooks/useValidations/useValidations';
-import { HandleClick } from '../../../interfaces/global.interface';
-import { initialStateProductCreation, InitialStateProductCreation, UseProductCreationQueryReturn } from '../../../pages/dash/Inventory/ProductCreation/useProductCreationQuery';
-import { RequestMapProduct, RouteProduct } from '../../../services/product/productRequest';
-import useMutationProduct from '../../../services/product/useMutationProduct';
-import Button from '../button/Button';
-import Input from '../Input/Input';
-import Spinner from '../spinner';
+import RenderImages from '../../../../hooks/useAdminImages/RenderImages';
+import useAdminImages from '../../../../hooks/useAdminImages/useAdminImages';
+import useValidations from '../../../../hooks/useValidations/useValidations';
+import { HandleClick } from '../../../../interfaces/global.interface';
+import { initialStateProductCreation, InitialStateProductCreation, UseProductCreationQueryReturn } from './useProductCreationQuery';
+import { RequestMapProduct, RouteProduct } from '../../../../services/product/productRequest';
+import useMutationProduct from '../../../../services/product/useMutationProduct';
+import Button from '../../../../components/common/button/Button';
+import Input from '../../../../components/common/Input/Input';
+import Spinner from '../../../../components/common/spinner';
 
 interface ProductFormProps<T extends RouteProduct> {
   query: UseProductCreationQueryReturn['query'],
@@ -18,7 +18,7 @@ interface ProductFormProps<T extends RouteProduct> {
 }
 
 function ProductForm<T extends RouteProduct>({ route, options, entity, query, setStateProductCreation }: ProductFormProps<T>) {
-  const { executeProductMutation, status, tools } = useMutationProduct();
+  const { executeProductMutation, status, tools, dataSave} = useMutationProduct();
   const { getValidationErrors } = useValidations();
   const { ModalAdminImages, openModal, selectedFiles, typeFile } = useAdminImages({ entity, location: 'admin' })
 
@@ -49,11 +49,17 @@ function ProductForm<T extends RouteProduct>({ route, options, entity, query, se
 
   useEffect(() => {
     if (status.isProductSuccess || status.isProductError) {
+      if(dataSave && !!entity){
+        const id = 'product_id' in dataSave.data[0]? dataSave.data[0].product_id as string : dataSave.data[0].category_id
+        !!id && query.mutate({entity, search: id, type: 'search'})
+      } else{
+        query.reset()
+      }
       tools.removeQuery()
       setStateProductCreation(initialStateProductCreation)
     }
     // eslint-disable-next-line
-  }, [status])
+  }, [status, dataSave])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

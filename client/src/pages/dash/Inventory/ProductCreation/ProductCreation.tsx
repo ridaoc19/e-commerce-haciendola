@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import Message from "../../../../components/common/Message/Message";
-import ProductCreationForm from "../../../../components/common/ProductForm/ProductForm";
+import ProductCreationForm from "./ProductForm";
 import ProductCreationList from "./ProductCreationList";
 import ProductCreationSearch from "./ProductCreationSearch";
 import useProductCreationQuery from "./useProductCreationQuery";
@@ -35,14 +35,14 @@ function ProductCreation() {
   return (
     <div className="product-creation">
       <div className="product-creation__search">
-        <ProductCreationSearch stateProductCreation={stateProductCreation} setStateProductCreation={setStateProductCreation} query={query} />
+        <ProductCreationSearch query={query} />
       </div>
 
       {query.data && (
         <div>
           {Breadcrumb}
           <div className="product-creation__list">
-            {query.data && <ProductCreationList data={query.data} setStateProductCreation={setStateProductCreation} stateProductCreation={stateProductCreation} />}
+            {query.data && <ProductCreationList query={query} data={query.data} setStateProductCreation={setStateProductCreation}/>}
           </div>
 
           <hr />

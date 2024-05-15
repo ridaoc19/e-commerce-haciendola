@@ -9,8 +9,9 @@ export enum RouteAdvertising {
 }
 
 export interface TopViewedProducts extends Pick<IProduct.Product, 'product_id' | 'product' > {
-  images: string,
-  price: Array<number>
+  images: string[],
+  price: number
+  listPrice: number
 }
 
 export type RequestMapAdvertising = {

@@ -18,7 +18,7 @@ function Content({ stateProductDetail, listProductsData: { listProducts } }: Con
     <div className={`content ${mediaQuery}`}>
 
       <div className="content__id">
-        <h6>ID: {stateProductDetail.selectedVariant.product_id.replace(/-/g, '').toUpperCase()}</h6>
+        <h6>Código de barras: {stateProductDetail.selectedVariant.barcode}</h6>
       </div>
 
       <div className="content__title">

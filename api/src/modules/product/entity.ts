@@ -36,6 +36,9 @@ export default class ProductEntity {
   @Column()
   grams: string;
 
+  @Column({ default: 0 })
+  product_view: number;
+
   @ManyToOne(() => CategoryEntity, category => category.products, {onDelete: 'CASCADE'})
   @JoinColumn({ name: 'category_id' })
   category: CategoryEntity;
