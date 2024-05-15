@@ -1,8 +1,13 @@
 import * as dotenv from 'dotenv';
+import * as path from 'path';
 import 'dotenv/config';
 import { z } from 'zod';
 
-dotenv.config({ path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development' });
+const environment = process.env.NODE_ENV === 'production';
+
+dotenv.config({ path: environment ? '.env.production' : '.env.development' });
+
+
 
 const envVars = z.object({
   PORT: z.number(),
@@ -26,7 +31,10 @@ const envVarsSchema = Object.entries(process.env).reduce((acc, [key, value]) => 
 
 envVars.parse(envVarsSchema);
 
+global.__base = environment? path.resolve(__dirname, '..') : __dirname;
+
 declare global {
+  var __base: string;
   namespace NodeJS {
     interface ProcessEnv extends z.infer<typeof envVars> { }
   }
