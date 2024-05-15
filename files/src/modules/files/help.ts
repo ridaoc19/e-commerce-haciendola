@@ -66,7 +66,7 @@ export const getFiles = async ({ entity, location, name, selected, typeFile }: O
   }
 }
 
-export const folderPath = './files';
+export const folderPath = `${__base}/files`;
 
 export async function checkFolderAccess({ folderPath }: { folderPath: string }) {
   fsExtra.access(folderPath, fsExtra.constants.F_OK, (err) => {
@@ -110,7 +110,7 @@ export const deleteFiles = (filteredImages: string[]): boolean => {
 
     filteredImages.forEach((url: string) => {
       try {
-        const absolutePath = path.resolve(__dirname, '..', '..', '..', 'files', url);
+        const absolutePath = path.resolve(__base, 'files', url);
         if (fs.existsSync(absolutePath)) {
           console.log(`El archivo ${url} sí existe en ${absolutePath}`);
           fs.unlinkSync(absolutePath);

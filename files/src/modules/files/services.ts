@@ -53,7 +53,7 @@ export default {
           });
         }
 
-        const absolutePath = path.resolve(__dirname, '..', '..', '..', 'files', imagesCreated[0].fileId);
+        const absolutePath = path.resolve(__base, 'files', imagesCreated[0].fileId);
         const workbook = await XlsxPopulate.fromFileAsync(absolutePath);
         const excelData = await workbook.sheet("Hoja1").usedRange().value();
         const filterProducts: [(string)[]] = excelData.filter((e: [[]]) => e.filter(Boolean).length === 10);
